@@ -11,6 +11,15 @@ function($scope, $rootScope, auth) {
     auth.registerUser({
       email: $scope.useremail,
       password: $scope.userpassword
-    });
+    })
+    .then(function(data) {
+      
+      $rootScope.loading = false;
+      $rootScope.$digest();
+      if (data) {
+        
+        console.debug('SignUp - ', data);
+      }
+    })
   }
 }]

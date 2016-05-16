@@ -28,20 +28,23 @@ export default
   }
   
   function authUser(user) {
-    
-    messanger.authWithPassword({
+        
+    return new Promise(function(resolve, reject) {
       
-      email: user.email,
-      password: user.password
-    }, function(err, data) {;   
-      if (err) {
+      authentication.$authWithPassword({
+    
+        email: user.email,
+        password: user.password
+      })
+      .then(function(data) {
         
-        console.debug('Authentication failed: ', err);
-      } else {
+        resolve(data);
+      })
+      .catch(function(data) {
         
-        console.debug('Authenticated successfully: ', data);
-      }
-    });
+        resolve(data);
+      }) 
+    })        
   }
   
   function unauthUser() {
@@ -51,36 +54,41 @@ export default
   
   function resetUserPassword(user) {
     
-    messanger.resetPassword({
+    return new Promise(function(resolve, reject) {
       
-      email: user.email
-    }, function(err) {
+      authentication.$resetPassword({
       
-      if (err === null) {
+        email: user.email
+      })
+      .then(function(data) {
         
-        console.debug('Email for password reset sended successfully');
-      } else {
+        resolve(data);
+      })
+      .catch(function(data) {
         
-        console.debug('Error when sending new password for user');
-      }
+        resolve(data);
+      })
     })
   }
   
   function registerUser(user) {
-    
-    messanger.createUser({
+   
+    return new Promise(function(resolve, reject) {
+
+      authentication.$createUser({
       
-      email: user.email,
-      password: user.password
-    }, function(error, data) {
-      
-      if (!error) {
+        email: user.email,
+        password: user.password
+      })
+      .then(function(data) {
         
-        console.debug('User was successfully registered!', data);
-      } else {
+        resolve(data)
+      })
+      .catch(function(data) {
         
-        console.debug('Error while user registration!', error);
-      }
+        resolve(data);
+      })
     })
+    
   }
 }]

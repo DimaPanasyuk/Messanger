@@ -24,7 +24,7 @@
             
             <div class="form-group">
               <label for="uemail">Email: </label>
-              <input type="text"
+              <input type="email"
                     id="uemail"
                     name="useremail"
                     ng-model="useremail"
@@ -41,6 +41,9 @@
             </div>
             <div class="text-center">                  
               <button class="btn btn-warning"
+                      ng-disabled="!useremail || 
+                                   useremail.length < 10 || 
+                                   !userpassword || userpassword.length < 3"
                       ng-click="signUp()">
                 Sign Up
               </button>            

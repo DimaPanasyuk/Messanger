@@ -8,6 +8,8 @@ export default
 
 function Auth($scope, $rootScope, $location, $timeout, auth) {
   
+  // $scope.useremail = '';
+  // $scope.userpassword = '';
   $scope.logIn  = logIn;
   $scope.signUp = signUp;
   
@@ -17,11 +19,15 @@ function Auth($scope, $rootScope, $location, $timeout, auth) {
     auth.authUser({
       email: $scope.useremail,
       password: $scope.userpassword
-    });
-    $timeout(function() {
-      
-      $location.path('/');
-    }, 400);
+    })
+    .then(function(data) {
+      $rootScope.loading = false;
+      if(data && data.provider) {
+
+        $location.path('/');
+        $rootScope.$digest();
+      }
+    })
   }
   
   function signUp() {

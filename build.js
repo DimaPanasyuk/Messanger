@@ -106,6 +106,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', function Auth($scope, $rootScope, $location, $timeout, auth) {
 
+  // $scope.useremail = '';
+  // $scope.userpassword = '';
   $scope.logIn = logIn;
   $scope.signUp = signUp;
 
@@ -115,11 +117,14 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', func
     auth.authUser({
       email: $scope.useremail,
       password: $scope.userpassword
-    });
-    $timeout(function () {
+    }).then(function (data) {
+      $rootScope.loading = false;
+      if (data && data.provider) {
 
-      $location.path('/');
-    }, 400);
+        $location.path('/');
+        $rootScope.$digest();
+      }
+    });
   }
 
   function signUp() {
@@ -149,7 +154,18 @@ exports.default = ['urls', '$routeProvider', function (urls, $routeProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope, $rootScope, $location, auth) {}];
+exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope, $rootScope, $location, auth) {
+
+  $scope.logOut = logOut;
+
+  function logOut() {
+
+    $rootScope.loading = true;
+    auth.unauthUser();
+    $rootScope.loading = false;
+    $location.path('/auth');
+  }
+}];
 
 },{}],7:[function(require,module,exports){
 'use strict';
@@ -182,6 +198,14 @@ exports.default = ['$scope', '$rootScope', 'auth', function ($scope, $rootScope,
     auth.registerUser({
       email: $scope.useremail,
       password: $scope.userpassword
+    }).then(function (data) {
+
+      $rootScope.loading = false;
+      $rootScope.$digest();
+      if (data) {
+
+        console.debug('SignUp - ', data);
+      }
     });
   }
 }];
@@ -214,9 +238,21 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope
 
   function reset() {
 
+    $rootScope.loading = true;
     auth.resetUserPassword({
 
       email: $scope.userEmail
+    }).then(function (data) {
+      if (data) {
+
+        console.debug('Reset - ', data);
+      } else {
+
+        console.debug('Reset - no data');
+        $rootScope.loading = false;
+        $location.path('/auth');
+        $rootScope.$digest();
+      }
     });
   }
 
@@ -277,19 +313,19 @@ exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
 
   function authUser(user) {
 
-    messanger.authWithPassword({
+    return new Promise(function (resolve, reject) {
 
-      email: user.email,
-      password: user.password
-    }, function (err, data) {
-      ;
-      if (err) {
+      authentication.$authWithPassword({
 
-        console.debug('Authentication failed: ', err);
-      } else {
+        email: user.email,
+        password: user.password
+      }).then(function (data) {
 
-        console.debug('Authenticated successfully: ', data);
-      }
+        resolve(data);
+      }).catch(function (data) {
+
+        resolve(data);
+      });
     });
   }
 
@@ -300,36 +336,36 @@ exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
 
   function resetUserPassword(user) {
 
-    messanger.resetPassword({
+    return new Promise(function (resolve, reject) {
 
-      email: user.email
-    }, function (err) {
+      authentication.$resetPassword({
 
-      if (err === null) {
+        email: user.email
+      }).then(function (data) {
 
-        console.debug('Email for password reset sended successfully');
-      } else {
+        resolve(data);
+      }).catch(function (data) {
 
-        console.debug('Error when sending new password for user');
-      }
+        resolve(data);
+      });
     });
   }
 
   function registerUser(user) {
 
-    messanger.createUser({
+    return new Promise(function (resolve, reject) {
 
-      email: user.email,
-      password: user.password
-    }, function (error, data) {
+      authentication.$createUser({
 
-      if (!error) {
+        email: user.email,
+        password: user.password
+      }).then(function (data) {
 
-        console.debug('User was successfully registered!', data);
-      } else {
+        resolve(data);
+      }).catch(function (data) {
 
-        console.debug('Error while user registration!', error);
-      }
+        resolve(data);
+      });
     });
   }
 }];
