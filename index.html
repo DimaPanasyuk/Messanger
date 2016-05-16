@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fancy Messager</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body ng-app="app"
+      ng-controller="App">
+  
+  <pre>
+    {{user_info.user | json}}
+  </pre>
+  <ng-view></ng-view>
+  
+  <script src="build.js"></script>
+</body>
+</html>

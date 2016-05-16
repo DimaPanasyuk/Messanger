@@ -1,0 +1,9 @@
+{
+  "injectCahnges": true,
+  "files": [
+    "./build.js",
+    "./less/**/*.less",
+    "./index.html",
+    "./js/**/*.html"
+    ]
+}
