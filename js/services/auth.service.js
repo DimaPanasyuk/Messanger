@@ -1,19 +1,16 @@
-
-auth.$inject = [
+export default
+['$firebaseAuth', function auth($firebaseAuth) {
   
-  '$firebaseAuth'
-]
-
-function auth($firebaseAuth) {
-  
-  let user = new Firebase('https://dima-messanger.firebaseio.com');
-  let authentication = $firebaseAuth(user);
+  let messanger = new Firebase('https://dima-messanger.firebaseio.com');
+  let authentication = $firebaseAuth(messanger);
   
   return {
     
-    //status: authStatus,
-    authPassword: authPass,
-    unauth: unauth
+    authStatus,
+    authUser,
+    unauthUser,
+    resetUserPassword,
+    registerUser
   }
   
   function authStatus() {
@@ -30,27 +27,60 @@ function auth($firebaseAuth) {
     })   
   }
   
-  function authPass(user) {
+  function authUser(user) {
     
-    user.authWithPassword({
+    messanger.authWithPassword({
       
       email: user.email,
       password: user.password
-    })
-    .then(function(data) {
+    }, function(err, data) {;   
+      if (err) {
+        
+        console.debug('Authentication failed: ', err);
+      } else {
+        
+        console.debug('Authenticated successfully: ', data);
+      }
+    });
+  }
+  
+  function unauthUser() {
+    
+    authentication.$unauth();
+  }
+  
+  function resetUserPassword(user) {
+    
+    messanger.resetPassword({
       
-      console.debug('Authenticated successfully: ', data);
-    })
-    .catch(function(err) {
+      email: user.email
+    }, function(err) {
       
-      console.debug('Login Failed', err);
+      if (err === null) {
+        
+        console.debug('Email for password reset sended successfully');
+      } else {
+        
+        console.debug('Error when sending new password for user');
+      }
     })
   }
   
-  function unauth() {
+  function registerUser(user) {
     
-    user.$unauth();
+    messanger.createUser({
+      
+      email: user.email,
+      password: user.password
+    }, function(error, data) {
+      
+      if (!error) {
+        
+        console.debug('User was successfully registered!', data);
+      } else {
+        
+        console.debug('Error while user registration!', error);
+      }
+    })
   }
-}
-
-export default user;
+}]

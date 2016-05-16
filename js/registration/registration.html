@@ -1,0 +1,54 @@
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+          <div class="row">
+            <div class="col-md-4">
+              <a href="#auth" 
+                 class="btn btn-warning">
+                Back
+              </a>
+            </div>
+            <div class="col-md-4">
+              <b>Sign Up</b>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form name="loginForm">
+            
+            <div class="form-group">
+              <label for="uemail">Email: </label>
+              <input type="text"
+                    id="uemail"
+                    name="useremail"
+                    ng-model="useremail"
+                    class="form-control text-center"
+                    required>
+                    
+              <label for="upassword">Password: </label>
+              <input type="password"
+                    id="upassword"
+                    name="userpassword"
+                    ng-model="userpassword"
+                    class="form-control text-center"
+                    required>
+            </div>
+            <div class="text-center">                  
+              <button class="btn btn-warning"
+                      ng-click="signUp()">
+                Sign Up
+              </button>            
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

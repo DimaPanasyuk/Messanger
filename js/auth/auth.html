@@ -1,0 +1,50 @@
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      
+      <div class="panel panel-primary">
+        <div class="panel-heading text-center">
+          <b>Login</b>
+        </div>
+        <div class="panel-body">
+          <form name="loginForm">
+            
+            <label for="uemail">Email: </label>
+            <input type="email"
+                   id="uemail"
+                   name="useremail"
+                   ng-model="useremail"
+                   autocomplete="off"
+                   class="form-control text-center"
+                   required>
+                   
+            <label for="upassword">Password: </label>
+            <input type="password"
+                   id="upassword"
+                   name="userpassword"
+                   autocomplete="off"
+                   ng-model="userpassword"
+                   class="form-control text-center"
+                   required>
+                   
+            <p class="text-muted">
+              <a href="#reset">Forgot Password?</a>
+            </p>
+            <button class="btn btn-primary"
+                    ng-disabled="loginForm.$invalid"
+                    ng-click="logIn()">
+              Log In  
+            </button>
+            <button class="btn btn-warning pull-right"
+                    ng-click="signUp()">
+              Sign Up
+            </button>            
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

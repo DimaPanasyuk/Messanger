@@ -17,60 +17,324 @@ var _angularRoute = require('angular-route');
 
 var _angularRoute2 = _interopRequireDefault(_angularRoute);
 
-var _app = require('./app/app');
+var _app = require('./app/app.config');
 
 var _app2 = _interopRequireDefault(_app);
 
-var _app3 = require('./app/');
+var _auth = require('./auth/auth.route');
+
+var _auth2 = _interopRequireDefault(_auth);
+
+var _resetPassword = require('./resetPassword/resetPassword.route');
+
+var _resetPassword2 = _interopRequireDefault(_resetPassword);
+
+var _registration = require('./registration/registration.route');
+
+var _registration2 = _interopRequireDefault(_registration);
+
+var _dashboard = require('./dashboard/dashboard.route');
+
+var _dashboard2 = _interopRequireDefault(_dashboard);
+
+var _app3 = require('./app/app.js');
 
 var _app4 = _interopRequireDefault(_app3);
+
+var _auth3 = require('./auth/auth.js');
+
+var _auth4 = _interopRequireDefault(_auth3);
+
+var _resetPassword3 = require('./resetPassword/resetPassword.js');
+
+var _resetPassword4 = _interopRequireDefault(_resetPassword3);
+
+var _registration3 = require('./registration/registration.js');
+
+var _registration4 = _interopRequireDefault(_registration3);
+
+var _dashboard3 = require('./dashboard/dashboard.js');
+
+var _dashboard4 = _interopRequireDefault(_dashboard3);
+
+var _auth5 = require('./services/auth.service');
+
+var _auth6 = _interopRequireDefault(_auth5);
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
 //Controllers
-//Angular items
 
 _angular2.default.module('app', ['ngRoute', 'firebase']);
 
 //Services
 
-_angular2.default.module('app').controller('App', _app2.default).service('auth', _app4.default);
+//Configs
+//Angular items
 
-},{"./app/":1,"./app/app":2,"angular":6,"angular-route":4,"angularfire":8,"firebase":9}],2:[function(require,module,exports){
+_angular2.default.module('app').constant('urls', { templates: './js/' }).config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).service('auth', _auth6.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default);
+
+},{"./app/app.config":2,"./app/app.js":3,"./auth/auth.js":4,"./auth/auth.route":5,"./dashboard/dashboard.js":6,"./dashboard/dashboard.route":7,"./registration/registration.js":8,"./registration/registration.route":9,"./resetPassword/resetPassword.js":10,"./resetPassword/resetPassword.route":11,"./services/auth.service":12,"angular":16,"angular-route":14,"angularfire":18,"firebase":19}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = ['$routeProvider', function appConfig($routeProvider) {
 
-App.$inject = ['$scope', '$firebaseObject', 'auth'];
+  // $routeProvider.otherwise({
 
-function App($scope, $firebaseObject, auth) {
-
-  var user = new Firebase('https://dima-messanger.firebaseio.com');
-  $scope.user_info = $firebaseObject(user);
-
-  $scope.title = 'App controller!';
-  $scope.user = {
-
-    email: '1@u.net',
-    password: '123'
-  };
-
-  auth.authPassword({
-    email: '1@u.net',
-    password: '123'
-  }).then(function (data) {
-
-    console.debug(data);
-  });
-}
-
-exports.default = App;
+  //   redirectTo: 'auth'
+  // })
+}];
 
 },{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$firebaseObject', 'auth', function App($scope, $firebaseObject, auth) {}];
+
+},{}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', function Auth($scope, $rootScope, $location, $timeout, auth) {
+
+  $scope.logIn = logIn;
+  $scope.signUp = signUp;
+
+  function logIn() {
+
+    $rootScope.loading = true;
+    auth.authUser({
+      email: $scope.useremail,
+      password: $scope.userpassword
+    });
+    $timeout(function () {
+
+      $location.path('/');
+    }, 400);
+  }
+
+  function signUp() {
+
+    $location.path('/signup');
+  }
+}];
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$routeProvider', function (urls, $routeProvider) {
+
+  $routeProvider.when('/auth', {
+
+    templateUrl: urls.templates + 'auth/auth.html',
+    controller: 'Auth'
+  });
+}];
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope, $rootScope, $location, auth) {}];
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$routeProvider', function (urls, $routeProvider) {
+
+  $routeProvider.when('/', {
+
+    templateUrl: urls.templates + 'dashboard/dashboard.html',
+    controller: 'Dashboard'
+  });
+}];
+
+},{}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$rootScope', 'auth', function ($scope, $rootScope, auth) {
+
+  $scope.signUp = signUp;
+
+  function signUp() {
+
+    $rootScope.loading = true;
+    auth.registerUser({
+      email: $scope.useremail,
+      password: $scope.userpassword
+    });
+  }
+}];
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$routeProvider', function (urls, $routeProvider) {
+
+  $routeProvider.when('/signup', {
+
+    templateUrl: urls.templates + 'registration/registration.html',
+    controller: 'Registration'
+  });
+}];
+
+},{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope, $rootScope, $location, auth) {
+
+  $scope.reset = reset;
+  $scope.backToAuth = backToAuth;
+
+  function reset() {
+
+    auth.resetUserPassword({
+
+      email: $scope.userEmail
+    });
+  }
+
+  function backToAuth() {
+
+    $location.path('/auth');
+  }
+}];
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$routeProvider', function (urls, $routeProvider) {
+
+  $routeProvider.when('/reset', {
+
+    templateUrl: urls.templates + '/resetPassword/resetPassword.html',
+    controller: 'ResetPassword'
+  });
+}];
+
+},{}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
+
+  var messanger = new Firebase('https://dima-messanger.firebaseio.com');
+  var authentication = $firebaseAuth(messanger);
+
+  return {
+
+    authStatus: authStatus,
+    authUser: authUser,
+    unauthUser: unauthUser,
+    resetUserPassword: resetUserPassword,
+    registerUser: registerUser
+  };
+
+  function authStatus() {
+
+    authentication.$onAuth(function (data) {
+
+      if (data) {
+
+        return true;
+      } else {
+
+        return false;
+      }
+    });
+  }
+
+  function authUser(user) {
+
+    messanger.authWithPassword({
+
+      email: user.email,
+      password: user.password
+    }, function (err, data) {
+      ;
+      if (err) {
+
+        console.debug('Authentication failed: ', err);
+      } else {
+
+        console.debug('Authenticated successfully: ', data);
+      }
+    });
+  }
+
+  function unauthUser() {
+
+    authentication.$unauth();
+  }
+
+  function resetUserPassword(user) {
+
+    messanger.resetPassword({
+
+      email: user.email
+    }, function (err) {
+
+      if (err === null) {
+
+        console.debug('Email for password reset sended successfully');
+      } else {
+
+        console.debug('Error when sending new password for user');
+      }
+    });
+  }
+
+  function registerUser(user) {
+
+    messanger.createUser({
+
+      email: user.email,
+      password: user.password
+    }, function (error, data) {
+
+      if (!error) {
+
+        console.debug('User was successfully registered!', data);
+      } else {
+
+        console.debug('Error while user registration!', error);
+      }
+    });
+  }
+}];
+
+},{}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -1097,11 +1361,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],4:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":3}],5:[function(require,module,exports){
+},{"./angular-route":13}],15:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31970,11 +32234,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],6:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":5}],7:[function(require,module,exports){
+},{"./angular":15}],17:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -34314,11 +34578,11 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],8:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./dist/angularfire');
 module.exports = 'firebase';
 
-},{"./dist/angularfire":7}],9:[function(require,module,exports){
+},{"./dist/angularfire":17}],19:[function(require,module,exports){
 /*! @license Firebase v2.4.2
     License: https://www.firebase.com/terms/terms-of-service.html */
 (function() {var h,n=this;function p(a){return void 0!==a}function aa(){}function ba(a){a.yb=function(){return a.zf?a.zf:a.zf=new a}}
