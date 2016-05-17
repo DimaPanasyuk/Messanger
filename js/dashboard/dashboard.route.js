@@ -7,6 +7,13 @@ function(urls, $routeProvider) {
   .when('/', {
     
     templateUrl: urls.templates + 'dashboard/dashboard.html',
-    controller: 'Dashboard'
+    controller: 'Dashboard',
+    resolve: {
+      
+      currentAuth: ['auth', function(auth) {
+        
+        return auth.authentication.$requireAuth();
+      }] 
+    }
   })
 }]

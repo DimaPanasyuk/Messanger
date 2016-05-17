@@ -1,7 +1,7 @@
 export default
-['$scope', '$rootScope', 'auth', 
+['$scope', '$rootScope', 'auth', '$location', 
 
-function($scope, $rootScope, auth) {
+function($scope, $rootScope, auth, $location) {
   
   $scope.signUp = signUp;  
   
@@ -16,9 +16,11 @@ function($scope, $rootScope, auth) {
       
       $rootScope.loading = false;
       $rootScope.$digest();
-      if (data) {
+      if (data) { 
+        toastr.error(data);
+      } else {
         
-        console.debug('SignUp - ', data);
+        $location.path('/auth');
       }
     })
   }

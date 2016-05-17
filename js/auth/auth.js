@@ -26,6 +26,9 @@ function Auth($scope, $rootScope, $location, $timeout, auth) {
 
         $location.path('/');
         $rootScope.$digest();
+      } else {
+        toastr.error(data);
+        $rootScope.$digest();
       }
     })
   }

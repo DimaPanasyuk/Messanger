@@ -1,57 +1,62 @@
-<div class="container">
-  
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      
-      <div class="panel panel-primary">
-        <div class="panel-heading text-center">
-          <div class="row">
-            <div class="col-md-4">
-              <a href="#auth" 
-                 class="btn btn-warning">
-                Back
-              </a>
+<div class="main-content">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        
+        <div class="panel panel-primary">
+          <div class="panel-heading text-center">
+            <div class="row">
+              <div class="col-md-4">
+                <a href="#auth" 
+                  class="btn btn-warning">
+                  <span class="glyphicon glyphicon-arrow-left"></span>
+                  Back
+                </a>
+              </div>
+              <div class="col-md-4">
+                <b>Sign Up</b>
+              </div>
+              <div class="col-md-4"></div>
             </div>
-            <div class="col-md-4">
-              <b>Sign Up</b>
-            </div>
-            <div class="col-md-4"></div>
+          </div>
+          <div class="panel-body">
+            <form name="loginForm">
+              
+              <div class="form-group">
+                <input type="email"
+                      id="uemail"
+                      name="useremail"
+                      placeholder="Email"
+                      ng-model="useremail"
+                      class="form-control"
+                      required>
+              </div>
+              <div class="form-group">
+                <input type="password"
+                      id="upassword"
+                      name="userpassword"
+                      placeholder="Password"
+                      ng-model="userpassword"
+                      class="form-control"
+                      required>
+              </div>
+              <div class="text-center">                  
+                <button class="btn btn-warning"
+                        ng-disabled="!useremail || 
+                                    useremail.length < 4 || 
+                                    !userpassword || 
+                                    userpassword.length < 3"
+                        ng-click="signUp()">
+                  Sign Up
+                </button>            
+              </div>
+            </form>
           </div>
         </div>
-        <div class="panel-body">
-          <form name="loginForm">
-            
-            <div class="form-group">
-              <label for="uemail">Email: </label>
-              <input type="email"
-                    id="uemail"
-                    name="useremail"
-                    ng-model="useremail"
-                    class="form-control text-center"
-                    required>
-                    
-              <label for="upassword">Password: </label>
-              <input type="password"
-                    id="upassword"
-                    name="userpassword"
-                    ng-model="userpassword"
-                    class="form-control text-center"
-                    required>
-            </div>
-            <div class="text-center">                  
-              <button class="btn btn-warning"
-                      ng-disabled="!useremail || 
-                                   useremail.length < 10 || 
-                                   !userpassword || userpassword.length < 3"
-                      ng-click="signUp()">
-                Sign Up
-              </button>            
-            </div>
-          </form>
-        </div>
       </div>
+      <div class="col-md-4"></div>
     </div>
-    <div class="col-md-4"></div>
   </div>
 </div>

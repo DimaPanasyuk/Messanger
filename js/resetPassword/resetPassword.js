@@ -17,11 +17,13 @@ function($scope, $rootScope, $location, auth) {
     .then(function(data) {
       if (data) {
         
-        console.debug('Reset - ', data);
-      } else {
-        
-        console.debug('Reset - no data');
         $rootScope.loading = false;
+        toastr.error(data);
+        $rootScope.$digest();
+      } else {
+       
+        $rootScope.loading = false;
+        toastr.success('Temporary password was send on your email!');
         $location.path('/auth');
         $rootScope.$digest();
       }

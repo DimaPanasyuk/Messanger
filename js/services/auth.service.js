@@ -7,6 +7,7 @@ export default
   return {
     
     authStatus,
+    authentication,
     authUser,
     unauthUser,
     resetUserPassword,
@@ -79,10 +80,6 @@ export default
       
         email: user.email,
         password: user.password
-      })
-      .then(function(data) {
-        
-        resolve(data)
       })
       .catch(function(data) {
         

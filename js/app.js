@@ -19,7 +19,11 @@ import Registration        from './registration/registration.js';
 import Dashboard           from './dashboard/dashboard.js';
 
 //Services
-import auth from './services/auth.service';
+import auth  from './services/auth.service';
+
+
+//Run
+import run   from './app/app.run';
 
 angular.module('app', ['ngRoute', 'firebase']);
 
@@ -32,12 +36,12 @@ angular.module('app')
        .config(registrationConfig)
        .config(dashboardConfig)
        
-       .service('auth', auth)  
+       .service('auth', auth)
         
        .controller('App', App)
        .controller('Auth', Auth)
        .controller('ResetPassword', ResetPassword)
        .controller('Registration', Registration)
-       .controller('Dashboard', Dashboard);
-       
+       .controller('Dashboard', Dashboard)
+       .run(run);
        
