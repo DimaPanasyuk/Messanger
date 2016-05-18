@@ -1,11 +1,12 @@
 export default
-['urls', '$routeProvider', 
-function(urls, $routeProvider) {
+['urls', '$stateProvider', 
+function(urls, $stateProvider) {
   
-  $routeProvider
+  $stateProvider
   
-  .when('/', {
+  .state('dashboard', {
     
+    url: '/',
     templateUrl: urls.templates + 'dashboard/dashboard.html',
     controller: 'Dashboard',
     resolve: {

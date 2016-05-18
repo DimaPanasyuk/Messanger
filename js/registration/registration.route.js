@@ -1,11 +1,12 @@
 export default
-['urls', '$routeProvider', 
-function(urls, $routeProvider) {
+['urls', '$stateProvider', 
+function(urls, $stateProvider) {
   
-  $routeProvider
+  $stateProvider
   
-  .when('/signup', {
+  .state('signup', {
     
+    url: '/signup',
     templateUrl: urls.templates + 'registration/registration.html',
     controller: 'Registration'
   })

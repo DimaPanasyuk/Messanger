@@ -2,7 +2,7 @@
 import angular             from 'angular';
 import firebase            from 'firebase';
 import angularFire         from 'angularfire';
-import ngRoute             from 'angular-route';
+// import uiRouter            from 'angular-ui-router';
 import ngResource          from 'angular-resource';
 
 //Configs
@@ -11,6 +11,8 @@ import authConfig          from './auth/auth.route';
 import resetConfig         from './resetPassword/resetPassword.route';
 import registrationConfig  from './registration/registration.route';
 import dashboardConfig     from './dashboard/dashboard.route'; 
+import friendsConfig       from './dashboard.friends/dashboard.friends.route';
+import newsConfig          from './dashboard.news/dashboard.news.route'; 
 
 //Controllers
 import App                 from './app/app.js';
@@ -18,6 +20,8 @@ import Auth                from './auth/auth.js';
 import ResetPassword       from './resetPassword/resetPassword.js';
 import Registration        from './registration/registration.js';
 import Dashboard           from './dashboard/dashboard.js';
+import Friends             from './dashboard.friends/dashboard.friends.js';
+import News                from './dashboard.news/dashboard.news.js';
 
 //Services
 import auth  from './services/auth.service';
@@ -31,11 +35,13 @@ import run   from './app/app.run';
 
 angular.module('app', [
   
-  'ngRoute', 
+  'ui.router', 
   'firebase', 
   'ngResource'
 ]);
 
+
+//TODO: Split this 1 module into several smaller
 angular.module('app')
        
        .constant('urls', {templates: './js/'})
@@ -43,6 +49,8 @@ angular.module('app')
        .config(authConfig)
        .config(resetConfig)
        .config(registrationConfig)
+       .config(dashboardConfig)
+       .config(friendsConfig)
        .config(dashboardConfig)
        
        .service('auth', auth)
@@ -53,5 +61,7 @@ angular.module('app')
        .controller('ResetPassword', ResetPassword)
        .controller('Registration', Registration)
        .controller('Dashboard', Dashboard)
+       .controller('Friends', Friends)
+       .controller('News', News)
        .run(run);
        

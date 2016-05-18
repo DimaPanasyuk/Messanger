@@ -1,11 +1,12 @@
 export default
-['urls', '$routeProvider', 
-function(urls, $routeProvider) {
+['urls', '$stateProvider', 
+function(urls, $stateProvider) {
   
-  $routeProvider
+  $stateProvider
   
-  .when('/auth', {
+  .state('auth', {
     
+    url: '/auth',
     templateUrl: urls.templates + 'auth/auth.html',
     controller: 'Auth'
   })

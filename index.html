@@ -18,8 +18,8 @@
         
       </div>
     </header>
-    <ng-view>  
-    </ng-view>
+    <ui-view>  
+    </ui-view>
     <script src="//vk.com/js/api/openapi.js"></script>
     <script>
       VK.init({
@@ -27,9 +27,11 @@
         apiId: 5467721
       })
     </script>
+    <!--TODO: remove this link from here after importing ui.router-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.2/toastr.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="build.js"></script>
+    <script src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
   </body>
 </html>

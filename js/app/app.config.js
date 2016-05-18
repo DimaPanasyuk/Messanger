@@ -1,6 +1,6 @@
 export default
 
-['$routeProvider', function appConfig($routeProvider) {
+['$stateProvider', function appConfig($stateProvider) {
   
   // $routeProvider.otherwise({
     

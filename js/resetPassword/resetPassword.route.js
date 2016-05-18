@@ -1,10 +1,11 @@
 export default 
-['urls', '$routeProvider', 
-function(urls, $routeProvider) {
+['urls', '$stateProvider', 
+function(urls, $stateProvider) {
   
-  $routeProvider
-    .when('/reset', {
+  $stateProvider
+    .state('reset', {
       
+      url: '/reset',
       templateUrl: urls.templates + '/resetPassword/resetPassword.html',
       controller: 'ResetPassword'
     })
