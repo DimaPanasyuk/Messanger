@@ -3,6 +3,7 @@ import angular             from 'angular';
 import firebase            from 'firebase';
 import angularFire         from 'angularfire';
 import ngRoute             from 'angular-route';
+import ngResource          from 'angular-resource';
 
 //Configs
 import appConfig           from './app/app.config';
@@ -21,11 +22,19 @@ import Dashboard           from './dashboard/dashboard.js';
 //Services
 import auth  from './services/auth.service';
 
+//Filters 
+import cut   from './filters/cutTo.filter';
+
 
 //Run
 import run   from './app/app.run';
 
-angular.module('app', ['ngRoute', 'firebase']);
+angular.module('app', [
+  
+  'ngRoute', 
+  'firebase', 
+  'ngResource'
+]);
 
 angular.module('app')
        
@@ -37,6 +46,7 @@ angular.module('app')
        .config(dashboardConfig)
        
        .service('auth', auth)
+       .filter('cut', cut)
         
        .controller('App', App)
        .controller('Auth', Auth)

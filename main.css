@@ -147,3 +147,11 @@ header {
   left: 50%;
   transform: translate(-50%, 0);
 }
+@media only screen and (max-width: 600px) {
+  .main-content {
+    width: 100%;
+  }
+}
+.likes {
+  margin: 0 10px 4px 0;
+}
