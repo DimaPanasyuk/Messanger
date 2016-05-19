@@ -12,7 +12,9 @@ import resetConfig         from './resetPassword/resetPassword.route';
 import registrationConfig  from './registration/registration.route';
 import dashboardConfig     from './dashboard/dashboard.route'; 
 import friendsConfig       from './dashboard.friends/dashboard.friends.route';
-import newsConfig          from './dashboard.news/dashboard.news.route'; 
+import newsConfig          from './dashboard.news/dashboard.news.route';
+import profileConfig       from './dashboard.profile/dashboard.profile.route'; 
+import dialogsConfig       from './dashboard.dialogs/dashboard.dialogs.route';
 
 //Controllers
 import App                 from './app/app.js';
@@ -22,6 +24,8 @@ import Registration        from './registration/registration.js';
 import Dashboard           from './dashboard/dashboard.js';
 import Friends             from './dashboard.friends/dashboard.friends.js';
 import News                from './dashboard.news/dashboard.news.js';
+import Profile             from './dashboard.profile/dashboard.profile.js';
+import Dialogs             from './dashboard.dialogs/dashboard.dialogs.js';
 
 //Services
 import auth  from './services/auth.service';
@@ -51,7 +55,9 @@ angular.module('app')
        .config(registrationConfig)
        .config(dashboardConfig)
        .config(friendsConfig)
-       .config(dashboardConfig)
+       .config(newsConfig)
+       .config(profileConfig)
+       .config(dialogsConfig)
        
        .service('auth', auth)
        .filter('cut', cut)
@@ -63,5 +69,7 @@ angular.module('app')
        .controller('Dashboard', Dashboard)
        .controller('Friends', Friends)
        .controller('News', News)
+       .controller('Profile', Profile)
+       .controller('Dialogs', Dialogs)
        .run(run);
        

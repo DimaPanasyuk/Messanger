@@ -24,7 +24,7 @@ function Auth($scope, $rootScope, $location, $timeout, auth) {
       $rootScope.loading = false;
       if(data && data.provider) {
 
-        $location.path('/');
+        $location.path('/news');
         $rootScope.$digest();
       } else {
         toastr.error(data);

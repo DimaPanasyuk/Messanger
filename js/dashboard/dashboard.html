@@ -12,27 +12,41 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/">Messanger</a>
+      <a class="navbar-brand" 
+         ui-sref="dashboard.profile"
+         ng-click="setActivePage('profile')"
+         href="">
+         
+         Messanger
+      </a>
     </div>
 
     <div class="collapse navbar-collapse" 
          id="bs-example-navbar-collapse-2">
       
       <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="#/">
+        <li ng-class="{'active': activePage === 'news'}">
+          <a href=""
+             ng-click="setActivePage('news')" 
+             ui-sref="dashboard.news">
              
              News
           </a>
         </li>
-        <li>
-          <a href="#friends">
-            Friends
+        <li ng-class="{'active': activePage === 'friends'}">
+          <a href="" 
+             ui-sref="dashboard.friends"
+             ng-click="setActivePage('friends')">
+             
+             Friends
           </a>
         </li>
-        <li>
-          <a href="#dialogs">
-            Dialogs
+        <li ng-class="{'active': activePage === 'dialogs'}">
+          <a href="" 
+             ui-sref="dashboard.dialogs"
+             ng-click="setActivePage('dialogs')">
+             
+             Dialogs
           </a>
         </li>
       </ul>    

@@ -4,7 +4,7 @@ export default
   $stateProvider
     .state('dashboard.news', {
       
-      url: '/news',
+      url: 'news',
       parent: 'dashboard',
       templateUrl: urls.templates + '/dashboard.news/dashboard.news.html',
       controller: 'News',
