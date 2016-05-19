@@ -244,9 +244,13 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', function ($scope, $
   function addNewDialog() {
 
     $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
-    console.debug($scope.dialog);
-    dialogs.$add($scope.dialog);
+    dialog_ref.child($scope.dialog.name).set({
+
+      title: $scope.dialog.title,
+      name: $scope.dialog.name
+    });
     $scope.dialog.title = '';
+    $scope.dialog.name = '';
   }
 
   function removeDialog(dialog) {
@@ -336,7 +340,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', function ($scope, $rootScope, $firebaseArray, $stateParams) {
 
-  var messages_ref = new Firebase('https://dima-messanger.firebaseio.com/dialogs-list/' + $stateParams.name + '/messages');
+  var messages_ref = new Firebase('https://dima-messanger.firebaseio.com/dialogs/' + $stateParams.name + '/messages');
   var messages = $firebaseArray(messages_ref);
 
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
@@ -349,11 +353,13 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', fun
     time: '',
     text: ''
   };
+  $scope.message.author = localStorage.getItem('messageAuthor');
 
   function sendMessage() {
 
     $scope.message.time = new Date().getTime();
     messages.$add($scope.message);
+    localStorage.setItem('messageAuthor', $scope.message.author);
     $scope.message.time = '';
     $scope.message.text = '';
   }

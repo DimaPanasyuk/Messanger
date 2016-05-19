@@ -21,9 +21,13 @@ function($scope, $rootScope, $firebaseArray) {
   function addNewDialog() {
     
     $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
-    console.debug($scope.dialog);
-    dialogs.$add($scope.dialog);
+    dialog_ref.child($scope.dialog.name).set({
+      
+      title: $scope.dialog.title,
+      name: $scope.dialog.name
+    });
     $scope.dialog.title = '';
+    $scope.dialog.name = '';
   } 
   
   function removeDialog(dialog) {
