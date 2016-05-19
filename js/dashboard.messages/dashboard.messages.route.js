@@ -3,17 +3,17 @@ export default
 function(urls, $stateProvider) {
   
   $stateProvider
-  .state('dashboard.friends', {
+  .state('dashboard.messages', {
     
-    url: 'friends',
+    url: 'dialogs/:name/messages',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.friends/dashboard.friends.html',
-    controller: 'Friends',
+    templateUrl: urls.templates + '/dashboard.messages/dashboard.messages.html',
+    controller: 'Messages',
     resolve: {
       
       log: function() {
         
-        console.debug('Routed to friends page');
+        console.debug('Routed to messages page');
       },
       currentAuth: ['auth', function(auth) {
         

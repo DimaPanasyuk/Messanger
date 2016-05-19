@@ -1,12 +1,86 @@
 <div class="container">
   
   <div class="row">
+    <div class="col-md-12">
+        <button ng-click="toggleNewDialogForm()"
+                ng-if="!creatingNewDialog"
+                class="btn btn-success pull-right">
+          Add
+        </button>
+        <button ng-click="toggleNewDialogForm()"
+                ng-if="creatingNewDialog"
+                class="btn btn-danger pull-right">
+          Close
+        </button>
+        <br><br>
+    </div>
+  </div>
+  
+  <div class="row">
     
     <div class="col-md-12">
       
-      <h1>
-        {{pageTitle}}
-      </h1>
+      <div class="form-group"
+           ng-if="creatingNewDialog">
+        <div class="panel panel-success">
+          
+          <div class="panel-heading">
+            New Dialog
+          </div>
+          
+          <div class="panel-body">
+            <input type="text"
+               class="form-control"
+               ng-model="dialog.title"
+               placeholder="Enter dialog title">
+            <br>
+            <button class="btn btn-primary pull-right"
+                    ng-disabled="!dialog.title.length"
+                    ng-click="addNewDialog()">
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Dialog Title</th>
+            <th class="text-right">Change Dialog</th>
+            <th class="text-right">
+              Remove Dialog
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="dialog in dialogs">
+            <td>
+              <a href="#/dialogs/{{dialog.name}}/messages">
+                {{dialog.title}}
+              </a>
+            </td>
+            <td class="text-right">
+              <button class="btn btn-warning"
+                      disabled>
+                Change
+              </button>
+            </td>
+            <td class="text-right">
+              <button class="btn btn-danger" 
+                      ng-click="removeDialog(dialog)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="alert alert-info text-center"
+           ng-if="!dialogs.length">
+        Press <span class="label label-success">Add</span> 
+        button to add new dialog
+      </div>
     </div>
   </div>
 </div>

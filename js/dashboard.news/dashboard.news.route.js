@@ -13,7 +13,11 @@ export default
         log: function() {
           
           console.debug('Routed to news page');
-        }
+        },
+        currentAuth: ['auth', function(auth) {
+        
+          return auth.authentication.$requireAuth();
+        }] 
       }
     })
 }]

@@ -15,6 +15,7 @@ import friendsConfig       from './dashboard.friends/dashboard.friends.route';
 import newsConfig          from './dashboard.news/dashboard.news.route';
 import profileConfig       from './dashboard.profile/dashboard.profile.route'; 
 import dialogsConfig       from './dashboard.dialogs/dashboard.dialogs.route';
+import messagesConfig      from './dashboard.messages/dashboard.messages.route';
 
 //Controllers
 import App                 from './app/app.js';
@@ -26,6 +27,7 @@ import Friends             from './dashboard.friends/dashboard.friends.js';
 import News                from './dashboard.news/dashboard.news.js';
 import Profile             from './dashboard.profile/dashboard.profile.js';
 import Dialogs             from './dashboard.dialogs/dashboard.dialogs.js';
+import Messages            from './dashboard.messages/dashboard.messages.js';
 
 //Services
 import auth  from './services/auth.service';
@@ -58,6 +60,7 @@ angular.module('app')
        .config(newsConfig)
        .config(profileConfig)
        .config(dialogsConfig)
+       .config(messagesConfig)
        
        .service('auth', auth)
        .filter('cut', cut)
@@ -71,5 +74,6 @@ angular.module('app')
        .controller('News', News)
        .controller('Profile', Profile)
        .controller('Dialogs', Dialogs)
+       .controller('Messages', Messages)
        .run(run);
        

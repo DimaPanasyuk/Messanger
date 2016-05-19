@@ -1,0 +1,60 @@
+<br>
+<div class="container">
+  
+  <div class="row">
+    
+    <div class="col-md-12">
+     <div class="panel panel-warning">
+      
+      <div class="panel-heading">
+        <b>
+          {{dialogTitle}}
+        </b> messages  
+      </div>
+      
+      <div class="form-group">
+        <input type="text"
+               placeholder="Enter your name"
+               ng-model="message.author"
+               class="form-control">
+        <br>
+        <input type="text"
+               placeholder="Enter your message"
+               class="form-control"
+               ng-model="message.text">
+        <br>
+        <button class="btn btn-success"
+                ng-disabled="!message.author.length ||
+                             !message.text.length"
+                ng-click="sendMessage()">
+          Post message
+        </button>       
+      </div>
+      
+      <div class="panel-body">
+      
+        <div class="panel panel-info"
+             ng-repeat="message in messages | orderBy: time : true">
+          
+          <div class="panel-heading">
+            {{message.author}}
+            
+            <span class="label label-default pull-right">
+              {{message.time | date: 'HH:mm:ss dd/MM:/yyyy'}}
+            </span>
+          </div>
+          
+          <div class="panel-body">
+            {{message.text}}
+          </div>
+        </div>
+        
+        <div class="alert alert-danger"
+             ng-if="!messages.length">
+          This dialog has no messages yet!
+        </div>
+      </div>  
+     </div> 
+    </div>
+  </div>
+</div>

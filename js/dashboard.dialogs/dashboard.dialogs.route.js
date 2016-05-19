@@ -14,7 +14,11 @@ function(urls, $stateProvider) {
       log: function() {
         
         console.debug('Routed to dialogs page');
-      }
+      },
+      currentAuth: ['auth', function(auth) {
+        
+        return auth.authentication.$requireAuth();
+      }] 
     }
   })
 }];
