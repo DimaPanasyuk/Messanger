@@ -3,7 +3,6 @@ import angular             from 'angular';
 import firebase            from 'firebase';
 import angularFire         from 'angularfire';
 // import uiRouter            from 'angular-ui-router';
-import ngResource          from 'angular-resource';
 
 //Configs
 import appConfig           from './app/app.config';
@@ -42,8 +41,7 @@ import run   from './app/app.run';
 angular.module('app', [
   
   'ui.router', 
-  'firebase', 
-  'ngResource'
+  'firebase'
 ]);
 
 

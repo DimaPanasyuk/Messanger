@@ -1,13 +1,19 @@
 export default
-['$scope', '$rootScope', '$firebaseArray', '$stateParams', 
-function($scope, $rootScope, $firebaseArray, $stateParams) {
+['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', 
+function($scope, $rootScope, $firebaseArray, $stateParams, $timeout) {
   
+  $rootScope.loading = true;
   let messages_ref = new Firebase(`https://dima-messanger.firebaseio.com/dialogs/${$stateParams.name}/messages`);
   let messages = $firebaseArray(messages_ref);
+  messages.$loaded(function() {
+    
+    $rootScope.loading = false;
+  })
   
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
-  $scope.messages = messages;
+  $scope.messages    = messages;
   $scope.sendMessage = sendMessage;
+  $scope.watchEnter  = watchEnter;
 
   $scope.message = {
     
@@ -16,6 +22,17 @@ function($scope, $rootScope, $firebaseArray, $stateParams) {
     text: ''
   };
   $scope.message.author = localStorage.getItem('messageAuthor');
+  
+  function watchEnter(e) {
+    
+    if (e.keyCode === 13) {
+      
+      $timeout(function() {
+        angular.element('#message_text').triggerHandler('click');
+      }, 0);
+    }
+  }
+  
   
   function sendMessage() {
     
