@@ -101,6 +101,10 @@ var _cutTo = require('./filters/cutTo.filter');
 
 var _cutTo2 = _interopRequireDefault(_cutTo);
 
+var _fromNow = require('./filters/fromNow.filter');
+
+var _fromNow2 = _interopRequireDefault(_fromNow);
+
 var _app5 = require('./app/app.run');
 
 var _app6 = _interopRequireDefault(_app5);
@@ -109,15 +113,6 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-//Filters
-//Angular items
-
-_angular2.default.module('app', ['ui.router', 'firebase']);
-
-//TODO: Split this 1 module into several smaller
-
-//Run
-
 //Services
 
 //Controllers
@@ -125,9 +120,18 @@ _angular2.default.module('app', ['ui.router', 'firebase']);
 // import uiRouter            from 'angular-ui-router';
 
 //Configs
-_angular2.default.module('app').constant('urls', { templates: './js/' }).config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default).config(_dashboardNews2.default).config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default).controller('News', _dashboardNews4.default).controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).run(_app6.default);
 
-},{"./app/app.config":2,"./app/app.js":3,"./app/app.run":4,"./auth/auth.js":5,"./auth/auth.route":6,"./dashboard.dialogs/dashboard.dialogs.js":7,"./dashboard.dialogs/dashboard.dialogs.route":8,"./dashboard.friends/dashboard.friends.js":9,"./dashboard.friends/dashboard.friends.route":10,"./dashboard.messages/dashboard.messages.js":11,"./dashboard.messages/dashboard.messages.route":12,"./dashboard.news/dashboard.news.js":13,"./dashboard.news/dashboard.news.route":14,"./dashboard.profile/dashboard.profile.js":15,"./dashboard.profile/dashboard.profile.route":16,"./dashboard/dashboard.js":17,"./dashboard/dashboard.route":18,"./filters/cutTo.filter":19,"./registration/registration.js":20,"./registration/registration.route":21,"./resetPassword/resetPassword.js":22,"./resetPassword/resetPassword.route":23,"./services/auth.service":24,"angular":26,"angularfire":28,"firebase":29}],2:[function(require,module,exports){
+_angular2.default.module('app', ['ui.router', 'firebase']);
+
+//TODO: Split this 1 module into several smaller
+
+//Run
+
+//Filters
+//Angular items
+_angular2.default.module('app').constant('urls', { templates: './js/' }).config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default).config(_dashboardNews2.default).config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).filter('fromNow', _fromNow2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default).controller('News', _dashboardNews4.default).controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).run(_app6.default);
+
+},{"./app/app.config":2,"./app/app.js":3,"./app/app.run":4,"./auth/auth.js":5,"./auth/auth.route":6,"./dashboard.dialogs/dashboard.dialogs.js":7,"./dashboard.dialogs/dashboard.dialogs.route":8,"./dashboard.friends/dashboard.friends.js":9,"./dashboard.friends/dashboard.friends.route":10,"./dashboard.messages/dashboard.messages.js":11,"./dashboard.messages/dashboard.messages.route":12,"./dashboard.news/dashboard.news.js":13,"./dashboard.news/dashboard.news.route":14,"./dashboard.profile/dashboard.profile.js":15,"./dashboard.profile/dashboard.profile.route":16,"./dashboard/dashboard.js":17,"./dashboard/dashboard.route":18,"./filters/cutTo.filter":19,"./filters/fromNow.filter":20,"./registration/registration.js":21,"./registration/registration.route":22,"./resetPassword/resetPassword.js":23,"./resetPassword/resetPassword.route":24,"./services/auth.service":25,"angular":27,"angularfire":29,"firebase":30}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -222,11 +226,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ['$scope', '$rootScope', '$firebaseArray', function ($scope, $rootScope, $firebaseArray) {
 
+  $rootScope.loading = true;
   $scope.pageTitle = 'Your Dialogs page';
   var dialog_ref = new Firebase('https://dima-messanger.firebaseio.com/dialogs'),
       dialogs_ref = new Firebase('https://dima-messanger.firebaseio.com/dialogs-list'),
       dialogs = $firebaseArray(dialog_ref),
       dialogs_list = $firebaseArray(dialogs_ref);
+
+  dialogs.$loaded(function () {
+
+    $rootScope.loading = false;
+  });
 
   $scope.creatingNewDialog = false;
   $scope.dialog = {
@@ -334,7 +344,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout) {
+exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location) {
 
   $rootScope.loading = true;
   var messages_ref = new Firebase('https://dima-messanger.firebaseio.com/dialogs/' + $stateParams.name + '/messages');
@@ -343,6 +353,8 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
     $rootScope.loading = false;
   });
+
+  $scope.currentDate = 1463754897700;
 
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
   $scope.messages = messages;
@@ -355,6 +367,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
     time: '',
     text: ''
   };
+
   $scope.message.author = localStorage.getItem('messageAuthor');
 
   function watchEnter(e) {
@@ -415,6 +428,7 @@ exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
 
   $scope.sortType = 'date';
   $scope.reverse = true;
+  $rootScope.loading = true;
 
   $scope.setSortBy = setSortBy;
 
@@ -434,6 +448,7 @@ exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
   getWall().then(function (data) {
     console.debug(data);
     $scope.posts = data.slice(1);
+    $rootScope.loading = false;
     $rootScope.$digest();
   });
 
@@ -586,6 +601,37 @@ exports.default = [function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = ['dateFilter', function (dateFilter) {
+
+  return function (date) {
+
+    var result = null,
+        current_date = new Date(),
+        day_start = new Date().setHours(0, 0, 0, 0);
+
+    var dayDifference = current_date.getTime() - day_start;
+    var messageDifference = current_date.getTime() - date;
+
+    console.debug(dayDifference);
+    if (messageDifference > dayDifference) {
+
+      console.debug(true);
+      result = dateFilter(date, 'dd.MM.yy');
+    } else {
+
+      console.debug(false);
+      result = dateFilter(date, 'HH:mm:ss');
+    }
+    return result;
+  };
+}];
+
+},{}],21:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = ['$scope', '$rootScope', 'auth', '$location', function ($scope, $rootScope, auth, $location) {
 
   $scope.signUp = signUp;
@@ -610,7 +656,7 @@ exports.default = ['$scope', '$rootScope', 'auth', '$location', function ($scope
   }
 }];
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -626,7 +672,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -665,7 +711,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope
   }
 }];
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -681,7 +727,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -772,7 +818,7 @@ exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
   }
 }];
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -31641,11 +31687,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":25}],27:[function(require,module,exports){
+},{"./angular":26}],28:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -33985,11 +34031,11 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 require('./dist/angularfire');
 module.exports = 'firebase';
 
-},{"./dist/angularfire":27}],29:[function(require,module,exports){
+},{"./dist/angularfire":28}],30:[function(require,module,exports){
 /*! @license Firebase v2.4.2
     License: https://www.firebase.com/terms/terms-of-service.html */
 (function() {var h,n=this;function p(a){return void 0!==a}function aa(){}function ba(a){a.yb=function(){return a.zf?a.zf:a.zf=new a}}

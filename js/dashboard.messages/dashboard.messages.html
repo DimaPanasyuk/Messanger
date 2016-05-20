@@ -4,45 +4,51 @@
   <div class="row">
     
     <div class="col-md-12">
-     <div class="panel panel-warning">
+     <div class="panel panel-info">
       
       <div class="panel-heading">
         <b>
           {{dialogTitle}}
         </b> messages  
       </div>
-      
-      <div class="form-group">
-        <input type="text"
-               placeholder="Enter your name"
-               ng-model="message.author"
-               class="form-control">
-        <br>
-        <input type="text"
-               placeholder="Enter your message"
-               class="form-control"
-               ng-keydown="watchEnter($event)"
-               ng-model="message.text">
-        <br>
-        <button class="btn btn-success"
-                id="message_text"
-                ng-disabled="!message.author.length ||
-                             !message.text.length"
-                ng-click="sendMessage()">
-          Post message
-        </button>       
-      </div>
-      
+              
       <div class="panel-body">
+        
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="form-group">
+              <input type="text"
+                    placeholder="Enter your name"
+                    ng-model="message.author"
+                    class="form-control">
+              <br>
+              <textarea placeholder="Enter your message"
+                        class="form-control textarea"
+                        ng-keydown="watchEnter($event)"
+                        ng-model="message.text">
+              </textarea>       
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-warning"
+                      id="message_text"
+                      ng-disabled="!message.author.length ||
+                                   !message.text.length"
+                      ng-click="sendMessage()">
+                Post message
+            </button>
+          </div>
+        </div>
       
-        <div class="panel panel-info"
+      
+      
+        <div class="panel panel-default"
              ng-repeat="message in messages | orderBy: time : true">
           
           <div class="panel-heading">
-            {{message.author}}
-            
-            <span class="label label-default pull-right">
-              {{message.time | date: 'HH:mm:ss dd/MM:/yyyy'}}
+            <b class="text-info">{{message.author}}</b>
+            <span class="pull-right">
+              <b>{{ message.time | fromNow }}</b>
             </span>
           </div>
           

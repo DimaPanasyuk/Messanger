@@ -2,11 +2,17 @@ export default
 ['$scope', '$rootScope', '$firebaseArray', 
 function($scope, $rootScope, $firebaseArray) {
   
+  $rootScope.loading = true;
   $scope.pageTitle = 'Your Dialogs page';
   let dialog_ref   = new Firebase('https://dima-messanger.firebaseio.com/dialogs'),
       dialogs_ref  = new Firebase('https://dima-messanger.firebaseio.com/dialogs-list'), 
       dialogs      = $firebaseArray(dialog_ref),
       dialogs_list = $firebaseArray(dialogs_ref);
+      
+  dialogs.$loaded(function() {
+    
+    $rootScope.loading = false;
+  })
   
   $scope.creatingNewDialog = false;
   $scope.dialog       = {
