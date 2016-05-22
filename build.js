@@ -409,7 +409,7 @@ exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
   function getWall() {
 
     return new Promise(function (resolve, reject) {
-
+      $rootScope.loading = true;
       VK.api('wall.get', { domain: 'forwebdev', count: 20 }, function (data) {
 
         if (data.response) {
@@ -422,6 +422,7 @@ exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
   getWall().then(function (data) {
     console.debug(data);
     $scope.posts = data.slice(1);
+    $rootScope.loading = false;
     $rootScope.$digest();
   });
 
