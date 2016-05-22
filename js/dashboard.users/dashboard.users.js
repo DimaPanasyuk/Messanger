@@ -11,11 +11,20 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray) {
   users.$loaded(function() {
     
     $rootScope.loading = false;
+    console.debug(users);
+    $scope.users = users
+    .filter(function(user) {
+      
+      return user.info != null;
+    })
+    .filter(function(user) {
+      
+      return user.id !== userInfo.uid;
+    });
   });    
   
   $scope.pageTitle = 'Users page';
   $scope.filter = 'show-all';
-  $scope.users = users;
   $scope.filterUsers = filterUsers;
   
   

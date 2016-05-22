@@ -18,14 +18,22 @@
          href="">
          
          Profile
+         <strong ng-if="user && !user.info">
+           <span class="glyphicon glyphicon-exclamation-sign">
+           
+           </span>
+         </strong>
       </a>
     </div>
-
+    
+    
     <div class="collapse navbar-collapse" 
          id="bs-example-navbar-collapse-2">
       
       <ul class="nav navbar-nav">
-        <li ng-class="{'active': activePage === 'news'}">
+        
+        <li ng-class="{'active': activePage === 'news'}"
+            ng-if="user.info">
           <a href=""
              ng-click="setActivePage('news')" 
              ui-sref="dashboard.news">
@@ -33,7 +41,8 @@
              News
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'users'}">
+        <li ng-class="{'active': activePage === 'users'}"
+            ng-if="user.info">
           <a href="" 
              ui-sref="dashboard.users"
              ng-click="setActivePage('users')">
@@ -41,7 +50,8 @@
              Users
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'friends'}">
+        <li ng-class="{'active': activePage === 'friends'}"
+            ng-if="user.info">
           <a href="" 
              ui-sref="dashboard.friends"
              ng-click="setActivePage('friends')">
@@ -49,7 +59,8 @@
              Friends
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'dialogs'}">
+        <li ng-class="{'active': activePage === 'dialogs'}"
+            ng-if="user.info">
           <a href="" 
              ui-sref="dashboard.dialogs"
              ng-click="setActivePage('dialogs')">

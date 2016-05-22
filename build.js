@@ -543,24 +543,19 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseObject'
       $scope.mode = 'change';
       $scope.profile = {
 
-        name: 'Enter your name here',
-        surname: 'Enter your surname here',
-        about: 'Enter information about yourself',
+        name: '',
+        surname: '',
+        about: '',
         numbers: [],
-        country: 'Your Country',
-        region: 'Your Region',
-        city: 'Your City'
+        country: '',
+        region: '',
+        city: ''
       };
     } else {
 
       $scope.mode = 'view';
     }
     $rootScope.loading = false;
-  });
-
-  $scope.$watch('profile.phoneNumber', function (prev, next) {
-
-    console.debug($scope.profile.phoneNumber);
   });
 
   $scope.addPhoneNumber = addPhoneNumber;
@@ -656,11 +651,18 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseArray',
   users.$loaded(function () {
 
     $rootScope.loading = false;
+    console.debug(users);
+    $scope.users = users.filter(function (user) {
+
+      return user.info != null;
+    }).filter(function (user) {
+
+      return user.id !== userInfo.uid;
+    });
   });
 
   $scope.pageTitle = 'Users page';
   $scope.filter = 'show-all';
-  $scope.users = users;
   $scope.filterUsers = filterUsers;
 
   function filterUsers(state) {
@@ -778,10 +780,16 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInfo', function ($scope, $rootScope, $location, auth, fire, userInfo) {
+exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInfo', '$firebaseObject', function ($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
 
   var current_page = location.href.split('/'),
-      user = new Firebase(fire + '/users/' + userInfo.uid);
+      user = new Firebase(fire + '/users/' + userInfo.uid),
+      user_obj = $firebaseObject(user);
+
+  user_obj.$loaded(function () {
+
+    $scope.user = user_obj;
+  });
 
   $scope.logOut = logOut;
   $scope.setActivePage = setActivePage;

@@ -18,24 +18,19 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
       $scope.mode = 'change';
       $scope.profile = {
         
-        name: 'Enter your name here',
-        surname: 'Enter your surname here',
-        about: 'Enter information about yourself',
+        name: '',
+        surname: '',
+        about: '',
         numbers: [],
-        country: 'Your Country',
-        region: 'Your Region',
-        city: 'Your City'
+        country: '',
+        region: '',
+        city: ''
       }
     } else {
       
       $scope.mode = 'view';
     }
     $rootScope.loading = false;
-  })
-  
-  $scope.$watch('profile.phoneNumber', function(prev, next) {
-    
-    console.debug($scope.profile.phoneNumber);
   })
   
   
