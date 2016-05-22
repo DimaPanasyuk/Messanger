@@ -1,9 +1,14 @@
 export default
-['$scope', '$rootScope', '$location', 'auth', 
+['$scope', '$rootScope', 
+ '$location', 'auth', 'fire', 
+ 'userInfo', 
 
-function($scope, $rootScope, $location, auth) {
+function($scope, $rootScope, $location, auth, fire, userInfo) {
   
-  var current_page = location.href.split('/');  
+  let current_page = location.href.split('/'),
+      user         = new Firebase(`${fire}/users/${userInfo.uid}`);
+  
+     
   $scope.logOut = logOut;   
   $scope.setActivePage = setActivePage;
   $scope.activePage = current_page[current_page.length - 1];
@@ -12,6 +17,10 @@ function($scope, $rootScope, $location, auth) {
     
     $rootScope.loading = true;
     auth.unauthUser();
+    user.update({
+      
+      lastLoggedOut: (new Date()).getTime()
+    })
     $rootScope.loading = false;
     $location.path('/auth');
   }

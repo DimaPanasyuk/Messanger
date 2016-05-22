@@ -14,13 +14,17 @@ function($scope, $rootScope, auth, $location) {
     })
     .then(function(data) {
       
-      $rootScope.loading = false;
-      $rootScope.$digest();
-      if (data) { 
+      if (!data.uid) { 
+        
         toastr.error(data);
+        $rootScope.loading = false;
+        $rootScope.$digest();
       } else {
         
+        $rootScope.loading = false;
+        toastr.success('Сongratulation, account created successfully, <b>Log in</b>!');
         $location.path('/auth');
+        $rootScope.$digest();
       }
     })
   }

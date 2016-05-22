@@ -15,6 +15,12 @@ function(urls, $stateProvider) {
         
         console.debug('Routed to profile page');
       },
+      
+      userInfo: ['auth', function(auth) {
+       
+        return auth.authentication.$getAuth(); 
+      }],
+      
       currentAuth: ['auth', function(auth) {
         
         return auth.authentication.$requireAuth();

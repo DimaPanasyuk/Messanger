@@ -1,13 +1,14 @@
 export default
-['$scope', '$rootScope', '$firebaseArray', 
-function($scope, $rootScope, $firebaseArray) {
+['$scope', 
+ '$rootScope', 
+ '$firebaseArray',
+ 'userInfo', 
+function($scope, $rootScope, $firebaseArray, userInfo) {
   
   $rootScope.loading = true;
   $scope.pageTitle = 'Your Dialogs page';
-  let dialog_ref   = new Firebase('https://dima-messanger.firebaseio.com/dialogs'),
-      dialogs_ref  = new Firebase('https://dima-messanger.firebaseio.com/dialogs-list'), 
-      dialogs      = $firebaseArray(dialog_ref),
-      dialogs_list = $firebaseArray(dialogs_ref);
+  let dialog_ref   = new Firebase(`https://dima-messanger.firebaseio.com/users/${userInfo.uid}/dialogs`), 
+      dialogs      = $firebaseArray(dialog_ref);
       
   dialogs.$loaded(function() {
     

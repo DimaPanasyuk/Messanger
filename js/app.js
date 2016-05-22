@@ -15,6 +15,8 @@ import newsConfig          from './dashboard.news/dashboard.news.route';
 import profileConfig       from './dashboard.profile/dashboard.profile.route'; 
 import dialogsConfig       from './dashboard.dialogs/dashboard.dialogs.route';
 import messagesConfig      from './dashboard.messages/dashboard.messages.route';
+import usersConfig         from './dashboard.users/dashboard.users.route';
+import usersInfoConfig     from './dashboard.usersinfo/dashboard.usersinfo.route';
 
 //Controllers
 import App                 from './app/app.js';
@@ -27,6 +29,8 @@ import News                from './dashboard.news/dashboard.news.js';
 import Profile             from './dashboard.profile/dashboard.profile.js';
 import Dialogs             from './dashboard.dialogs/dashboard.dialogs.js';
 import Messages            from './dashboard.messages/dashboard.messages.js';
+import Users               from './dashboard.users/dashboard.users.js';
+import UsersInfo           from './dashboard.usersinfo/dashboard.usersinfo.js';
 
 //Services
 import auth    from './services/auth.service';
@@ -50,6 +54,7 @@ angular.module('app', [
 angular.module('app')
        
        .constant('urls', {templates: './js/'})
+       .constant('fire', 'https://dima-messanger.firebaseio.com')
        .config(appConfig)
        .config(authConfig)
        .config(resetConfig)
@@ -60,6 +65,8 @@ angular.module('app')
        .config(profileConfig)
        .config(dialogsConfig)
        .config(messagesConfig)
+       .config(usersConfig)
+       .config(usersInfoConfig)
        
        .service('auth', auth)
        .filter('cut', cut)
@@ -75,5 +82,7 @@ angular.module('app')
        .controller('Profile', Profile)
        .controller('Dialogs', Dialogs)
        .controller('Messages', Messages)
+       .controller('Users', Users)
+       .controller('UsersInfo', UsersInfo)
        .run(run);
        

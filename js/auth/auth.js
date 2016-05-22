@@ -4,12 +4,14 @@ export default
   '$rootScope', 
   '$location',
   '$timeout', 
-  'auth', 
+  'auth',
+  'fire', 
 
-function Auth($scope, $rootScope, $location, $timeout, auth) {
+function Auth($scope, $rootScope, $location, $timeout, auth, fire) {
   
   // $scope.useremail = '';
   // $scope.userpassword = '';
+  let users = new Firebase(fire + '/users');
   $scope.logIn  = logIn;
   $scope.signUp = signUp;
   
@@ -24,6 +26,11 @@ function Auth($scope, $rootScope, $location, $timeout, auth) {
       $rootScope.loading = false;
       if(data && data.provider) {
 
+        users.child(data.uid).update({
+          id: data.uid,
+          lastLoggedIn: (new Date()).getTime(),
+          lastLoggedOut: 0
+        });
         $location.path('/news');
         $rootScope.$digest();
       } else {

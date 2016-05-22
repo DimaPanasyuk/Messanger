@@ -1,0 +1,53 @@
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs">
+        <li ng-class="{'active': filter === 'show-all'}"
+            ng-click="filterUsers('show-all')">
+          <a href="">All</a>
+        </li>
+        <li ng-class="{'active': filter === 'show-online'}"
+            ng-click="filterUsers('show-online')">
+          <a href="">Online</a>
+        </li>
+      </ul>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    
+    <div class="col-md-12">
+
+      <div class="list-group">
+        
+        <div class="list-group-item"
+             ng-repeat="user in users track by $index">
+
+          <a href="#users/{{user.id}}/info">
+            {{user.info.name}} {{user.info.surname}}
+          </a>
+          
+          <button class="btn btn-info btn-xs"
+                  type="button"
+                  data-placement="right"
+                  title=""
+                  data-original-title="Add To Friends"
+                  data-toggle="tooltip">
+            +
+          </button>
+          
+          <span class="label label-success pull-right"
+                ng-if="!user.lastLoggedOut">
+            Online
+          </span>
+          
+          <span class="label label-danger pull-right"
+                ng-if="user.lastLoggedOut">
+            Offline
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

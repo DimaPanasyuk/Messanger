@@ -1,12 +1,235 @@
 <div class="container">
   
   <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs pull-right">
+        <li ng-class="{'active': mode === 'view'}"
+            ng-click="changeMode('view')">
+          <a href="">View Mode</a>
+        </li>
+        <li ng-class="{'active': mode === 'change'}"
+            ng-click="changeMode('change')">
+          <a href="">Modify Mode</a>
+        </li>
+      </ul>
+      <br>
+    </div>
+  </div>
+  
+  <div class="row"
+       ng-if="firstTime">
     
     <div class="col-md-12">
       
-      <h1>
-        {{pageTitle}}
-      </h1>
+     <div class="alert alert-dismissible alert-info">
+       
+       <button type="button"
+               class="close"
+               data-dismiss="alert">
+         &times;
+       </button>
+       
+       <strong>First time here?</strong> Fill in information about yourself!
+     </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    
+    <div class="col-md-12">
+      
+      <h3 ng-if="mode === 'view'">
+        {{profile.name}} {{profile.surname}}
+      </h3>
+      <br>
+      <div class="row"
+           ng-if="mode === 'change'">
+        <div class="col-md-6">
+          <input type="text"
+                 class="form-control"
+                 ng-model="profile.name"
+                 required>
+        </div>
+        <div class="col-md-6">
+          <input type="text"
+                 class="form-control" 
+                 ng-model="profile.surname"
+                 required>
+        <br>
+        </div>
+      </div>
+      
+      <div class="row"
+           ng-if="mode === 'view'">
+        <div class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <strong>About Me</strong>
+            </div>
+            <div class="panel-body">
+              <p ng-if="profile.about.length">
+                {{profile.about}}
+              </p>
+              <div class="alert alert-warning"
+                   ng-if="!profile.about.length">
+                Opps seams this user didn't add anything!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row"
+           ng-if="mode === 'change'">
+        <div class="col-md-12">
+          <div class="form-group">
+            <textarea rows="1"
+                      ng-model="profile.about"
+                      placeholder="Tell people about yourself!"
+                      class="form-control textarea"
+                      required>
+                  
+            </textarea>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row"
+           ng-if="profile.name">
+        <div class="col-md-12">
+          
+          <div class="row"
+               ng-if="mode === 'change'">
+            <div class="col-md-10">
+              
+              <div class="form-group">
+                
+                <input type="tel"
+                      placeholder="Enter your telephone number"
+                      ng-model="profile.phoneNumber" 
+                      class="form-control">
+              </div>
+            </div>
+            <div class="col-md-2 text-center">
+              <button class="btn btn-success"
+                      ng-click="addPhoneNumber()"
+                      ng-disabled="profile.phoneNumber.length < 10 || 
+                                   profile.phoneNumber.length > 10">
+                Add phone number
+              </button>
+            </div>
+          </div>
+          <br>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <strong>My phone numbers</strong>
+            </div>
+            <div class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item"
+                    ng-if="profile.numbers.length"
+                    ng-repeat="number in profile.numbers">
+                  
+                  <strong>{{number}}</strong>
+                  <button class="btn btn-danger btn-xs pull-right"
+                          ng-if="mode === 'change'"
+                          ng-click="removePhone($index)">
+                    <span class="glyphicon glyphicon-remove">
+                      
+                    </span>
+                  </button>
+                </li>
+                <li class="alert alert-warning"
+                    ng-if="!profile.numbers.length">
+                  <strong>You have not added any phone number yet</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      
+      <div class="row"
+           ng-if="mode === 'view'">
+        <div class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <strong>My Location</strong>
+            </div>
+            
+            <div class="panel-body">
+              <div class="col-md-4">
+                <ul class="list-group">
+                  
+                  <li class="list-group-item">
+                    <strong>Country: </strong>
+                    {{profile.country}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <ul class="list-group">
+                  
+                  <li class="list-group-item">
+                    <strong>Region: </strong>
+                    {{profile.region}}
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <ul class="list-group">
+                  
+                  <li class="list-group-item">
+                    <strong>City: </strong>
+                    {{profile.city}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row"
+           ng-if="mode === 'change'">
+        <div class="col-md-4">
+          <input type="text"
+                 ng-model="profile.country"
+                 class="form-control">
+        </div>
+        <div class="col-md-4">
+          <input type="text"
+                 ng-model="profile.region"
+                 class="form-control">
+        </div>
+        <div class="col-md-4">
+          <input type="text"
+                 ng-model="profile.city"
+                 class="form-control">
+        </div>
+      </div>
+      
+      <div class="row" 
+           ng-if="mode === 'change'">
+        <br>
+        <div class="col-md-12">
+          
+          <button class="btn btn-success"
+                  ng-disabled="!profile.name.length ||
+                               !profile.surname.length"
+                  ng-click="saveProfileInfo()">
+            
+            Save
+          </button>
+          <button class="btn btn-primary"
+                  ng-click="dontSaveProfileInfo()">
+            
+            Don't save
+          </button>  
+        </div>
+      </div>
+             
     </div>
   </div>
 </div>

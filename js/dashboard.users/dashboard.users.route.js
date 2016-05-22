@@ -3,20 +3,20 @@ export default
 function(urls, $stateProvider) {
   
   $stateProvider
-  .state('dashboard.dialogs', {
+  .state('dashboard.users', {
     
-    url: 'dialogs',
+    url: 'users',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.dialogs/dashboard.dialogs.html',
-    controller: 'Dialogs',
+    templateUrl: urls.templates + '/dashboard.users/dashboard.users.html',
+    controller: 'Users',
     resolve: {
       
       log: function() {
         
-        console.debug('Routed to dialogs page');
+        console.debug('Routed to users page');
       },
+      
       userInfo: ['auth', function(auth) {
-        
         
         return auth.authentication.$getAuth();  
       }],

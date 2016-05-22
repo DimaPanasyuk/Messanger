@@ -3,20 +3,25 @@ export default
 function(urls, $stateProvider) {
   
   $stateProvider
-  .state('dashboard.dialogs', {
+  .state('dashboard.usersinfo', {
     
-    url: 'dialogs',
+    url: 'users/:id/info',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.dialogs/dashboard.dialogs.html',
-    controller: 'Dialogs',
+    templateUrl: urls.templates + '/dashboard.usersinfo/dashboard.usersinfo.html',
+    controller: 'UsersInfo',
     resolve: {
       
       log: function() {
         
-        console.debug('Routed to dialogs page');
+        console.debug('Routed to Users Info page');
       },
-      userInfo: ['auth', function(auth) {
+      
+      infoAboutWatchedUser: ['$stateParams', function($stateParams) {
         
+        return $stateParams.id;
+      }],
+      
+      userInfo: ['auth', function(auth) {
         
         return auth.authentication.$getAuth();  
       }],

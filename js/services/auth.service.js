@@ -81,9 +81,13 @@ export default
         email: user.email,
         password: user.password
       })
-      .catch(function(data) {
+      .then(function(data) {
         
         resolve(data);
+      })
+      .catch(function(err) {
+       
+        resolve(err);
       })
     })
     

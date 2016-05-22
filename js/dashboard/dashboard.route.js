@@ -11,6 +11,11 @@ function(urls, $stateProvider) {
     controller: 'Dashboard',
     resolve: {
       
+      userInfo: ['auth', function(auth) {
+        
+        return auth.authentication.$getAuth();
+      }],
+      
       currentAuth: ['auth', function(auth) {
         
         return auth.authentication.$requireAuth();

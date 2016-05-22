@@ -1,11 +1,13 @@
 export default
 ['$scope', '$rootScope', '$firebaseArray', '$stateParams', 
- '$timeout', '$interval', '$location', 
+ '$timeout', '$interval', '$location', 'userInfo',
 function($scope, $rootScope, $firebaseArray, $stateParams, 
-  $timeout, $interval, $location) {
+  $timeout, $interval, $location, userInfo) {
+  
+  console.debug(userInfo);
   
   $rootScope.loading = true;
-  let messages_ref = new Firebase(`https://dima-messanger.firebaseio.com/dialogs/${$stateParams.name}/messages`);
+  let messages_ref = new Firebase(`https://dima-messanger.firebaseio.com/users/${userInfo.uid}/dialogs/${$stateParams.name}/messages`);
   let messages = $firebaseArray(messages_ref);
   messages.$loaded(function() {
     
