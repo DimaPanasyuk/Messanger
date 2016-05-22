@@ -4,9 +4,9 @@ export default
   
   $scope.sortType = 'date';
   $scope.reverse = true;
+  $rootScope.loading = true;
   
   $scope.setSortBy = setSortBy;
-  
   
   function getWall() {
     

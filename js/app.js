@@ -3,7 +3,6 @@ import angular             from 'angular';
 import firebase            from 'firebase';
 import angularFire         from 'angularfire';
 // import uiRouter            from 'angular-ui-router';
-import ngResource          from 'angular-resource';
 
 //Configs
 import appConfig           from './app/app.config';
@@ -30,20 +29,20 @@ import Dialogs             from './dashboard.dialogs/dashboard.dialogs.js';
 import Messages            from './dashboard.messages/dashboard.messages.js';
 
 //Services
-import auth  from './services/auth.service';
+import auth    from './services/auth.service';
 
 //Filters 
-import cut   from './filters/cutTo.filter';
+import cut     from './filters/cutTo.filter';
+import fromNow from './filters/fromNow.filter';
 
 
 //Run
-import run   from './app/app.run';
+import run     from './app/app.run';
 
 angular.module('app', [
   
   'ui.router', 
-  'firebase', 
-  'ngResource'
+  'firebase'
 ]);
 
 
@@ -64,6 +63,7 @@ angular.module('app')
        
        .service('auth', auth)
        .filter('cut', cut)
+       .filter('fromNow', fromNow)
         
        .controller('App', App)
        .controller('Auth', Auth)
