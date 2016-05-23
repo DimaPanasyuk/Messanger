@@ -22,6 +22,7 @@
       <div class="list-group">
         
         <div class="list-group-item"
+             ng-if="users.length"
              ng-repeat="user in users track by $index">
 
           <a href="#users/{{user.id}}/info">
@@ -47,6 +48,10 @@
             Offline
           </span>
         </div>
+      </div>
+      <div class="alert alert-info"
+           ng-if="!users.length">
+        Opps no users!
       </div>
     </div>
   </div>

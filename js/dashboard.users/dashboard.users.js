@@ -11,7 +11,6 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray) {
   users.$loaded(function() {
     
     $rootScope.loading = false;
-    console.debug(users);
     $scope.users = users
     .filter(function(user) {
       
@@ -35,10 +34,26 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray) {
     switch(state) {
       
       case 'show-all':
-        $scope.users = users;
+        $scope.users = users.filter(function(user) {
+      
+          return user.info != null;
+        })
+        .filter(function(user) {
+          
+          return user.id !== userInfo.uid;
+        });
         break;
       case 'show-online':
-        $scope.users = users.filter(function(user) {
+        $scope.users = users
+        .filter(function(user) {
+      
+          return user.info != null;
+        })
+        .filter(function(user) {
+          
+          return user.id !== userInfo.uid;
+        })
+        .filter(function(user) {
           
           return user.lastLoggedOut === 0;
         })
