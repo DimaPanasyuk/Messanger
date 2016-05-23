@@ -12,8 +12,7 @@ function($scope, $rootScope, userInfo, $timeout,
       current_user_friends     = $firebaseArray(current_user_friends_ref);
   
   friends.$loaded(function() {
-    
-    console.debug(friends);
+   
     $scope.friends = friends;
     $rootScope.loading = false;
   })

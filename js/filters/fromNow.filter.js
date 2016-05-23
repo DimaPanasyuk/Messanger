@@ -10,14 +10,11 @@ export default
     var dayDifference = current_date.getTime() - day_start;
     var messageDifference = current_date.getTime() - date;
     
-    console.debug(dayDifference);
     if (messageDifference > dayDifference) {
       
-      console.debug(true);
       result = dateFilter(date, 'dd.MM.yy');
     } else {
       
-      console.debug(false);
       result = dateFilter(date, 'HH:mm:ss');
     }
     return result;

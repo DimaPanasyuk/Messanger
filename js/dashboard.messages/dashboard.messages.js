@@ -18,7 +18,7 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
   
   current_dialog.$loaded(function() {
     
-    $scope.current_dialog = current_dialog;
+    $scope.current_dialog = current_dialog;    
   })
   
   current_user.$loaded(function() {
@@ -50,7 +50,6 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
   
   function sendMessage() {
     
-    console.debug($scope.current_dialog.participants);
     $scope.message.time = (new Date()).getTime();
     $scope.current_dialog.participants.forEach(function(participant) {
 

@@ -360,7 +360,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
 
   friends.$loaded(function () {
 
-    console.debug(friends);
     $scope.friends = friends;
     $rootScope.loading = false;
   });
@@ -485,7 +484,6 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
   function sendMessage() {
 
-    console.debug($scope.current_dialog.participants);
     $scope.message.time = new Date().getTime();
     $scope.current_dialog.participants.forEach(function (participant) {
 
@@ -559,7 +557,7 @@ exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
   }
 
   getWall().then(function (data) {
-    console.debug(data);
+
     $scope.posts = data.slice(1);
     $rootScope.loading = false;
     $rootScope.$digest();
@@ -764,8 +762,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseArray',
         return user;
       }
     });
-
-    console.debug($scope.users);
   });
 
   $scope.pageTitle = 'Users page';
@@ -838,7 +834,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseArray',
           user_u = $firebaseObject(user_ref);
 
       user_u.$remove().then(function (data) {
-        console.debug('remove');
         user.$$friend = false;
       });
     } else {
@@ -1049,14 +1044,11 @@ exports.default = ['dateFilter', function (dateFilter) {
     var dayDifference = current_date.getTime() - day_start;
     var messageDifference = current_date.getTime() - date;
 
-    console.debug(dayDifference);
     if (messageDifference > dayDifference) {
 
-      console.debug(true);
       result = dateFilter(date, 'dd.MM.yy');
     } else {
 
-      console.debug(false);
       result = dateFilter(date, 'HH:mm:ss');
     }
     return result;

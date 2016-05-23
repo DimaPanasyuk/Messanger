@@ -41,7 +41,6 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
       }
     })
     
-    console.debug($scope.users);
   });    
   
   $scope.pageTitle = 'Users page';
@@ -124,7 +123,6 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
        user_u  
         .$remove()
         .then(function(data) {
-          console.debug('remove');
           user.$$friend = false;
         })
     } else {

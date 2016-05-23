@@ -23,7 +23,7 @@ export default
   
   getWall()
   .then(function(data) {
-    console.debug(data);
+
     $scope.posts = data.slice(1);
     $rootScope.loading = false;
     $rootScope.$digest();
