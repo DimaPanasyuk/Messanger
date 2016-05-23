@@ -1,7 +1,7 @@
 <div class="container">
   
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
       <ul class="nav nav-tabs">
         <li ng-class="{'active': filter === 'show-all'}"
             ng-click="filterUsers('show-all')">
@@ -20,7 +20,7 @@
     <div class="col-md-12">
 
       <div class="list-group">
-        
+
         <div class="list-group-item"
              ng-if="users.length"
              ng-repeat="user in users track by $index">
@@ -30,12 +30,20 @@
           </a>
           
           <button class="btn btn-info btn-xs"
-                  type="button"
-                  data-placement="right"
-                  title=""
-                  data-original-title="Add To Friends"
-                  data-toggle="tooltip">
-            +
+                  ng-if="!user.$$friend"
+                  ng-click="toggleFriends(user, $index)">
+            
+            Add to friends
+            <span class="glyphicon glyphicon-plus">
+            </span>
+          </button>
+          <button class="btn btn-success btn-xs"
+                  ng-if="user.$$friend"
+                  ng-click="toggleFriends(user, $index)">
+            
+            Added
+            <span class="glyphicon glyphicon-ok">
+            </span>
           </button>
           
           <span class="label label-success pull-right"
@@ -50,7 +58,7 @@
         </div>
       </div>
       <div class="alert alert-info"
-           ng-if="!users.length">
+           ng-if="users && !users.length">
         Opps no users!
       </div>
     </div>

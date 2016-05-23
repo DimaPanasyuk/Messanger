@@ -1,12 +1,72 @@
 <div class="container">
   
   <div class="row">
+    <div class="col-md-4">
+      <ul class="nav nav-tabs">
+        <li ng-class="{'active': filter === 'show-all'}"
+            ng-click="filterFriends('show-all')">
+          <a href="">All</a>
+        </li>
+        <li ng-class="{'active': filter === 'show-online'}"
+            ng-click="filterFriends('show-online')">
+          <a href="">Online</a>
+        </li>
+      </ul>
+      <br>
+    </div>
+  </div>
+  
+  <div class="row">
     
     <div class="col-md-12">
       
-      <h1>
-        {{pageTitle}}
-      </h1>
+      <div class="panel panel-primary">
+        
+        <div class="panel-heading">
+          <strong>Friends list</strong>
+        </div>
+        
+        <div class="panel-body">
+          
+          <ul class="list-group">
+            
+            <div class="list-group-item"
+                 ng-if="friends.length"
+                 ng-repeat="friend in friends track by $index">
+
+              <a href="#users/{{friend.id}}/info">
+                {{friend.info.name}} {{friend.info.surname}}
+              </a>
+              
+              <button class="btn btn-danger btn-xs"
+                      ng-click="removeFriend(friend, $index)">
+
+                <span class="glyphicon glyphicon-remove">
+                </span>
+              </button>
+              
+              <span class="label label-success pull-right"
+                    ng-if="!friend.lastLoggedOut">
+                Online
+              </span>
+              
+              <span class="label label-danger pull-right"
+                    ng-if="friend.lastLoggedOut">
+                Offline
+              </span>
+            </div>
+          </ul>
+          
+          <div class="alert alert-danger"
+               ng-if="friends && !friends.length && filter === 'show-all'">
+            You have no friends
+          </div>
+          <div class="alert alert-info"
+               ng-if="friends && !friends.length && filter === 'show-online'">
+            No friends online
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
