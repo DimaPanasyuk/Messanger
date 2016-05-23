@@ -246,21 +246,25 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', function ($scope, $rootScope, $firebaseArray, userInfo) {
+exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, userInfo, fire) {
 
   $rootScope.loading = true;
   $scope.pageTitle = 'Your Dialogs page';
-  var dialog_ref = new Firebase('https://dima-messanger.firebaseio.com/users/' + userInfo.uid + '/dialogs'),
-      dialogs = $firebaseArray(dialog_ref);
+  var dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
+      friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
+      dialogs = $firebaseArray(dialog_ref),
+      friends = $firebaseArray(friends_ref);
 
   dialogs.$loaded(function () {
 
     $rootScope.loading = false;
+    $scope.friends = friends;
   });
 
   $scope.creatingNewDialog = false;
   $scope.dialog = {
-    title: ''
+    title: '',
+    participants: [userInfo.uid]
   };
   $scope.dialogs = dialogs;
   $scope.addNewDialog = addNewDialog;
@@ -269,20 +273,35 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', functio
 
   function addNewDialog() {
 
+    var participant_dialogs_ref = new Firebase(fire + '/users/' + $scope.dialog.participants[1] + '/dialogs');
+
     $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
+
+    //Adding dialog for choosed user  
+    participant_dialogs_ref.child($scope.dialog.name).set({
+
+      title: $scope.dialog.title,
+      name: $scope.dialog.name,
+      participants: $scope.dialog.participants
+    });
+
+    //Adding dialog for current user
     dialog_ref.child($scope.dialog.name).set({
 
       title: $scope.dialog.title,
-      name: $scope.dialog.name
+      name: $scope.dialog.name,
+      participants: $scope.dialog.participants
     });
+
     $scope.dialog.title = '';
     $scope.dialog.name = '';
+    $scope.dialog.participants.length = 1;
   }
 
   function removeDialog(dialog) {
 
     dialogs.$remove(dialog);
-    dialogs_list.$remove(dialog);
+    dialogs.$remove(dialog);
   }
 
   function toggleNewDialogForm() {
@@ -303,7 +322,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'dialogs',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.dialogs/dashboard.dialogs.html',
+    templateUrl: urls.templates + 'dashboard.dialogs/dashboard.dialogs.html',
     controller: 'Dialogs',
     resolve: {
 
@@ -391,7 +410,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'friends',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.friends/dashboard.friends.html',
+    templateUrl: urls.templates + 'dashboard.friends/dashboard.friends.html',
     controller: 'Friends',
     resolve: {
 
@@ -419,16 +438,32 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo) {
-
-  console.debug(userInfo);
+exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
 
   $rootScope.loading = true;
-  var messages_ref = new Firebase('https://dima-messanger.firebaseio.com/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
+  var current_dialog = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name));
+  var current_user = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
+  var messages_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
   var messages = $firebaseArray(messages_ref);
+
   messages.$loaded(function () {
 
     $rootScope.loading = false;
+  });
+
+  current_dialog.$loaded(function () {
+
+    $scope.current_dialog = current_dialog;
+  });
+
+  current_user.$loaded(function () {
+
+    $scope.message = {
+
+      author: current_user.info.name + ' ' + current_user.info.surname,
+      time: '',
+      text: ''
+    };
   });
 
   $scope.currentDate = 1463754897700;
@@ -437,15 +472,6 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   $scope.messages = messages;
   $scope.sendMessage = sendMessage;
   $scope.watchEnter = watchEnter;
-
-  $scope.message = {
-
-    author: '',
-    time: '',
-    text: ''
-  };
-
-  $scope.message.author = localStorage.getItem('messageAuthor');
 
   function watchEnter(e) {
 
@@ -459,9 +485,13 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
   function sendMessage() {
 
+    console.debug($scope.current_dialog.participants);
     $scope.message.time = new Date().getTime();
-    messages.$add($scope.message);
-    localStorage.setItem('messageAuthor', $scope.message.author);
+    $scope.current_dialog.participants.forEach(function (participant) {
+
+      var participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
+      participant_messages.$add($scope.message);
+    });
     $scope.message.time = '';
     $scope.message.text = '';
   }
@@ -479,7 +509,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'dialogs/:name/messages',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.messages/dashboard.messages.html',
+    templateUrl: urls.templates + 'dashboard.messages/dashboard.messages.html',
     controller: 'Messages',
     resolve: {
 
@@ -554,7 +584,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'news',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.news/dashboard.news.html',
+    templateUrl: urls.templates + 'dashboard.news/dashboard.news.html',
     controller: 'News',
     resolve: {
 
@@ -664,7 +694,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'profile',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.profile/dashboard.profile.html',
+    templateUrl: urls.templates + 'dashboard.profile/dashboard.profile.html',
     controller: 'Profile',
     resolve: {
 
@@ -836,7 +866,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'users',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.users/dashboard.users.html',
+    templateUrl: urls.templates + 'dashboard.users/dashboard.users.html',
     controller: 'Users',
     resolve: {
 
@@ -889,7 +919,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 
     url: 'users/:id/info',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.usersinfo/dashboard.usersinfo.html',
+    templateUrl: urls.templates + 'dashboard.usersinfo/dashboard.usersinfo.html',
     controller: 'UsersInfo',
     resolve: {
 
@@ -1133,7 +1163,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   $stateProvider.state('reset', {
 
     url: '/reset',
-    templateUrl: urls.templates + '/resetPassword/resetPassword.html',
+    templateUrl: urls.templates + 'resetPassword/resetPassword.html',
     controller: 'ResetPassword'
   });
 }];

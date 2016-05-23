@@ -7,7 +7,7 @@ function(urls, $stateProvider) {
     
     url: 'dialogs',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.dialogs/dashboard.dialogs.html',
+    templateUrl: urls.templates + 'dashboard.dialogs/dashboard.dialogs.html',
     controller: 'Dialogs',
     resolve: {
       

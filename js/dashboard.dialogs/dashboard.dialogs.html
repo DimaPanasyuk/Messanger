@@ -29,13 +29,37 @@
           </div>
           
           <div class="panel-body">
-            <input type="text"
-               class="form-control"
-               ng-model="dialog.title"
-               placeholder="Enter dialog title">
+            <div class="row">
+              <div class="col-md-6">
+                <input type="text"
+                       class="form-control"
+                       ng-model="dialog.title"
+                       placeholder="Enter dialog title">  
+              </div>
+              <div class="col-md-6">
+                <select class="form-control"
+                        ng-if="friends.length"
+                        ng-model="dialog.participants[1]">
+                  
+                  <option value="" 
+                          selected
+                          disabled>
+                    Choose person to communicate to
+                  </option>
+                  <option value="{{friend.id}}"
+                          ng-repeat="friend in friends">
+                    {{friend.info.name}} {{friend.info.surname}}
+                  </option>
+                </select>
+                <div class="alert alert-warning"
+                     ng-if="!friends.length">
+                  Add friends to communicate with them
+                </div>
+              </div>
+            </div>
             <br>
             <button class="btn btn-primary pull-right"
-                    ng-disabled="!dialog.title.length"
+                    ng-disabled="!dialog.title.length || !dialog.participants.length > 1"
                     ng-click="addNewDialog()">
               Create
             </button>

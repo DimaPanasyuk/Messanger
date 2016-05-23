@@ -6,7 +6,7 @@ export default
       
       url: 'news',
       parent: 'dashboard',
-      templateUrl: urls.templates + '/dashboard.news/dashboard.news.html',
+      templateUrl: urls.templates + 'dashboard.news/dashboard.news.html',
       controller: 'News',
       resolve: {
         

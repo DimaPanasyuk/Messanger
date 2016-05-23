@@ -7,7 +7,7 @@ function(urls, $stateProvider) {
     
     url: 'users/:id/info',
     parent: 'dashboard',
-    templateUrl: urls.templates + '/dashboard.usersinfo/dashboard.usersinfo.html',
+    templateUrl: urls.templates + 'dashboard.usersinfo/dashboard.usersinfo.html',
     controller: 'UsersInfo',
     resolve: {
       

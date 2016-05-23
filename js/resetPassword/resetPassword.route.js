@@ -6,7 +6,7 @@ function(urls, $stateProvider) {
     .state('reset', {
       
       url: '/reset',
-      templateUrl: urls.templates + '/resetPassword/resetPassword.html',
+      templateUrl: urls.templates + 'resetPassword/resetPassword.html',
       controller: 'ResetPassword'
     })
 }]
