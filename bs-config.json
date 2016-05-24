@@ -2,7 +2,7 @@
   "injectCahnges": true,
   "files": [
     "./build.js",
-    "./less/**/*.less",
+    "./main.css",
     "./index.html",
     "./js/**/*.html"
     ]

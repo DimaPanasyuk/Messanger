@@ -30,31 +30,50 @@
           
           <ul class="list-group">
             
-            <div class="list-group-item"
+            <li class="list-group-item"
                  ng-if="friends.length"
                  ng-repeat="friend in friends track by $index">
+              
+              <div class="row">
+            
+                <div class="col-sm-1">
+                  <div class="profile-image"
+                       ng-if="friend.info.image"
+                       style="background-image: url({{friend.info.image}})">
+                  </div>
+                  <div class="profile-image-no"
+                       ng-if="!friend.info.image">
+                  </div>
+                </div>
+                
+                <div class="col-sm-9 text-left">
+                  
+                  <a href="#users/{{friend.id}}/info">
+                    {{friend.info.name}} {{friend.info.surname}}
+                  </a>
+                  <br>
+                  <span class="label label-success"
+                        ng-if="!friend.lastLoggedOut">
+                    Online
+                  </span>
+                  
+                  <span class="label label-danger"
+                        ng-if="friend.lastLoggedOut">
+                    Offline
+                  </span>  
+                </div>
+                
+                <div class="col-sm-2">
+                  <button class="btn btn-danger btn-xs"
+                          ng-click="removeFriend(friend, $index)">
 
-              <a href="#users/{{friend.id}}/info">
-                {{friend.info.name}} {{friend.info.surname}}
-              </a>
-              
-              <button class="btn btn-danger btn-xs"
-                      ng-click="removeFriend(friend, $index)">
-
-                <span class="glyphicon glyphicon-remove">
-                </span>
-              </button>
-              
-              <span class="label label-success pull-right"
-                    ng-if="!friend.lastLoggedOut">
-                Online
-              </span>
-              
-              <span class="label label-danger pull-right"
-                    ng-if="friend.lastLoggedOut">
-                Offline
-              </span>
-            </div>
+                    Remove from friends
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </li>
           </ul>
           
           <div class="alert alert-danger"

@@ -28,12 +28,13 @@
     
     
     <div class="collapse navbar-collapse" 
-         id="bs-example-navbar-collapse-2">
+         id="bs-example-navbar-collapse-2"
+         ng-if="user.info.name.length && 
+                user.info.surname.length">
       
       <ul class="nav navbar-nav">
         
-        <li ng-class="{'active': activePage === 'news'}"
-            ng-if="user.info">
+        <li ng-class="{'active': activePage === 'news'}">
           <a href=""
              ng-click="setActivePage('news')" 
              ui-sref="dashboard.news">
@@ -41,8 +42,7 @@
              News
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'users'}"
-            ng-if="user.info">
+        <li ng-class="{'active': activePage === 'users'}">
           <a href="" 
              ui-sref="dashboard.users"
              ng-click="setActivePage('users')">
@@ -50,8 +50,7 @@
              Users
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'friends'}"
-            ng-if="user.info">
+        <li ng-class="{'active': activePage === 'friends'}">
           <a href="" 
              ui-sref="dashboard.friends"
              ng-click="setActivePage('friends')">
@@ -59,8 +58,7 @@
              Friends
           </a>
         </li>
-        <li ng-class="{'active': activePage === 'dialogs'}"
-            ng-if="user.info">
+        <li ng-class="{'active': activePage === 'dialogs'}">
           <a href="" 
              ui-sref="dashboard.dialogs"
              ng-click="setActivePage('dialogs')">

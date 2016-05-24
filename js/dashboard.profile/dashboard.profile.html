@@ -38,9 +38,22 @@
     
     <div class="col-md-12">
       
-      <h3 ng-if="mode === 'view'">
-        {{profile.name}} {{profile.surname}}
-      </h3>
+      <div class="row"
+           ng-if="mode === 'view'">
+        <div class="col-sm-3">
+          <br>
+          <div class="image-preview">
+            <img ng-src="{{profile.image}}"
+                 class="image-preview__item"
+                 alt="{{profile.name}}_{{profile.surname}}_image"> 
+          </div>     
+        </div>
+        <div class="col-sm-9">
+          <h3 ng-if="mode === 'view'">
+            {{profile.name}} {{profile.surname}}
+          </h3>
+        </div>
+      </div>
       <br>
       <div class="row"
            ng-if="mode === 'change'">
@@ -61,6 +74,72 @@
         </div>
       </div>
       
+      
+      <div class="row"
+           ng-if="mode === 'change'">
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <strong>Profile Image Preview</strong>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  
+                  <div class="image-preview">
+                    <img ng-src="{{profile.image}}"
+                         class="image-preview__item"
+                         alt="{{profile.name}}_{{profile.surname}}_image">
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <input type="file"
+                         class="image-upload">
+                  <button class="btn btn-info btn-block"
+                          disabled>
+                    Upload via file
+                  </button>
+                  
+                  <div class="form-group">
+                    
+                    <input type="url"
+                           placeholder="Enter image url"
+                           ng-model="newImageUrl"
+                           class="form-control">
+                  </div>
+                  
+                  <div class="image-preview"
+                       ng-if="newImageUrl.length && !imageLoaded">
+                    <img ng-src="{{newImageUrl}}"
+                         class="image-preview__new" 
+                         alt="{{profile.name}}_{{profile.surname}}_image"> 
+                  </div>
+                   
+                  <button class="btn btn-success"
+                          ng-disabled="!newImageUrl.length"
+                          ng-click="uploadProfileImage(newImageUrl)">
+                    
+                    <span class="glyphicon glyphicon-upload"></span>
+                    Upload Image                     
+                  </button>
+                   
+                </div>
+              </div>  
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <textarea rows="3"
+                    ng-model="profile.about"
+                    placeholder="Tell people about yourself!"
+                    class="form-control textarea"
+                    required>
+                  
+          </textarea>
+        </div>
+      </div>
+      
       <div class="row"
            ng-if="mode === 'view'">
         <div class="col-md-12">
@@ -77,21 +156,6 @@
                 Opps seams this user didn't add anything!
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="row"
-           ng-if="mode === 'change'">
-        <div class="col-md-12">
-          <div class="form-group">
-            <textarea rows="1"
-                      ng-model="profile.about"
-                      placeholder="Tell people about yourself!"
-                      class="form-control textarea"
-                      required>
-                  
-            </textarea>
           </div>
         </div>
       </div>
