@@ -24,37 +24,56 @@
         <div class="list-group-item"
              ng-if="users.length"
              ng-repeat="user in users track by $index">
-
-          <a href="#users/{{user.id}}/info">
-            {{user.info.name}} {{user.info.surname}}
-          </a>
           
-          <button class="btn btn-info btn-xs"
-                  ng-if="!user.$$friend"
-                  ng-click="toggleFriends(user, $index)">
+          <div class="row">
             
-            Add to friends
-            <span class="glyphicon glyphicon-plus">
-            </span>
-          </button>
-          <button class="btn btn-success btn-xs"
-                  ng-if="user.$$friend"
-                  ng-click="toggleFriends(user, $index)">
+            <div class="col-sm-1">
+              
+              <div class="profile-image"
+                   ng-if="user.info.image"
+                   style="background-image: url({{user.info.image}})">
+              </div>
+              <div class="profile-image-no"
+                   ng-if="!user.info.image">
+              </div>
+            </div>
             
-            Added
-            <span class="glyphicon glyphicon-ok">
-            </span>
-          </button>
-          
-          <span class="label label-success pull-right"
-                ng-if="!user.lastLoggedOut">
-            Online
-          </span>
-          
-          <span class="label label-danger pull-right"
-                ng-if="user.lastLoggedOut">
-            Offline
-          </span>
+            <div class="col-sm-9 text-left">
+              
+              <a href="#users/{{user.id}}/info">
+                {{user.info.name}} {{user.info.surname}}
+              </a>
+              <br>
+              <span class="label label-success"
+                    ng-if="!user.lastLoggedOut">
+                Online
+              </span>
+              
+              <span class="label label-danger"
+                    ng-if="user.lastLoggedOut">
+                Offline
+              </span>  
+            </div>
+            
+            <div class="col-sm-2">
+              <button class="btn btn-info btn-xs pull-right"
+                      ng-if="!user.$$friend"
+                      ng-click="toggleFriends(user, $index)">
+                
+                Add to friends
+                <span class="glyphicon glyphicon-plus">
+                </span>
+              </button>
+              <button class="btn btn-success btn-xs pull-right"
+                      ng-if="user.$$friend"
+                      ng-click="toggleFriends(user, $index)">
+                
+                Added
+                <span class="glyphicon glyphicon-ok">
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="alert alert-info"

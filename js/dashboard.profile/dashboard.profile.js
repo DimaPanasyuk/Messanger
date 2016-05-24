@@ -22,6 +22,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
         surname: '',
         about: '',
         numbers: [],
+        image: profile.image || '../../images/noavatar.jpg',
         country: '',
         region: '',
         city: ''
@@ -39,6 +40,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
   $scope.saveProfileInfo     = saveProfileInfo;
   $scope.dontSaveProfileInfo = dontSaveProfileInfo;
   $scope.changeMode          = changeMode;
+  $scope.uploadProfileImage  = uploadProfileImage;
   
   function addPhoneNumber() {
     $scope.profile.numbers = $scope.profile.numbers || [];
@@ -52,7 +54,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
   }
   
   function saveProfileInfo() {
-    
+   
     let prof = $scope.profile;
     profile_ref.update({
       
@@ -62,9 +64,11 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
       numbers: prof.numbers || [],
       country: prof.country || '',
       region: prof.region || '',
-      city: prof.city || ''
+      city: prof.city || '',
+      image: prof.image || '../../images/noavatar.jpg'
     });
     $scope.mode = 'view';
+    $scope.firstTime = false;
   }
   
   function dontSaveProfileInfo() {
@@ -75,5 +79,15 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
   function changeMode(mode) {
     
     $scope.mode = mode;
+  }
+  
+  function uploadProfileImage(img) {
+    $scope.profile.image = img;
+    angular.extend(profile, $scope.profile);
+    profile.$save()
+    .then(function() {
+      
+      $scope.imageLoaded = true;
+    })
   }
 }]

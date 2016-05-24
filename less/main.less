@@ -162,3 +162,52 @@ header {
   
   resize: vertical;
 }
+
+.image-preview {
+  
+  margin-bottom: 20px;
+}
+
+.image-preview__item {
+  
+  height: auto;
+  width: 100%;
+  max-width: 270px;
+}
+@media only screen and (max-width: 480px) {
+  
+  .image-preview {
+    
+    text-align: center !important;
+  }
+}
+
+.image-preview__new {
+  
+  height: auto;
+  width: 100%;
+  max-width: 200px;
+  -webkit-filter: blur(1px) opacity(80%);
+  filter: blur(2px) opacity(80%);
+}
+
+.image-upload {
+  
+  display: none !important;
+}
+
+.profile-image {
+  
+  width: 70px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  height: 70px;
+  box-shadow: 0 0 3px 1px rebeccapurple;
+}
+
+.profile-image-no {
+ 
+  .profile-image;  
+  background-image: url('../../images/noavatar.jpg');
+}
