@@ -14,7 +14,7 @@
       </button>
          
       <div class="profile-image-rounded"
-           ng-if="user.info.image"
+           ng-if="user.info.image && !loading"
            ui-sref="dashboard.profile"
            ng-click="setActivePage('profile')"
            style="background-image: url({{user.info.image}})">
@@ -22,7 +22,7 @@
       <div class="profile-image-no-rounded"
            ui-sref="dashboard.profile"
            ng-click="setActivePage('profile')"
-           ng-if="!user.info.image">
+           ng-if="!user.info.image && !loading">
       </div>
     </div>
     

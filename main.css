@@ -209,13 +209,16 @@ header {
   cursor: pointer;
 }
 .profile-image-no-rounded {
-  border-radius: 50%;
   width: 70px;
   background-size: cover;
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  border-radius: 50%;
+  margin: 9px 10px 0 0;
+  width: 50px;
+  height: 50px;
   background-image: url('../../images/noavatar.jpg');
 }
 .messages-profile-image {
