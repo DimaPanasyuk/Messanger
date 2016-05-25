@@ -282,7 +282,8 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', 'fire',
 
       title: $scope.dialog.title,
       name: $scope.dialog.name,
-      participants: $scope.dialog.participants
+      participants: $scope.dialog.participants,
+      newMessages: false
     });
 
     //Adding dialog for current user
@@ -290,7 +291,8 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', 'fire',
 
       title: $scope.dialog.title,
       name: $scope.dialog.name,
-      participants: $scope.dialog.participants
+      participants: $scope.dialog.participants,
+      newMessages: false
     });
 
     $scope.dialog.title = '';
@@ -440,7 +442,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
 
   $rootScope.loading = true;
-  var current_dialog = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name));
+  var current_dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
+  var current_dialog = $firebaseObject(current_dialog_ref);
   var current_user = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
   var messages_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
   var messages = $firebaseArray(messages_ref);
@@ -451,8 +454,9 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   });
 
   current_dialog.$loaded(function () {
-
+    console.debug(current_dialog);
     $scope.current_dialog = current_dialog;
+    current_dialog_ref.child('newMessages').set(false);
   });
 
   current_user.$loaded(function () {
@@ -488,7 +492,12 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
     $scope.current_dialog.participants.forEach(function (participant) {
 
       var participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
+      var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
       participant_messages.$add($scope.message);
+      if (userInfo.uid !== participant) {
+
+        dialog.child('newMessages').set(true);
+      }
     });
     $scope.message.time = '';
     $scope.message.text = '';
@@ -964,7 +973,8 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
 
   var current_page = location.href.split('/'),
       user = new Firebase(fire + '/users/' + userInfo.uid),
-      user_obj = $firebaseObject(user);
+      user_obj = $firebaseObject(user),
+      userMessages = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
 
   user_obj.$loaded(function () {
 
@@ -974,6 +984,19 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   $scope.logOut = logOut;
   $scope.setActivePage = setActivePage;
   $scope.activePage = current_page[current_page.length - 1];
+
+  userMessages.off('value');
+  userMessages.on('child_changed', function (event) {
+
+    var item = event.val();
+    var current_location = $location.path();
+    if (item.newMessages === true && current_location.indexOf(item.title) === -1) {
+      console.debug('yes');
+      var messageIn = new Audio('../../sounds/messageInSound.wav');
+      messageIn.play();
+      toastr.error('Received new Message!');
+    }
+  });
 
   function logOut() {
 

@@ -31,7 +31,6 @@ function($scope, $rootScope, $firebaseArray, userInfo, fire) {
   $scope.removeDialog      = removeDialog;
   $scope.toggleNewDialogForm = toggleNewDialogForm;
   
-  
   function addNewDialog() {
     
     let participant_dialogs_ref =  new Firebase(`${fire}/users/${$scope.dialog.participants[1]}/dialogs`);
@@ -44,7 +43,8 @@ function($scope, $rootScope, $firebaseArray, userInfo, fire) {
       
       title: $scope.dialog.title,
       name: $scope.dialog.name,
-      participants: $scope.dialog.participants
+      participants: $scope.dialog.participants,
+      newMessages: false
     });
     
     //Adding dialog for current user
@@ -52,7 +52,8 @@ function($scope, $rootScope, $firebaseArray, userInfo, fire) {
       
       title: $scope.dialog.title,
       name: $scope.dialog.name,
-      participants: $scope.dialog.participants
+      participants: $scope.dialog.participants,
+      newMessages: false
     });
     
     $scope.dialog.title               = '';

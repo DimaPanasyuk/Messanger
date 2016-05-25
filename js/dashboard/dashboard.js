@@ -7,7 +7,8 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   
   let current_page = location.href.split('/'),
       user         = new Firebase(`${fire}/users/${userInfo.uid}`),
-      user_obj     = $firebaseObject(user);
+      user_obj     = $firebaseObject(user),
+      userMessages = new Firebase(`${fire}/users/${userInfo.uid}/dialogs`);
   
   
   user_obj.$loaded(function() {
@@ -18,6 +19,19 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   $scope.logOut = logOut;   
   $scope.setActivePage = setActivePage;
   $scope.activePage = current_page[current_page.length - 1];
+  
+  userMessages.off('value');
+  userMessages.on('child_changed', function(event) {
+      
+    let item = event.val();
+    let current_location = $location.path();
+    if (item.newMessages === true && (current_location.indexOf(item.title)) === -1) {
+      console.debug('yes');
+      let messageIn = new Audio('../../sounds/messageInSound.wav');
+      messageIn.play();
+      toastr.error('Received new Message!');
+    }  
+  })
   
   function logOut() {
     

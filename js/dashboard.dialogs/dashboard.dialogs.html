@@ -82,6 +82,10 @@
             <td>
               <a href="#/dialogs/{{dialog.name}}/messages">
                 <b>{{dialog.title}}</b>
+                <span class="label label-success"
+                      ng-if="dialog.newMessages">
+                  New messages
+                </span>
               </a>
             </td>
             <td class="text-right">

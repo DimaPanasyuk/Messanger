@@ -46,9 +46,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
   $scope.pageTitle = 'Users page';
   $scope.filter = 'show-all';
   $scope.filterUsers = filterUsers;
-  $scope.toggleFriends = toggleFriends;
-  
-  
+  $scope.toggleFriends = toggleFriends;  
   
   function filterUsers(state) {
     
