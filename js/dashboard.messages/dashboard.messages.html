@@ -40,22 +40,38 @@
           </div>
         </div>
       
-      
-      
-        <div class="panel panel-default"
-             ng-repeat="message in messages | orderBy: time : true">
+              
+        <ul class="messages">
           
-          <div class="panel-heading">
-            <b class="text-info">{{message.author}}</b>
-            <span class="pull-right">
-              <b>{{ message.time | fromNow }}</b>
-            </span>
-          </div>
-          
-          <div class="panel-body">
-            {{message.text}}
-          </div>
-        </div>
+          <li class="messsages__message"
+              ng-repeat="message in messages | orderBy: time : true">
+            
+            <div class="row">
+              <div class="col-xs-2 col-sm-1 messages__message-photo">
+                <div class="messages-profile-image pull-right"
+                     ng-if="message.authorPhoto"
+                     style="background-image: url({{message.authorPhoto}})">
+                </div>
+                <div class="messages-profile-image-no pull-right"
+                     ng-if="!message.authorPhoto">
+                </div>
+              </div>
+              <div class="col-xs-7 col-sm-9 text-left">
+                <strong class="text-primary">
+                  {{message.author}}
+                </strong>
+                <div class="row">
+                  <div class="col-xs-12">
+                    {{message.text}}  
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-3 col-sm-2 text-center">
+                {{message.time | fromNow}}
+              </div>
+            </div>
+          </li>
+        </ul>  
         
         <div class="alert alert-danger"
              ng-if="!messages.length && !loading">

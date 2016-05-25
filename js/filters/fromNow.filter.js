@@ -15,7 +15,7 @@ export default
       result = dateFilter(date, 'dd.MM.yy');
     } else {
       
-      result = dateFilter(date, 'HH:mm:ss');
+      result = dateFilter(date, 'HH:mm');
     }
     return result;
   }

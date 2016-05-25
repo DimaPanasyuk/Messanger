@@ -198,3 +198,57 @@ header {
   box-shadow: 0 0 3px 1px rebeccapurple;
   background-image: url('../../images/noavatar.jpg');
 }
+.profile-image-rounded {
+  border-radius: 50%;
+  margin: 9px 10px 0px 0;
+  width: 50px;
+  height: 50px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.profile-image-no-rounded {
+  border-radius: 50%;
+  width: 70px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  height: 70px;
+  box-shadow: 0 0 3px 1px rebeccapurple;
+  background-image: url('../../images/noavatar.jpg');
+}
+.messages-profile-image {
+  margin-top: 6px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+}
+.messages-profile-image-no {
+  margin-top: 6px;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  background-image: url('../../images/noavatar.jpg');
+}
+.messages {
+  margin: 0;
+  padding: 0;
+  list-style-type: none !important;
+}
+.messages__message {
+  margin: 12px 0;
+  padding: 0;
+}
+.messages__message-photo {
+  padding-right: 0px !important;
+}
+.test {
+  border: 1px solid black;
+}

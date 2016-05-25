@@ -12,18 +12,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" 
-         ui-sref="dashboard.profile"
-         ng-click="setActivePage('profile')"
-         href="">
          
-         Profile
-         <strong ng-if="user && !user.info">
-           <span class="glyphicon glyphicon-exclamation-sign">
-           
-           </span>
-         </strong>
-      </a>
+      <div class="profile-image-rounded"
+           ng-if="user.info.image"
+           ui-sref="dashboard.profile"
+           ng-click="setActivePage('profile')"
+           style="background-image: url({{user.info.image}})">
+      </div>
+      <div class="profile-image-no-rounded"
+           ui-sref="dashboard.profile"
+           ng-click="setActivePage('profile')"
+           ng-if="!user.info.image">
+      </div>
     </div>
     
     

@@ -29,7 +29,9 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
     
       author: current_user.info.name + ' ' + current_user.info.surname,
       time: '',
-      text: ''
+      text: '',
+      authorId: current_user.id,
+      authorPhoto: current_user.info.image
     };
   })
   
