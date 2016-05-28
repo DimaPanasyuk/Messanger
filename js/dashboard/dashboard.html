@@ -34,14 +34,6 @@
       
       <ul class="nav navbar-nav">
         
-        <li ng-class="{'active': activePage === 'news'}">
-          <a href=""
-             ng-click="setActivePage('news')" 
-             ui-sref="dashboard.news">
-             
-             News
-          </a>
-        </li>
         <li ng-class="{'active': activePage === 'users'}">
           <a href="" 
              ui-sref="dashboard.users"
@@ -75,12 +67,12 @@
                   Log Out
           </button>
       </form>
-      <form class="navbar-form navbar-right">
+      <!--<form class="navbar-form navbar-right">
         <input type="text" 
              placeholder="Search"
              ng-model="searchFor"
              class="form-control">
-      </form>
+      </form>-->
     </div>
   </div>
 </nav>

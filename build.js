@@ -37,10 +37,6 @@ var _dashboardFriends = require('./dashboard.friends/dashboard.friends.route');
 
 var _dashboardFriends2 = _interopRequireDefault(_dashboardFriends);
 
-var _dashboardNews = require('./dashboard.news/dashboard.news.route');
-
-var _dashboardNews2 = _interopRequireDefault(_dashboardNews);
-
 var _dashboardProfile = require('./dashboard.profile/dashboard.profile.route');
 
 var _dashboardProfile2 = _interopRequireDefault(_dashboardProfile);
@@ -60,6 +56,14 @@ var _dashboardUsers2 = _interopRequireDefault(_dashboardUsers);
 var _dashboardUsersinfo = require('./dashboard.usersinfo/dashboard.usersinfo.route');
 
 var _dashboardUsersinfo2 = _interopRequireDefault(_dashboardUsersinfo);
+
+var _dashboardDialogSettings = require('./dashboard.dialog.settings/dashboard.dialog.settings.route');
+
+var _dashboardDialogSettings2 = _interopRequireDefault(_dashboardDialogSettings);
+
+var _dashboardDialogNew = require('./dashboard.dialog.new/dashboard.dialog.new.route');
+
+var _dashboardDialogNew2 = _interopRequireDefault(_dashboardDialogNew);
 
 var _app3 = require('./app/app.js');
 
@@ -85,10 +89,6 @@ var _dashboardFriends3 = require('./dashboard.friends/dashboard.friends.js');
 
 var _dashboardFriends4 = _interopRequireDefault(_dashboardFriends3);
 
-var _dashboardNews3 = require('./dashboard.news/dashboard.news.js');
-
-var _dashboardNews4 = _interopRequireDefault(_dashboardNews3);
-
 var _dashboardProfile3 = require('./dashboard.profile/dashboard.profile.js');
 
 var _dashboardProfile4 = _interopRequireDefault(_dashboardProfile3);
@@ -108,6 +108,14 @@ var _dashboardUsers4 = _interopRequireDefault(_dashboardUsers3);
 var _dashboardUsersinfo3 = require('./dashboard.usersinfo/dashboard.usersinfo.js');
 
 var _dashboardUsersinfo4 = _interopRequireDefault(_dashboardUsersinfo3);
+
+var _dashboardDialogSettings3 = require('./dashboard.dialog.settings/dashboard.dialog.settings.js');
+
+var _dashboardDialogSettings4 = _interopRequireDefault(_dashboardDialogSettings3);
+
+var _dashboardDialogNew3 = require('./dashboard.dialog.new/dashboard.dialog.new.js');
+
+var _dashboardDialogNew4 = _interopRequireDefault(_dashboardDialogNew3);
 
 var _auth5 = require('./services/auth.service');
 
@@ -131,7 +139,7 @@ function _interopRequireDefault(obj) {
 
 //Services
 
-//Controllers
+// import newsConfig          from './dashboard.news/dashboard.news.route';
 
 // import uiRouter            from 'angular-ui-router';
 
@@ -144,10 +152,18 @@ _angular2.default.module('app', ['ui.router', 'firebase']);
 //Run
 
 //Filters
-//Angular items
-_angular2.default.module('app').constant('urls', { templates: './js/' }).constant('fire', 'https://dima-messanger.firebaseio.com').config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default).config(_dashboardNews2.default).config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).config(_dashboardUsers2.default).config(_dashboardUsersinfo2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).filter('fromNow', _fromNow2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default).controller('News', _dashboardNews4.default).controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).controller('Users', _dashboardUsers4.default).controller('UsersInfo', _dashboardUsersinfo4.default).run(_app6.default);
 
-},{"./app/app.config":2,"./app/app.js":3,"./app/app.run":4,"./auth/auth.js":5,"./auth/auth.route":6,"./dashboard.dialogs/dashboard.dialogs.js":7,"./dashboard.dialogs/dashboard.dialogs.route":8,"./dashboard.friends/dashboard.friends.js":9,"./dashboard.friends/dashboard.friends.route":10,"./dashboard.messages/dashboard.messages.js":11,"./dashboard.messages/dashboard.messages.route":12,"./dashboard.news/dashboard.news.js":13,"./dashboard.news/dashboard.news.route":14,"./dashboard.profile/dashboard.profile.js":15,"./dashboard.profile/dashboard.profile.route":16,"./dashboard.users/dashboard.users.js":17,"./dashboard.users/dashboard.users.route":18,"./dashboard.usersinfo/dashboard.usersinfo.js":19,"./dashboard.usersinfo/dashboard.usersinfo.route":20,"./dashboard/dashboard.js":21,"./dashboard/dashboard.route":22,"./filters/cutTo.filter":23,"./filters/fromNow.filter":24,"./registration/registration.js":25,"./registration/registration.route":26,"./resetPassword/resetPassword.js":27,"./resetPassword/resetPassword.route":28,"./services/auth.service":29,"angular":31,"angularfire":33,"firebase":34}],2:[function(require,module,exports){
+// import News                from './dashboard.news/dashboard.news.js';
+
+//Controllers
+//Angular items
+_angular2.default.module('app').constant('urls', { templates: './js/' }).constant('fire', 'https://dima-messanger.firebaseio.com').config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default)
+//.config(newsConfig)
+.config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).config(_dashboardUsers2.default).config(_dashboardUsersinfo2.default).config(_dashboardDialogSettings2.default).config(_dashboardDialogNew2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).filter('fromNow', _fromNow2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default)
+//.controller('News', News)
+.controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).controller('Users', _dashboardUsers4.default).controller('UsersInfo', _dashboardUsersinfo4.default).controller('DialogSettings', _dashboardDialogSettings4.default).controller('DialogNew', _dashboardDialogNew4.default).run(_app6.default);
+
+},{"./app/app.config":2,"./app/app.js":3,"./app/app.run":4,"./auth/auth.js":5,"./auth/auth.route":6,"./dashboard.dialog.new/dashboard.dialog.new.js":7,"./dashboard.dialog.new/dashboard.dialog.new.route":8,"./dashboard.dialog.settings/dashboard.dialog.settings.js":9,"./dashboard.dialog.settings/dashboard.dialog.settings.route":10,"./dashboard.dialogs/dashboard.dialogs.js":11,"./dashboard.dialogs/dashboard.dialogs.route":12,"./dashboard.friends/dashboard.friends.js":13,"./dashboard.friends/dashboard.friends.route":14,"./dashboard.messages/dashboard.messages.js":15,"./dashboard.messages/dashboard.messages.route":16,"./dashboard.profile/dashboard.profile.js":17,"./dashboard.profile/dashboard.profile.route":18,"./dashboard.users/dashboard.users.js":19,"./dashboard.users/dashboard.users.route":20,"./dashboard.usersinfo/dashboard.usersinfo.js":21,"./dashboard.usersinfo/dashboard.usersinfo.route":22,"./dashboard/dashboard.js":23,"./dashboard/dashboard.route":24,"./filters/cutTo.filter":25,"./filters/fromNow.filter":26,"./registration/registration.js":27,"./registration/registration.route":28,"./resetPassword/resetPassword.js":29,"./resetPassword/resetPassword.route":30,"./services/auth.service":31,"angular":33,"angularfire":35,"firebase":36}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -209,7 +225,7 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fir
           lastLoggedIn: new Date().getTime(),
           lastLoggedOut: 0
         });
-        $location.path('/news');
+        $location.path('/dialogs');
         $rootScope.$digest();
       } else {
         toastr.error(data);
@@ -246,10 +262,18 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, userInfo, fire) {
 
-  $rootScope.loading = true;
-  $scope.pageTitle = 'Your Dialogs page';
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
+
+  $rootScope.subLoading = true;
   var dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
       friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
       dialogs = $firebaseArray(dialog_ref),
@@ -257,62 +281,347 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', 'userInfo', 'fire',
 
   dialogs.$loaded(function () {
 
-    $rootScope.loading = false;
+    $rootScope.subLoading = false;
     $scope.friends = friends;
   });
 
-  $scope.creatingNewDialog = false;
   $scope.dialog = {
     title: '',
-    participants: [userInfo.uid]
+    participants: []
   };
   $scope.dialogs = dialogs;
-  $scope.addNewDialog = addNewDialog;
+  $scope.create = create;
+  $scope.cancel = cancel;
+  $scope.addParticipant = addParticipant;
+  $scope.removeParticipant = removeParticipant;
+
+  function create() {
+
+    var participants = angular.copy($scope.dialog.participants);
+    $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
+
+    participants = participants.map(function (participant) {
+
+      return participant.uid;
+    });
+    participants[participants.length] = userInfo.uid;
+
+    participants.forEach(function (participant) {
+
+      var participant_dialogs_ref = new Firebase(fire + '/users/' + participant + '/dialogs');
+
+      //Adding dialog for choosed user  
+      participant_dialogs_ref.child($scope.dialog.name).set({
+
+        title: $scope.dialog.title,
+        name: $scope.dialog.name,
+        participants: participants,
+        newMessages: false
+      });
+
+      //Adding dialog for current user
+      dialog_ref.child($scope.dialog.name).set({
+
+        title: $scope.dialog.title,
+        name: $scope.dialog.name,
+        participants: participants,
+        newMessages: false,
+        dialogHost: userInfo.uid
+      });
+    });
+    toastr.error('Dialog ' + $scope.dialog.title + ' created successfully!');
+    $location.path('/dialogs');
+  }
+
+  function cancel() {
+
+    $location.path('/dialogs');
+  }
+
+  function addParticipant(participant) {
+
+    $scope.dialog.participants.push({
+
+      name: participant.info.name,
+      surname: participant.info.surname,
+      uid: participant.id,
+      photo: participant.info.image
+    });
+
+    _lodash2.default.remove($scope.friends, {
+
+      id: participant.id
+    });
+  }
+
+  function removeParticipant(participant) {
+
+    _lodash2.default.remove($scope.dialog.participants, {
+
+      uid: participant.uid
+    });
+
+    $scope.friends.push({
+
+      id: participant.uid,
+      info: {
+        name: participant.name,
+        surname: participant.surname,
+        image: participant.photo
+      }
+    });
+  }
+}];
+
+},{"lodash":37}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
+
+  $stateProvider.state('dashboard.newDialog', {
+
+    url: 'dialogs/new',
+    parent: 'dashboard',
+    templateUrl: urls.templates + 'dashboard.dialog.new/dashboard.dialog.new.html',
+    controller: 'DialogNew',
+    resolve: {
+
+      log: function log() {
+
+        console.debug('Routed to new dialog page');
+      },
+      userInfo: ['auth', function (auth) {
+
+        return auth.authentication.$getAuth();
+      }],
+
+      currentAuth: ['auth', function (auth) {
+
+        return auth.authentication.$requireAuth();
+      }]
+    }
+  });
+}];
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInfo', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, $stateParams, $location, userInfo, fire, $firebaseObject, $firebaseArray) {
+
+  $rootScope.subLoading = true;
+  var current_dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name),
+      current_dialog = $firebaseObject(current_dialog_ref),
+      current_friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
+      current_friends = $firebaseArray(current_friends_ref);
+  $scope.participants = [];
+  $scope.friends = [];
+  $scope.current_user = userInfo.uid;
+
+  //Getting data and ordering it
+  current_dialog.$loaded(function () {
+
+    $rootScope.subLoading = false;
+    $scope.current_dialog = current_dialog;
+    if (current_dialog.participants.length > 1) {
+
+      getAllData();
+    } else {
+
+      current_friends.$loaded(function () {
+
+        $scope.friends = current_friends;
+      });
+    }
+  });
+
+  $scope.removeParticipant = removeParticipant;
+  $scope.addParticipant = addParticipant;
+  $scope.saveChanges = saveChanges;
+  $scope.cancelChanges = cancelChanges;
+
+  function addParticipant(participant) {
+
+    _lodash2.default.remove($scope.friends, {
+      id: participant.id
+    });
+
+    $scope.participants.push({
+      name: participant.info.name,
+      surname: participant.info.surname,
+      uid: participant.id,
+      photo: participant.info.image
+    });
+  }
+
+  function removeParticipant(participant) {
+
+    _lodash2.default.remove($scope.participants, {
+      uid: participant.uid
+    });
+
+    $scope.friends.push({
+      id: participant.uid,
+      info: {
+        name: participant.name,
+        surname: participant.surname,
+        image: participant.photo
+      }
+    });
+  }
+
+  function saveChanges() {
+
+    var participants = angular.copy($scope.participants);
+    var friends = angular.copy($scope.friends);
+    participants = participants.map(function (participant) {
+
+      return participant.uid;
+    });
+    participants[participants.length] = userInfo.uid;
+
+    friends.forEach(function (friend) {
+
+      var dialog_ref = new Firebase(fire + '/users/' + friend.id + '/dialogs/' + $stateParams.name);
+      dialog_ref.child('participants').set(null);
+    });
+
+    participants.forEach(function (participant) {
+
+      var dialog_ref = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
+      dialog_ref.child('participants').set(participants);
+      dialog_ref.child('name').set($stateParams.name);
+      dialog_ref.child('title').set($stateParams.name.split('_').join(' '));
+    });
+
+    toastr.error('Changes applied successfully!');
+
+    $location.path('/dialogs/' + $stateParams.name + '/messages');
+  }
+
+  function cancelChanges() {
+
+    $location.path('/dialogs/' + $stateParams.name + '/messages');
+  }
+
+  function getAllData() {
+
+    $scope.participants_prev = current_dialog.participants.filter(function (participant) {
+
+      return participant !== userInfo.uid;
+    }).forEach(function (participant) {
+
+      var participant_info = $firebaseObject(new Firebase(fire + '/users/' + participant));
+      participant_info.$loaded(function () {
+
+        $scope.participants.push({
+
+          name: participant_info.info.name,
+          surname: participant_info.info.surname,
+          photo: participant_info.info.image,
+          uid: participant_info.id
+        });
+        current_friends.$loaded(function () {
+
+          $scope.friends = current_friends.filter(function (friend) {
+
+            return !_lodash2.default.find($scope.participants, {
+
+              uid: friend.id
+            });
+          });
+        });
+      });
+    });
+  }
+}];
+
+},{"lodash":37}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
+
+  $stateProvider.state('dashboard.dialogSettings', {
+
+    url: 'dialogs/:name/settings',
+    parent: 'dashboard',
+    templateUrl: urls.templates + 'dashboard.dialog.settings/dashboard.dialog.settings.html',
+    controller: 'DialogSettings',
+    resolve: {
+
+      log: function log() {
+
+        console.debug('Routed to dialog settings page');
+      },
+      userInfo: ['auth', function (auth) {
+
+        return auth.authentication.$getAuth();
+      }],
+
+      currentAuth: ['auth', function (auth) {
+
+        return auth.authentication.$requireAuth();
+      }]
+    }
+  });
+}];
+
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
+
+  $rootScope.subLoading = true;
+  var dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
+      dialogs = $firebaseArray(dialog_ref);
+
+  dialogs.$loaded(function () {
+
+    $rootScope.subLoading = false;
+  });
+
+  $scope.dialogs = dialogs;
   $scope.removeDialog = removeDialog;
-  $scope.toggleNewDialogForm = toggleNewDialogForm;
+  $scope.openDialogMessages = openDialogMessages;
+  $scope.addNewDialog = addNewDialog;
 
   function addNewDialog() {
 
-    var participant_dialogs_ref = new Firebase(fire + '/users/' + $scope.dialog.participants[1] + '/dialogs');
-
-    $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
-
-    //Adding dialog for choosed user  
-    participant_dialogs_ref.child($scope.dialog.name).set({
-
-      title: $scope.dialog.title,
-      name: $scope.dialog.name,
-      participants: $scope.dialog.participants,
-      newMessages: false
-    });
-
-    //Adding dialog for current user
-    dialog_ref.child($scope.dialog.name).set({
-
-      title: $scope.dialog.title,
-      name: $scope.dialog.name,
-      participants: $scope.dialog.participants,
-      newMessages: false
-    });
-
-    $scope.dialog.title = '';
-    $scope.dialog.name = '';
-    $scope.dialog.participants.length = 1;
+    $location.path('/dialogs/new');
   }
 
   function removeDialog(dialog) {
 
     dialogs.$remove(dialog);
-    dialogs.$remove(dialog);
   }
 
-  function toggleNewDialogForm() {
+  function openDialogMessages(dialog) {
 
-    $scope.creatingNewDialog = !$scope.creatingNewDialog;
+    $location.path('/dialogs/' + dialog.name + '/messages');
   }
 }];
 
-},{}],8:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -345,7 +654,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],9:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -399,7 +708,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
   }
 }];
 
-},{}],10:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -433,7 +742,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],11:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -441,22 +750,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
 
-  $rootScope.loading = true;
+  $rootScope.subLoading = true;
   var current_dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
   var current_dialog = $firebaseObject(current_dialog_ref);
   var current_user = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
   var messages_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
   var messages = $firebaseArray(messages_ref);
-
-  messages.$loaded(function () {
-
-    $rootScope.loading = false;
-  });
+  $scope.userUid = userInfo.uid;
 
   current_dialog.$loaded(function () {
-    console.debug(current_dialog);
+
     $scope.current_dialog = current_dialog;
     current_dialog_ref.child('newMessages').set(false);
+    $rootScope.subLoading = false;
   });
 
   current_user.$loaded(function () {
@@ -474,9 +780,11 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   $scope.currentDate = 1463754897700;
 
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
+  $scope.dialogName = $stateParams.name;
   $scope.messages = messages;
   $scope.sendMessage = sendMessage;
   $scope.watchEnter = watchEnter;
+  $scope.goBack = goBack;
 
   function watchEnter(e) {
 
@@ -491,6 +799,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   function sendMessage() {
 
     $scope.message.time = new Date().getTime();
+
     $scope.current_dialog.participants.forEach(function (participant) {
 
       var participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
@@ -504,9 +813,15 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
     $scope.message.time = '';
     $scope.message.text = '';
   }
+
+  function goBack() {
+
+    current_dialog_ref.child('newMessages').set(false);
+    $location.path('/dialogs');
+  }
 }];
 
-},{}],12:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -540,76 +855,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],13:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ['$scope', '$rootScope', function ($scope, $rootScope) {
-
-  $scope.sortType = 'date';
-  $scope.reverse = true;
-  $rootScope.loading = true;
-
-  $scope.setSortBy = setSortBy;
-
-  function getWall() {
-
-    return new Promise(function (resolve, reject) {
-      $rootScope.loading = true;
-      VK.api('wall.get', { domain: 'forwebdev', count: 20 }, function (data) {
-
-        if (data.response) {
-          resolve(data.response);
-        }
-      });
-    });
-  }
-
-  getWall().then(function (data) {
-
-    $scope.posts = data.slice(1);
-    $rootScope.loading = false;
-    $rootScope.$digest();
-  });
-
-  function setSortBy(type) {
-
-    $scope.sortType = type;
-    $scope.reverse = !$scope.reverse;
-  }
-}];
-
-},{}],14:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
-  $stateProvider.state('dashboard.news', {
-
-    url: 'news',
-    parent: 'dashboard',
-    templateUrl: urls.templates + 'dashboard.news/dashboard.news.html',
-    controller: 'News',
-    resolve: {
-
-      log: function log() {
-
-        console.debug('Routed to news page');
-      },
-      currentAuth: ['auth', function (auth) {
-
-        return auth.authentication.$requireAuth();
-      }]
-    }
-  });
-}];
-
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -704,7 +950,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseObject'
   }
 }];
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -738,7 +984,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -873,7 +1119,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseArray',
   }
 }];
 
-},{"lodash":35}],18:[function(require,module,exports){
+},{"lodash":37}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -907,7 +1153,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -926,7 +1172,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatched
   });
 }];
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -965,7 +1211,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -992,11 +1238,11 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
 
     var item = event.val();
     var current_location = $location.path();
-    if (item.newMessages === true && current_location.indexOf(item.title) === -1) {
-      console.debug('yes');
+
+    if (item.newMessages === true && current_location.indexOf(item.name) === -1) {
       var messageIn = new Audio('../../sounds/messageInSound.wav');
       messageIn.play();
-      toastr.error('Received new Message!');
+      toastr.error('New Message!');
     }
   });
 
@@ -1018,7 +1264,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   }
 }];
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1046,7 +1292,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1065,7 +1311,7 @@ exports.default = [function () {
   };
 }];
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1093,7 +1339,7 @@ exports.default = ['dateFilter', function (dateFilter) {
   };
 }];
 
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1127,7 +1373,7 @@ exports.default = ['$scope', '$rootScope', 'auth', '$location', function ($scope
   }
 }];
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1143,7 +1389,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1182,7 +1428,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope
   }
 }];
 
-},{}],28:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1198,7 +1444,7 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
   });
 }];
 
-},{}],29:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1292,7 +1538,7 @@ exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
   }
 }];
 
-},{}],30:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.5
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -32161,11 +32407,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":30}],32:[function(require,module,exports){
+},{"./angular":32}],34:[function(require,module,exports){
 /*!
  * AngularFire is the officially supported AngularJS binding for Firebase. Firebase
  * is a full backend so you don't need servers to build your Angular app. AngularFire
@@ -34505,11 +34751,11 @@ if ( typeof Object.getPrototypeOf !== "function" ) {
     }
 })();
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 require('./dist/angularfire');
 module.exports = 'firebase';
 
-},{"./dist/angularfire":32}],34:[function(require,module,exports){
+},{"./dist/angularfire":34}],36:[function(require,module,exports){
 /*! @license Firebase v2.4.2
     License: https://www.firebase.com/terms/terms-of-service.html */
 (function() {var h,n=this;function p(a){return void 0!==a}function aa(){}function ba(a){a.yb=function(){return a.zf?a.zf:a.zf=new a}}
@@ -34791,7 +35037,7 @@ X.prototype.Ze=function(a,b){D("Firebase.resetPassword",1,2,arguments.length);sg
 
 module.exports = Firebase;
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -34807,7 +35053,7 @@ module.exports = Firebase;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.13.0';
+  var VERSION = '4.13.1';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -39345,6 +39591,31 @@ module.exports = Firebase;
     }
 
     /**
+     * Creates a `_.find` or `_.findLast` function.
+     *
+     * @private
+     * @param {Function} findIndexFunc The function to find the collection index.
+     * @returns {Function} Returns the new find function.
+     */
+    function createFind(findIndexFunc) {
+      return function(collection, predicate, fromIndex) {
+        var iterable = Object(collection);
+        predicate = getIteratee(predicate, 3);
+        if (!isArrayLike(collection)) {
+          var props = keys(collection);
+        }
+        var index = findIndexFunc(props || collection, function(value, key) {
+          if (props) {
+            key = value;
+            value = iterable[key];
+          }
+          return predicate(value, key, iterable);
+        }, fromIndex);
+        return index > -1 ? collection[props ? props[index] : index] : undefined;
+      };
+    }
+
+    /**
      * Creates a `_.flow` or `_.flowRight` function.
      *
      * @private
@@ -40589,7 +40860,7 @@ module.exports = Firebase;
      * @param {*} value The value to check.
      * @returns {boolean} Returns `true` if `func` is maskable, else `false`.
      */
-    var isMaskable = !coreJsData ? stubFalse : isFunction;
+    var isMaskable = coreJsData ? isFunction : stubFalse;
 
     /**
      * Checks if `value` is likely a prototype object.
@@ -43267,11 +43538,7 @@ module.exports = Firebase;
      * _.find(users, 'active');
      * // => object for 'barney'
      */
-    function find(collection, predicate, fromIndex) {
-      collection = isArrayLike(collection) ? collection : values(collection);
-      var index = findIndex(collection, predicate, fromIndex);
-      return index > -1 ? collection[index] : undefined;
-    }
+    var find = createFind(findIndex);
 
     /**
      * This method is like `_.find` except that it iterates over elements of
@@ -43293,11 +43560,7 @@ module.exports = Firebase;
      * });
      * // => 3
      */
-    function findLast(collection, predicate, fromIndex) {
-      collection = isArrayLike(collection) ? collection : values(collection);
-      var index = findLastIndex(collection, predicate, fromIndex);
-      return index > -1 ? collection[index] : undefined;
-    }
+    var findLast = createFind(findLastIndex);
 
     /**
      * Creates a flattened array of values by running each element in `collection`

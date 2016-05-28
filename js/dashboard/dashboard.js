@@ -25,11 +25,11 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
       
     let item = event.val();
     let current_location = $location.path();
-    if (item.newMessages === true && (current_location.indexOf(item.title)) === -1) {
-      console.debug('yes');
+    
+    if (item.newMessages === true && (current_location.indexOf(item.name)) === -1) {
       let messageIn = new Audio('../../sounds/messageInSound.wav');
       messageIn.play();
-      toastr.error('Received new Message!');
+      toastr.error('New Message!');
     }  
   })
   

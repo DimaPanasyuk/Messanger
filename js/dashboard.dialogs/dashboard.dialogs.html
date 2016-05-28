@@ -1,18 +1,59 @@
-<div class="container">
+<div class="canvas-container"
+      ng-if="subLoading">
+  <div class="canvas">
+    <div class="cube">
+        <div class="group group--aqua">
+            <div class="plane plane--aqua">
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="plane plane--gold">
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+            </div>
+        </div>
+        <div class="group group--tomato">
+            <div class="plane plane--tomato">
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="container"
+     ng-if="!subLoading">
   
   <div class="row">
     <div class="col-md-12">
-        <button ng-click="toggleNewDialogForm()"
-                ng-if="!creatingNewDialog"
+        <button ng-click="addNewDialog()"
                 class="btn btn-success pull-right">
           Add
         </button>
-        <button ng-click="toggleNewDialogForm()"
-                ng-if="creatingNewDialog"
-                class="btn btn-danger pull-right">
-          Close
-        </button>
-        <br><br>
     </div>
   </div>
   
@@ -71,7 +112,6 @@
         <thead>
           <tr>
             <th>Dialog Title</th>
-            <th class="text-right">Change Dialog</th>
             <th class="text-right">
               Remove Dialog
             </th>
@@ -79,20 +119,15 @@
         </thead>
         <tbody>
           <tr ng-repeat="dialog in dialogs">
-            <td>
-              <a href="#/dialogs/{{dialog.name}}/messages">
+            <td ng-click="openDialogMessages(dialog)"
+                class="link-to-messages">
+              <a href="">
                 <b>{{dialog.title}}</b>
                 <span class="label label-success"
                       ng-if="dialog.newMessages">
                   New messages
                 </span>
               </a>
-            </td>
-            <td class="text-right">
-              <button class="btn btn-warning"
-                      disabled>
-                Change
-              </button>
             </td>
             <td class="text-right">
               <button class="btn btn-danger" 

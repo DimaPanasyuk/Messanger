@@ -1,3 +1,156 @@
+.canvas-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.canvas {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: rotateX(-35deg);
+  transform: rotateX(-35deg);
+}
+.cube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform: translate(-50%, -50%) rotateY(45deg);
+  transform: translate(-50%, -50%) rotateY(45deg);
+}
+.group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.group--aqua {
+  -webkit-transform: translate3d(0, 0, 67px);
+  transform: translate3d(0, 0, 67px);
+}
+.group--tomato {
+  -webkit-transform: translate3d(0, 0, -67px);
+  transform: translate3d(0, 0, -67px);
+}
+@-webkit-keyframes plane-rotation {
+  50%,
+  100% {
+    -webkit-transform: rotateZ(-90deg);
+    transform: rotateZ(-90deg);
+  }
+}
+@keyframes plane-rotation {
+  50%,
+  100% {
+    -webkit-transform: rotateZ(-90deg);
+    transform: rotateZ(-90deg);
+  }
+}
+.plane {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-perspective: 2400px;
+  perspective: 2400px;
+  -webkit-animation: plane-rotation 2s infinite;
+  animation: plane-rotation 2s infinite;
+}
+.plane--gold {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+.plane--tomato {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+@-webkit-keyframes dot-rotation {
+  50%,
+  100% {
+    -webkit-transform: rotateY(0deg) rotateX(45deg) scaleX(1.2);
+    transform: rotateY(0deg) rotateX(45deg) scaleX(1.2);
+  }
+}
+@keyframes dot-rotation {
+  50%,
+  100% {
+    -webkit-transform: rotateY(0deg) rotateX(45deg) scaleX(1.2);
+    transform: rotateY(0deg) rotateX(45deg) scaleX(1.2);
+  }
+}
+.dot {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-basis: 33.33%;
+  -ms-flex-preferred-size: 33.33%;
+  flex-basis: 33.33%;
+  -webkit-transform: rotateY(-45deg) rotateX(35deg) scaleX(1);
+  transform: rotateY(-45deg) rotateX(35deg) scaleX(1);
+  -webkit-animation: dot-rotation 2s infinite;
+  animation: dot-rotation 2s infinite;
+}
+.dot::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot--aqua::before {
+  background-color: aqua;
+}
+.dot--gold {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+.dot--gold::before {
+  background-color: gold;
+}
+.dot--tomato {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+.dot--tomato::before {
+  background-color: tomato;
+}
 header [role="progressbar"][aria-busy="true"] {
   position: absolute;
   top: 0;
@@ -254,4 +407,33 @@ header {
 }
 .test {
   border: 1px solid black;
+}
+.messages-author-image {
+  width: 70px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  height: 70px;
+  box-shadow: 0 0 3px 1px rebeccapurple;
+  height: 50px;
+  width: 50px;
+  box-shadow: none;
+}
+.messages-author-image-no {
+  width: 70px;
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  height: 70px;
+  box-shadow: 0 0 3px 1px rebeccapurple;
+  background-image: url('../../images/noavatar.jpg');
+}
+.link-to-messages {
+  cursor: pointer;
+}
+.back-btn {
+  margin-top: 8px;
+}
+.messages {
+  overflow: hidden !important;
 }

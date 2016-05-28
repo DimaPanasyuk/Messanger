@@ -1,9 +1,78 @@
-<br>
-<div class="container">
+<div class="canvas-container"
+      ng-if="subLoading">
+  <div class="canvas">
+    <div class="cube">
+        <div class="group group--aqua">
+            <div class="plane plane--aqua">
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="plane plane--gold">
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+            </div>
+        </div>
+        <div class="group group--tomato">
+            <div class="plane plane--tomato">
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="container messages"
+     ng-if="!subLoading">
+     
+  <div class="row"
+       ng-if="current_dialog">
+    <div class="col-sm-2">
+      
+      <div class="form-group">
+        <button class="btn btn-default btn-block back-btn"
+                ng-click="goBack()">
+          <span class="glyphicon glyphicon-chevron-left text-primary"></span>
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-10">
+      
+      <div class="alert alert-danger"
+           ng-if="current_dialog && !current_dialog.participants">
+        <strong>
+          Host removed you from dialog!
+        </strong>
+      </div>
+    </div>
+  </div>
   
-  <div class="row">
+  <div class="row"
+       ng-if="current_dialog">
     
-    <div class="col-md-12">
+    <div class="col-md-8 col-md-offset-2">
      <div class="panel panel-info">
       <div class="panel-heading">
         <b>
@@ -13,33 +82,54 @@
               
       <div class="panel-body">
         
-        <div class="panel panel-default">
+        
+        <div class="panel panel-default"
+             ng-if="current_dialog && current_dialog.participants">
+          
           <div class="panel-body">
-            <div class="form-group">
-              <input type="text"
-                    placeholder="Enter your name"
-                    ng-model="message.author"
-                    disabled
-                    class="form-control">
-              <br>
-              <textarea placeholder="Enter your message"
-                        class="form-control textarea"
-                        ng-keydown="watchEnter($event)"
-                        ng-model="message.text">
-              </textarea>       
+            <div class="row">
+              <div class="col-sm-2">
+                
+                <div class="messages-author-image pull-right"
+                     ng-if="message.authorPhoto"
+                     style="background-image: url({{message.authorPhoto}})">
+                </div>
+                
+                <div class="messages-author-image-no pull-right"
+                     ng-if="!message.authorPhoto">
+                </div>
+              </div>
+              <div class="col-sm-7">
+                
+                <div class="form-group">
+                  
+                  <textarea rows="2"
+                            class="form-control textarea"
+                            ng-model="message.text"
+                            ng-keydown="watchEnter($event)"
+                            placeholder="Enter your message here">
+                            
+                  </textarea>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-sm btn-block btn-success"
+                        id="message_text"
+                        ng-disabled="!message.text.length"
+                        ng-click="sendMessage()">
+                  Send message
+                </button>
+                <a class="btn btn-sm btn-block btn-default"
+                   ng-if="(current_dialog &&  userUid) && current_dialog.dialogHost === userUid"
+                   href="#/dialogs/{{dialogName}}/settings">
+                  <span class="glyphicon glyphicon-cog"></span>
+                  Dialog settings
+                </a>
+              </div>
             </div>
           </div>
-          <div class="panel-footer">
-            <button class="btn btn-warning"
-                      id="message_text"
-                      ng-disabled="!message.author.length ||
-                                   !message.text.length"
-                      ng-click="sendMessage()">
-                Post message
-            </button>
-          </div>
         </div>
-      
+             
               
         <ul class="messages">
           
