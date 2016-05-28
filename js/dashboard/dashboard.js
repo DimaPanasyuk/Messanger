@@ -29,7 +29,7 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
     if (item.newMessages === true && (current_location.indexOf(item.name)) === -1) {
       let messageIn = new Audio('../../sounds/messageInSound.wav');
       messageIn.play();
-      toastr.error('New Message!');
+      toastr.error(`<b>${item.title}</b>, new message!`);
     }  
   })
   

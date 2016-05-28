@@ -54,19 +54,43 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
   function sendMessage() {
     
     $scope.message.time = (new Date()).getTime();
-     
-    $scope.current_dialog.participants.forEach(function(participant) {
-
-      let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`));
-      let dialog               = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
-      participant_messages.$add($scope.message);
-      if (userInfo.uid !== participant) {
+    
+    if($scope.current_dialog.toOneUser) {
+      
+      
+      $scope.current_dialog.participants.forEach(function(participant) {
+        
+        if (userInfo.uid !== participant) {
+                    
+          let dialog_name = current_user.info.name + '_' + current_user.info.surname,
+              dialog      = new Firebase(`${fire}/users/${participant}/dialogs/${dialog_name}`),
+              participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${dialog_name}/messages`));
           
-        dialog.child('newMessages').set(true); 
-      }
-    })
-    $scope.message.time = '';
-    $scope.message.text = ''; 
+          participant_messages.$add($scope.message);           
+          dialog.child('newMessages').set(true);
+        } else {
+          
+          let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`)),
+              dialog     = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
+          participant_messages.$add($scope.message);
+          dialog.child('newMessages').set(false);
+        }
+      })
+      $scope.message.text = ''; 
+    } else {
+      
+      $scope.current_dialog.participants.forEach(function(participant) {
+
+        let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`));
+        let dialog               = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
+        participant_messages.$add($scope.message);
+        if (userInfo.uid !== participant) {
+            
+          dialog.child('newMessages').set(true); 
+        }
+      })
+      $scope.message.text = '';  
+    }
   }
   
   function goBack() {

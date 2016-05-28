@@ -11,14 +11,16 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
   
   $rootScope.subLoading = true;
   let dialog_ref   = new Firebase(`${fire}/users/${userInfo.uid}/dialogs`),
-      friends_ref  = new Firebase(`${fire}/users/${userInfo.uid}/friends`), 
+      friends_ref  = new Firebase(`${fire}/users/${userInfo.uid}/friends`),
+      users_ref    = new Firebase(`${fire}/users`), 
       dialogs      = $firebaseArray(dialog_ref),
-      friends      = $firebaseArray(friends_ref);
+      friends      = $firebaseArray(friends_ref),
+      users        = $firebaseArray(users_ref);
       
   dialogs.$loaded(function() {
     
     $rootScope.subLoading = false;
-    $scope.friends = friends;
+    $scope.friends = users.filter(user => _.find(friends, { id: user.id }));
   });
   
   $scope.dialog       = {
@@ -45,25 +47,29 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
     participants.forEach(function(participant) {
       
       let participant_dialogs_ref =  new Firebase(`${fire}/users/${participant}/dialogs`);
-          
-      //Adding dialog for choosed user    
-      participant_dialogs_ref.child($scope.dialog.name).set({
+      
+      if (participant === userInfo.uid) {
         
-        title: $scope.dialog.title,
-        name: $scope.dialog.name,
-        participants: participants,
-        newMessages: false
-      });
+        participant_dialogs_ref.child($scope.dialog.name).set({
+      
+          title: $scope.dialog.title,
+          name: $scope.dialog.name,
+          participants: participants,
+          newMessages: false,
+          dialogHost: userInfo.uid
+        });
+      } else {
+        
+        participant_dialogs_ref.child($scope.dialog.name).set({
+      
+          title: $scope.dialog.title,
+          name: $scope.dialog.name,
+          participants: participants,
+          newMessages: false
+        });
+      }     
     
-      //Adding dialog for current user
-      dialog_ref.child($scope.dialog.name).set({
-        
-        title: $scope.dialog.title,
-        name: $scope.dialog.name,
-        participants: participants,
-        newMessages: false,
-        dialogHost: userInfo.uid
-      });
+   
     })
     toastr.error(`Dialog ${$scope.dialog.title} created successfully!`);
     $location.path('/dialogs');    

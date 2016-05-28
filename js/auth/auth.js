@@ -31,7 +31,7 @@ function Auth($scope, $rootScope, $location, $timeout, auth, fire) {
           lastLoggedIn: (new Date()).getTime(),
           lastLoggedOut: 0
         });
-        $location.path('/dialogs');
+        $location.path('/profile');
         $rootScope.$digest();
       } else {
         toastr.error(data);

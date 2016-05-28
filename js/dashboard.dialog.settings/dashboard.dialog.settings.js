@@ -16,7 +16,10 @@ export default [
     let current_dialog_ref  = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${$stateParams.name}`),
         current_dialog      = $firebaseObject(current_dialog_ref),
         current_friends_ref = new Firebase(`${fire}/users/${userInfo.uid}/friends`),
-        current_friends     = $firebaseArray(current_friends_ref); 
+        users_ref           = new Firebase(`${fire}/users`),
+        current_friends     = $firebaseArray(current_friends_ref),
+        users               = $firebaseArray(users_ref);
+         
     $scope.participants     = [];
     $scope.friends          = [];
     $scope.current_user     = userInfo.uid;
@@ -33,7 +36,7 @@ export default [
         
        current_friends.$loaded(function() {
          
-         $scope.friends = current_friends;
+         $scope.friends = users.filter(user => _.find(current_friends, { id: user.id }));;
        }) 
       }
     });  

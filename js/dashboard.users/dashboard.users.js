@@ -1,12 +1,12 @@
 import _ from 'lodash';
 
 export default
-['$scope', '$rootScope', 'userInfo',
+['$scope', '$rootScope', 'userInfo', '$location',
  'fire', '$firebaseArray', '$firebaseObject',
 
-function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
+function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebaseObject) {
   
-  $rootScope.loading           = true;
+  $rootScope.subLoading        = true;
   let users_ref                = new Firebase(`${fire}/users`),
       users                    = $firebaseArray(users_ref),
       current_user_friends_ref = new Firebase(`${fire}/users/${userInfo.uid}/friends`),
@@ -16,7 +16,6 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
   
   users.$loaded(function() {
     
-    $rootScope.loading = false;
     $scope.users = users
     .filter(function(user) {
       
@@ -40,13 +39,19 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
         return user;
       }
     })
-    
+    $rootScope.subLoading = false;
   });    
   
   $scope.pageTitle = 'Users page';
   $scope.filter = 'show-all';
   $scope.filterUsers = filterUsers;
-  $scope.toggleFriends = toggleFriends;  
+  $scope.toggleFriends = toggleFriends;
+  $scope.showProfile   = showProfile;
+  
+  function showProfile(user) {
+    
+    $location.path(`/users/${user.id}/info`);
+  }  
   
   function filterUsers(state) {
     
@@ -114,7 +119,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
       id: user.id 
     })) {
       
-      console.debug(user);
+      
       let user_ref = new Firebase(`${fire}/users/${userInfo.uid}/friends/${user.$id}`),
           user_u   = $firebaseObject(user_ref); 
          
@@ -127,10 +132,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseArray, $firebaseObject) {
       
       current_user_friends_ref.child(user.id)
         .set({
-          id: user.id,
-          info: user.info,
-          lastLoggedOut: user.lastLoggedOut,
-          lastLoggedIn: user.lastLoggedIn          
+          id: user.id          
         });
         user.$$friend = true;
     }

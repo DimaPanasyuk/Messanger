@@ -49,24 +49,30 @@
      
   <div class="row"
        ng-if="current_dialog">
-    <div class="col-sm-2">
+       
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        
+        <div class="col-sm-2">
       
-      <div class="form-group">
-        <button class="btn btn-default btn-block back-btn"
-                ng-click="goBack()">
-          <span class="glyphicon glyphicon-chevron-left text-primary"></span>
-        </button>
+          <div class="form-group">
+            <button class="btn btn-default btn-block back-btn"
+                    ng-click="goBack()">
+              <span class="glyphicon glyphicon-chevron-left text-primary"></span>
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-10">
+          
+          <div class="alert alert-danger"
+              ng-if="current_dialog && !current_dialog.participants">
+            <strong>
+              Host removed you from dialog!
+            </strong>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-10">
-      
-      <div class="alert alert-danger"
-           ng-if="current_dialog && !current_dialog.participants">
-        <strong>
-          Host removed you from dialog!
-        </strong>
-      </div>
-    </div>
+    </div>   
   </div>
   
   <div class="row"

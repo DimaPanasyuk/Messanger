@@ -1,24 +1,118 @@
-<div class="container">
-  
+<div class="canvas-container"
+      ng-if="subLoading">
+  <div class="canvas">
+    <div class="cube">
+        <div class="group group--aqua">
+            <div class="plane plane--aqua">
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+                <div class="dot dot--aqua"></div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="plane plane--gold">
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+                <div class="dot dot--gold"></div>
+            </div>
+        </div>
+        <div class="group group--tomato">
+            <div class="plane plane--tomato">
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+                <div class="dot dot--tomato"></div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" 
+     id="newMessage">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="profile-image pull-left"
+              ng-if="toUser.info.image"
+              style="background-image: url({{toUser.info.image}})">
+        </div>
+        <div class="profile-image-no pull-left"
+              ng-if="!toUser.info.image">
+        </div>
+        <span class="text-primary new-message__title">New Message</span>
+        
+        <button class="btn btn-warning btn-sm pull-right"
+                data-dismiss="modal">
+          Close
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text"
+               class="form-control"
+               placeholder="Write your message here"
+               ng-keydown="checkEnter($event)"
+               ng-model="message.text">
+      </div>
+      <div class="modal-footer">
+        
+        <button class="btn btn-primary pull-left"
+                id="sendMessage"
+                data-dismiss="modal"
+                ng-click="sendMessage()">
+          Send Message 
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container"
+     ng-if="!subLoading">
   <div class="row">
-    <div class="col-md-4">
-      <ul class="nav nav-tabs">
-        <li ng-class="{'active': filter === 'show-all'}"
-            ng-click="filterFriends('show-all')">
-          <a href="">All</a>
-        </li>
-        <li ng-class="{'active': filter === 'show-online'}"
-            ng-click="filterFriends('show-online')">
-          <a href="">Online</a>
-        </li>
-      </ul>
-      <br>
+    
+    <div class="col-sm-8 col-sm-offset-2">
+      
+      <div class="row">
+        <div class="col-md-4">
+          <ul class="nav nav-tabs">
+            <li ng-class="{'active': filter === 'show-all'}"
+                ng-click="filterFriends('show-all')">
+              <a href="">All</a>
+            </li>
+            <li ng-class="{'active': filter === 'show-online'}"
+                ng-click="filterFriends('show-online')">
+              <a href="">Online</a>
+            </li>
+          </ul>
+          <br>
+        </div>
+      </div>
     </div>
   </div>
   
   <div class="row">
     
-    <div class="col-md-12">
+    <div class="col-sm-8 col-sm-offset-2">
       
       <div class="panel panel-primary">
         
@@ -36,17 +130,16 @@
               
               <div class="row">
             
-                <div class="col-sm-1">
-                  <div class="profile-image"
+                <div class="col-xs-8">
+                  <div class="profile-image pull-left"
                        ng-if="friend.info.image"
+                       ng-click="showProfile(friend)"
                        style="background-image: url({{friend.info.image}})">
                   </div>
-                  <div class="profile-image-no"
+                  <div class="profile-image-no pull-left"
+                       ng-click="showProfile(friend)"
                        ng-if="!friend.info.image">
                   </div>
-                </div>
-                
-                <div class="col-sm-9 text-left">
                   
                   <a href="#users/{{friend.id}}/info">
                     {{friend.info.name}} {{friend.info.surname}}
@@ -63,11 +156,19 @@
                   </span>  
                 </div>
                 
-                <div class="col-sm-2">
-                  <button class="btn btn-danger btn-xs"
+                <div class="col-xs-4">
+                  <button class="btn btn-primary btn-xs pull-right"
+                          data-toggle="modal"
+                          data-target="#newMessage"
+                          ng-click="createChat(friend)">
+                    Chat
+                    <span class="glyphicon glyphicon-pencil"></span>
+                  </button>
+                  <br><br>
+                  <button class="btn btn-danger btn-xs pull-right"
                           ng-click="removeFriend(friend, $index)">
 
-                    Remove from friends
+                    Remove
                     <span class="glyphicon glyphicon-remove">
                     </span>
                   </button>

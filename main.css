@@ -340,7 +340,9 @@ header {
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
+  cursor: pointer;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  margin: 0 10px 0 0;
 }
 .profile-image-no {
   width: 70px;
@@ -348,7 +350,9 @@ header {
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
+  cursor: pointer;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  margin: 0 10px 0 0;
   background-image: url('../../images/noavatar.jpg');
 }
 .profile-image-rounded {
@@ -367,7 +371,9 @@ header {
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
+  cursor: pointer;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  margin: 0 10px 0 0;
   border-radius: 50%;
   margin: 9px 10px 0 0;
   width: 50px;
@@ -414,7 +420,9 @@ header {
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
+  cursor: pointer;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  margin: 0 10px 0 0;
   height: 50px;
   width: 50px;
   box-shadow: none;
@@ -425,7 +433,9 @@ header {
   background-position: bottom center;
   background-repeat: no-repeat;
   height: 70px;
+  cursor: pointer;
   box-shadow: 0 0 3px 1px rebeccapurple;
+  margin: 0 10px 0 0;
   background-image: url('../../images/noavatar.jpg');
 }
 .link-to-messages {
@@ -436,4 +446,7 @@ header {
 }
 .messages {
   overflow: hidden !important;
+}
+.new-message__title {
+  font-size: 16px;
 }

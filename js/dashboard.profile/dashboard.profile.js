@@ -3,7 +3,7 @@ export default
  'fire', '$firebaseObject',
 function($scope, $rootScope, userInfo, fire, $firebaseObject) {
   
-  $rootScope.loading = true;
+  $rootScope.subLoading = true;
   let profile_ref = new Firebase(`${fire}/users/${userInfo.uid}/info`),
       profile     = $firebaseObject(profile_ref);
   $scope.pageTitle = 'Your Profile page';
@@ -31,7 +31,7 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
       
       $scope.mode = 'view';
     }
-    $rootScope.loading = false;
+    $rootScope.subLoading = false;
   })
   
   

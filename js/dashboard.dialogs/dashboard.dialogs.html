@@ -49,100 +49,109 @@
      ng-if="!subLoading">
   
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-8 col-sm-offset-2">
         <button ng-click="addNewDialog()"
                 class="btn btn-success pull-right">
           Add
         </button>
+        <br><br>
     </div>
   </div>
   
   <div class="row">
     
-    <div class="col-md-12">
+    <div class="col-sm-8 col-sm-offset-2">
       
-      <div class="form-group"
-           ng-if="creatingNewDialog">
-        <div class="panel panel-success">
-          
-          <div class="panel-heading">
-            New Dialog
-          </div>
-          
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-md-6">
-                <input type="text"
-                       class="form-control"
-                       ng-model="dialog.title"
-                       placeholder="Enter dialog title">  
+      <div class="panel panel-primary">
+        
+        <div class="panel-heading">
+          <strong>Dialogs List</strong>
+        </div>
+        <div class="panel-body">
+          <div class="form-group"
+              ng-if="creatingNewDialog">
+            <div class="panel panel-success">
+              
+              <div class="panel-heading">
+                New Dialog
               </div>
-              <div class="col-md-6">
-                <select class="form-control"
-                        ng-if="friends.length"
-                        ng-model="dialog.participants[1]">
-                  
-                  <option value="" 
-                          selected
-                          disabled>
-                    Choose person to communicate to
-                  </option>
-                  <option value="{{friend.id}}"
-                          ng-repeat="friend in friends">
-                    {{friend.info.name}} {{friend.info.surname}}
-                  </option>
-                </select>
-                <div class="alert alert-warning"
-                     ng-if="!friends.length">
-                  Add friends to communicate with them
+              
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="text"
+                          class="form-control"
+                          ng-model="dialog.title"
+                          placeholder="Enter dialog title">  
+                  </div>
+                  <div class="col-md-6">
+                    <select class="form-control"
+                            ng-if="friends.length"
+                            ng-model="dialog.participants[1]">
+                      
+                      <option value="" 
+                              selected
+                              disabled>
+                        Choose person to communicate to
+                      </option>
+                      <option value="{{friend.id}}"
+                              ng-repeat="friend in friends">
+                        {{friend.info.name}} {{friend.info.surname}}
+                      </option>
+                    </select>
+                    <div class="alert alert-warning"
+                        ng-if="!friends.length">
+                      Add friends to communicate with them
+                    </div>
+                  </div>
                 </div>
+                <br>
+                <button class="btn btn-primary pull-right"
+                        ng-disabled="!dialog.title.length || !dialog.participants.length > 1"
+                        ng-click="addNewDialog()">
+                  Create
+                </button>
               </div>
             </div>
-            <br>
-            <button class="btn btn-primary pull-right"
-                    ng-disabled="!dialog.title.length || !dialog.participants.length > 1"
-                    ng-click="addNewDialog()">
-              Create
-            </button>
+          </div>
+          
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Dialog Title</th>
+                <th class="text-right">
+                  Remove Dialog
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="dialog in dialogs">
+                <td ng-click="openDialogMessages(dialog)"
+                    class="link-to-messages">
+                  <a href="">
+                    <b>{{dialog.title}}</b>
+                    <span class="label label-success"
+                          ng-if="dialog.newMessages">
+                      New messages
+                    </span>
+                  </a>
+                </td>
+                <td class="text-right">
+                  <button class="btn btn-danger" 
+                          ng-click="removeDialog(dialog)">
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div class="alert alert-info text-center"
+              ng-if="!dialogs.length">
+            Press <span class="label label-success">Add</span> 
+            button to add new dialog
           </div>
         </div>
-      </div>
-      
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Dialog Title</th>
-            <th class="text-right">
-              Remove Dialog
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="dialog in dialogs">
-            <td ng-click="openDialogMessages(dialog)"
-                class="link-to-messages">
-              <a href="">
-                <b>{{dialog.title}}</b>
-                <span class="label label-success"
-                      ng-if="dialog.newMessages">
-                  New messages
-                </span>
-              </a>
-            </td>
-            <td class="text-right">
-              <button class="btn btn-danger" 
-                      ng-click="removeDialog(dialog)">
-                Remove
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <div class="alert alert-info text-center"
-           ng-if="!dialogs.length">
-        Press <span class="label label-success">Add</span> 
-        button to add new dialog
       </div>
     </div>
   </div>
