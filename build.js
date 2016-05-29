@@ -979,15 +979,19 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
           participant_messages.$add($scope.message);
           dialog.child('newMessages').set(true);
-          dialog.child('lastMessageTime').set(new Date().getTime());
+
+          //add this feature back
+          //dialog.child('lastMessageTime').set((new Date()).getTime());
         } else {
 
-          var _participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages')),
-              _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
-          _participant_messages.$add($scope.message);
-          _dialog.child('newMessages').set(false);
-          _dialog.child('lastMessageTime').set(new Date().getTime());
-        }
+            var _participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages')),
+                _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
+            _participant_messages.$add($scope.message);
+            _dialog.child('newMessages').set(false);
+
+            //add this feature back but (2 notifications)
+            //dialog.child('lastMessageTime').set((new Date()).getTime());
+          }
       });
       $scope.message.text = '';
     } else {
@@ -1429,9 +1433,9 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   $scope.setActivePage = setActivePage;
   $scope.activePage = current_page[current_page.length - 1];
 
-  userMessages.off('value');
   userMessages.on('child_changed', function (event) {
 
+    console.debug('message change');
     var item = event.val();
     var current_location = $location.path();
 

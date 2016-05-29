@@ -68,14 +68,18 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
           
           participant_messages.$add($scope.message);           
           dialog.child('newMessages').set(true); 
-          dialog.child('lastMessageTime').set((new Date()).getTime());
+          
+          //add this feature back 
+          //dialog.child('lastMessageTime').set((new Date()).getTime());
         } else {
           
           let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`)),
               dialog     = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
           participant_messages.$add($scope.message);
           dialog.child('newMessages').set(false); 
-          dialog.child('lastMessageTime').set((new Date()).getTime());
+          
+          //add this feature back but (2 notifications)
+          //dialog.child('lastMessageTime').set((new Date()).getTime());
         }
       })
       $scope.message.text = ''; 

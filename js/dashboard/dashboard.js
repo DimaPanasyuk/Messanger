@@ -20,9 +20,9 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   $scope.setActivePage = setActivePage;
   $scope.activePage = current_page[current_page.length - 1];
   
-  userMessages.off('value');
   userMessages.on('child_changed', function(event) {
-      
+    
+    console.debug('message change');  
     let item = event.val();
     let current_location = $location.path();
     
