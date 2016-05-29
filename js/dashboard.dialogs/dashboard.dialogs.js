@@ -13,10 +13,9 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
       
   dialogs.$loaded(function() {
     
+    $scope.dialogs        = dialogs;
     $rootScope.subLoading = false;
   });
-  
-  $scope.dialogs             = dialogs;
   $scope.removeDialog        = removeDialog;
   $scope.openDialogMessages  = openDialogMessages;
   $scope.addNewDialog        = addNewDialog;

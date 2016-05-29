@@ -36,7 +36,7 @@ export default [
         
        current_friends.$loaded(function() {
          
-         $scope.friends = users.filter(user => _.find(current_friends, { id: user.id }));;
+         $scope.friends = users.filter(user => _.find(current_friends, { id: user.id }));
        }) 
       }
     });  
@@ -132,7 +132,9 @@ export default [
              })
              current_friends.$loaded(function() {
         
-                $scope.friends = current_friends.filter(function(friend) {
+                $scope.friends = users
+                .filter(user => _.find(current_friends, { id: user.id }))
+                .filter(function(friend) {
                   
                   return !(_.find($scope.participants, {
                     

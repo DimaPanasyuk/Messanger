@@ -455,7 +455,7 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
 
         $scope.friends = users.filter(function (user) {
           return _lodash2.default.find(current_friends, { id: user.id });
-        });;
+        });
       });
     }
   });
@@ -548,7 +548,9 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
         });
         current_friends.$loaded(function () {
 
-          $scope.friends = current_friends.filter(function (friend) {
+          $scope.friends = users.filter(function (user) {
+            return _lodash2.default.find(current_friends, { id: user.id });
+          }).filter(function (friend) {
 
             return !_lodash2.default.find($scope.participants, {
 
@@ -608,10 +610,9 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
 
   dialogs.$loaded(function () {
 
+    $scope.dialogs = dialogs;
     $rootScope.subLoading = false;
   });
-
-  $scope.dialogs = dialogs;
   $scope.removeDialog = removeDialog;
   $scope.openDialogMessages = openDialogMessages;
   $scope.addNewDialog = addNewDialog;
@@ -747,72 +748,115 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
 
     current_user_dialogs.$loaded(function () {
 
-      var dialog_exists = _lodash2.default.find(current_user_dialogs, { name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname }),
-          time = new Date().getTime();
+      var friend_dialogs_ref = new Firebase(fire + '/users/' + $scope.toUser.id + '/dialogs'),
+          current_user_dialogs_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
+          friend_dialogs = $firebaseArray(friend_dialogs_ref),
+          dialog_exists = _lodash2.default.find(current_user_dialogs, { name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname }),
+          time = new Date().getTime(),
+          participants = [$scope.toUser.id, current_user.id];
 
-      if (dialog_exists) {
+      friend_dialogs.$loaded(function () {
 
-        dialog_exists.participants.forEach(function (participant) {
+        var friend_dialog_exists = _lodash2.default.find(friend_dialogs, { name: current_user.info.name + '_' + current_user.info.surname });
 
-          if (userInfo.uid === participant) {
+        if (!dialog_exists && !friend_dialog_exists) {
+          console.debug('no dialogs');
+          var dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
+              dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
+          friend_dialog_exists = {
+            title: dialog_title_for_friend.split('_').join(' '),
+            name: dialog_title_for_friend,
+            participants: participants,
+            toOneUser: true
+          }, dialog_exists = {
+            title: dialog_title_for_user.split('_').join(' '),
+            name: dialog_title_for_user,
+            participants: participants,
+            toOneUser: true
+          };
 
-            var dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_exists.name + '/messages'));
-            var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_exists.name);
-            dialog_messages.$add({
-              author: current_user.info.name + ' ' + current_user.info.surname,
-              time: time,
-              text: $scope.message.text,
-              authorId: current_user.id,
-              authorPhoto: current_user.info.image
-            });
-            dialog.child('newMessages').set(false);
-          } else {
+          friend_dialogs_ref.child(dialog_title_for_friend).set(friend_dialog_exists);
+          current_user_dialogs_ref.child(dialog_title_for_user).set(dialog_exists);
 
-            var friend_dialog = current_user.info.name + '_' + current_user.info.surname;
-            var _dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog + '/messages'));
-            var _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog);
-            _dialog_messages.$add({
-              author: current_user.info.name + ' ' + current_user.info.surname,
-              time: time,
-              text: $scope.message.text,
-              authorId: current_user.id,
-              authorPhoto: current_user.info.image
-            });
+          $timeout(function () {
 
-            _dialog.child('newMessages').set(true);
+            sendMessages(dialog_exists, time);
+          }, 200);
+        }
+        //If your friend has no dialog
+        else if (!friend_dialog_exists) {
+
+            console.debug('no friends dialog');
+            var _dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
+                _friend_dialog_exists = {
+              title: _dialog_title_for_friend.split('_').join(' '),
+              name: _dialog_title_for_friend,
+              participants: participants,
+              toOneUser: true
+            };
+
+            friend_dialogs_ref.child(_dialog_title_for_friend).set(_friend_dialog_exists);
+
+            sendMessages(dialog_exists, time);
+          } else if (!dialog_exists) {
+
+            console.debug('no user dialog');
+            var _dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
+            dialog_exists = {
+              title: _dialog_title_for_user.split('_').join(' '),
+              name: _dialog_title_for_user,
+              participants: participants,
+              toOneUser: true
+            };
+            current_user_dialogs_ref.child(_dialog_title_for_user).set(dialog_exists);
+
+            sendMessages(dialog_exists, time);
+          } else if (dialog_exists && friend_dialog_exists) {
+
+            console.debug('all dialogs');
+            sendMessages(dialog_exists, time);
           }
+      });
+    });
+  }
+
+  function sendMessages(dialog_item, time) {
+
+    dialog_item.participants.forEach(function (participant) {
+
+      //Adds message to your dialog         
+      if (userInfo.uid === participant) {
+
+        var dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_item.name + '/messages')),
+            dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_item.name);
+
+        dialog_messages.$add({
+          author: current_user.info.name + ' ' + current_user.info.surname,
+          time: time,
+          text: $scope.message.text,
+          authorId: current_user.id,
+          authorPhoto: current_user.info.image
         });
-        $scope.message.text = '';
+        dialog.child('newMessages').set(false);
+
+        //Sends message for your friend
       } else {
 
-        var receiver_user_dialogs_ref = new Firebase(fire + '/users/' + $scope.toUser.id + '/dialogs'),
-            current_user_dialogs_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
-            dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname,
-            dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
-            participants = [$scope.toUser.id, current_user.id];
+          var friend_dialog = current_user.info.name + '_' + current_user.info.surname,
+              _dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog + '/messages')),
+              _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog);
+          _dialog_messages.$add({
+            author: current_user.info.name + ' ' + current_user.info.surname,
+            time: time,
+            text: $scope.message.text,
+            authorId: current_user.id,
+            authorPhoto: current_user.info.image
+          });
 
-        receiver_user_dialogs_ref.child(dialog_title_for_friend).set({
-
-          title: dialog_title_for_friend.split('_').join(' '),
-          name: dialog_title_for_friend,
-          participants: participants,
-          toOneUser: true
-        });
-
-        current_user_dialogs_ref.child(dialog_title_for_user).set({
-
-          title: dialog_title_for_user.split('_').join(' '),
-          name: dialog_title_for_user,
-          participants: participants,
-          toOneUser: true
-        });
-
-        setTimeout(function () {
-
-          sendMessage();
-        }, 500);
-      }
+          _dialog.child('newMessages').set(true);
+        }
     });
+    $scope.message.text = '';
   }
 
   function createChat(friend) {
