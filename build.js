@@ -760,7 +760,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
         var friend_dialog_exists = _lodash2.default.find(friend_dialogs, { name: current_user.info.name + '_' + current_user.info.surname });
 
         if (!dialog_exists && !friend_dialog_exists) {
-          console.debug('no dialogs');
+
           var dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
               dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
           friend_dialog_exists = {
@@ -786,7 +786,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
         //If your friend has no dialog
         else if (!friend_dialog_exists) {
 
-            console.debug('no friends dialog');
             var _dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
                 _friend_dialog_exists = {
               title: _dialog_title_for_friend.split('_').join(' '),
@@ -800,7 +799,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
             sendMessages(dialog_exists, time);
           } else if (!dialog_exists) {
 
-            console.debug('no user dialog');
             var _dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
             dialog_exists = {
               title: _dialog_title_for_user.split('_').join(' '),
@@ -813,7 +811,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
             sendMessages(dialog_exists, time);
           } else if (dialog_exists && friend_dialog_exists) {
 
-            console.debug('all dialogs');
             sendMessages(dialog_exists, time);
           }
       });
@@ -838,6 +835,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
           authorPhoto: current_user.info.image
         });
         dialog.child('newMessages').set(false);
+        dialog.child('lastMessageTime').set(new Date().getTime());
 
         //Sends message for your friend
       } else {
@@ -854,6 +852,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
           });
 
           _dialog.child('newMessages').set(true);
+          _dialog.child('lastMessageTime').set(new Date().getTime());
         }
     });
     $scope.message.text = '';
@@ -980,12 +979,14 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
           participant_messages.$add($scope.message);
           dialog.child('newMessages').set(true);
+          dialog.child('lastMessageTime').set(new Date().getTime());
         } else {
 
           var _participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages')),
               _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
           _participant_messages.$add($scope.message);
           _dialog.child('newMessages').set(false);
+          _dialog.child('lastMessageTime').set(new Date().getTime());
         }
       });
       $scope.message.text = '';
@@ -996,6 +997,8 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
         var participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
         var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
         participant_messages.$add($scope.message);
+
+        dialog.child('lastMessageTime').set(new Date().getTime());
         if (userInfo.uid !== participant) {
 
           dialog.child('newMessages').set(true);
@@ -1433,7 +1436,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
     var current_location = $location.path();
 
     if (item.newMessages === true && current_location.indexOf(item.name) === -1) {
-      var messageIn = new Audio('../../sounds/messageInSound.wav');
+      var messageIn = new Audio('../../sounds/sound_1.mp3');
       messageIn.play();
       toastr.error('<b>' + item.title + '</b>, new message!');
     }

@@ -84,7 +84,8 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         let friend_dialog_exists = _.find(friend_dialogs, {name: current_user.info.name + '_' + current_user.info.surname});      
         
         if (!dialog_exists && !friend_dialog_exists) {
-          console.debug('no dialogs');
+
+
           let dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
               dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
               friend_dialog_exists  = {
@@ -111,7 +112,6 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         //If your friend has no dialog
         else if (!friend_dialog_exists) {
           
-          console.debug('no friends dialog');
           let dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
               friend_dialog_exists    = {
                 title: dialog_title_for_friend.split('_').join(' '),
@@ -126,7 +126,6 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         
         } else if (!dialog_exists) {
           
-          console.debug('no user dialog');
           let dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
               dialog_exists         = {
                 title: dialog_title_for_user.split('_').join(' '),
@@ -140,7 +139,6 @@ function($scope, $rootScope, userInfo, $timeout, $location,
            
         } else if (dialog_exists && friend_dialog_exists) {
           
-          console.debug('all dialogs')
           sendMessages(dialog_exists, time);
         }
       })  
@@ -165,6 +163,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
           authorPhoto: current_user.info.image 
         })
         dialog.child('newMessages').set(false);
+        dialog.child('lastMessageTime').set((new Date()).getTime());
       
       //Sends message for your friend  
       } else {
@@ -181,6 +180,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         })
         
         dialog.child('newMessages').set(true); 
+        dialog.child('lastMessageTime').set((new Date()).getTime()); 
       }
     })
     $scope.message.text = ''; 

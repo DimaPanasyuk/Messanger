@@ -67,13 +67,15 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
               participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${dialog_name}/messages`));
           
           participant_messages.$add($scope.message);           
-          dialog.child('newMessages').set(true);
+          dialog.child('newMessages').set(true); 
+          dialog.child('lastMessageTime').set((new Date()).getTime());
         } else {
           
           let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`)),
               dialog     = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
           participant_messages.$add($scope.message);
-          dialog.child('newMessages').set(false);
+          dialog.child('newMessages').set(false); 
+          dialog.child('lastMessageTime').set((new Date()).getTime());
         }
       })
       $scope.message.text = ''; 
@@ -84,9 +86,11 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
         let participant_messages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`));
         let dialog               = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
         participant_messages.$add($scope.message);
+         
+        dialog.child('lastMessageTime').set((new Date()).getTime());
         if (userInfo.uid !== participant) {
             
-          dialog.child('newMessages').set(true); 
+          dialog.child('newMessages').set(true);
         }
       })
       $scope.message.text = '';  

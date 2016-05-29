@@ -130,11 +130,17 @@
                     class="link-to-messages">
                   <a href="">
                     <b>{{dialog.title}}</b>
-                    <span class="label label-success"
-                          ng-if="dialog.newMessages">
-                      New messages
-                    </span>
                   </a>
+                  <span class="label label-success new-message"
+                        ng-if="dialog.newMessages">
+                    New messages
+                  </span>
+                  <p class="last-message-time">
+                    <span class="text-muted">{{dialog.lastMessageTime | fromNow}}</span>
+                    <span ng-if="!dialog.toOneUser">
+                      {{dialog.participants.length}} participants
+                    </span>
+                  </p>
                 </td>
                 <td class="text-right">
                   <button class="btn btn-default" 
