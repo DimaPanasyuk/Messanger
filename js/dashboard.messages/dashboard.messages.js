@@ -91,7 +91,7 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
         let dialog               = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
         participant_messages.$add($scope.message);
          
-        dialog.child('lastMessageTime').set((new Date()).getTime());
+        //dialog.child('lastMessageTime').set((new Date()).getTime());
         if (userInfo.uid !== participant) {
             
           dialog.child('newMessages').set(true);

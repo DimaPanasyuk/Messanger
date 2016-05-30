@@ -1,5 +1,6 @@
 export default
 
-['$stateProvider', function appConfig($stateProvider) {
+['$urlRouterProvider', function appConfig($urlRouterProvider) {
   
+  $urlRouterProvider.otherwise('/auth');
 }]

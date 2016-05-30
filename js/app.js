@@ -2,7 +2,7 @@
 import angular             from 'angular';
 import firebase            from 'firebase';
 import angularFire         from 'angularfire';
-// import uiRouter            from 'angular-ui-router';
+import uirouter            from 'angular-ui-router';
 
 //Configs
 import appConfig            from './app/app.config';
@@ -49,7 +49,7 @@ import run     from './app/app.run';
 
 angular.module('app', [
   
-  'ui.router', 
+  uirouter, 
   'firebase'
 ]);
 

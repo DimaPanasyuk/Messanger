@@ -163,7 +163,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
           authorPhoto: current_user.info.image 
         })
         dialog.child('newMessages').set(false);
-        dialog.child('lastMessageTime').set((new Date()).getTime());
+        //dialog.child('lastMessageTime').set((new Date()).getTime());
       
       //Sends message for your friend  
       } else {
@@ -180,7 +180,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         })
         
         dialog.child('newMessages').set(true); 
-        dialog.child('lastMessageTime').set((new Date()).getTime()); 
+        //dialog.child('lastMessageTime').set((new Date()).getTime()); 
       }
     })
     $scope.message.text = ''; 
