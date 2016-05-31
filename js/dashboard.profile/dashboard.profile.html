@@ -49,304 +49,340 @@
      ng-if="!subLoading">
   
   <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-tabs pull-right">
-        <li ng-class="{'active': mode === 'view'}"
-            ng-click="changeMode('view')">
-          <a href="">View Mode</a>
-        </li>
-        <li ng-class="{'active': mode === 'change'}"
-            ng-click="changeMode('change')">
-          <a href="">Modify Mode</a>
-        </li>
-      </ul>
-      <br>
-    </div>
-  </div>
-  
-  <div class="row"
-       ng-if="firstTime">
-    
-    <div class="col-md-12">
-      
-     <div class="alert alert-dismissible alert-info">
-       
-       <button type="button"
-               class="close"
-               data-dismiss="alert">
-         &times;
-       </button>
-       
-       <strong>First time here?</strong> Fill in information about yourself to use service! 
-     </div>
+    <div class="col-sm-8 col-sm-offset-2"> 
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-tabs pull-right">
+            <li ng-class="{'active': mode === 'view'}"
+                ng-click="changeMode('view')">
+              <a href="">View Mode</a>
+            </li>
+            <li ng-class="{'active': mode === 'change'}"
+                ng-click="changeMode('change')">
+              <a href="">Modify Mode</a>
+            </li>
+          </ul>
+          <br>
+        </div>
+      </div>
     </div>
   </div>
   
   <div class="row">
-    
-    <div class="col-md-12">
-      
+    <div class="col-sm-8 col-sm-offset-2">
       <div class="row"
-           ng-if="mode === 'view'">
-        <div class="col-sm-3">
-          <br>
-          <div class="image-preview">
-            <img ng-src="{{profile.image}}"
-                 class="image-preview__item"
-                 alt="{{profile.name}}_{{profile.surname}}_image"> 
-          </div>     
+          ng-if="firstTime">
+        
+        <div class="col-md-12">
+          
+        <div class="alert alert-dismissible alert-info">
+          
+          <button type="button"
+                  class="close"
+                  data-dismiss="alert">
+            &times;
+          </button>
+          
+          <strong>First time here?</strong> Fill in information about yourself to use service! 
         </div>
-        <div class="col-sm-9">
-          <h3 ng-if="mode === 'view'">
-            {{profile.name}} {{profile.surname}}
-          </h3>
         </div>
       </div>
-      <br>
-      <div class="row"
-           ng-if="mode === 'change'">
-        <div class="col-md-6">
-          <input type="text"
-                 class="form-control"
-                 ng-model="profile.name"
-                 placeholder="Enter your name here"
-                 required>
-        </div>
-        <div class="col-md-6">
-          <input type="text"
-                 class="form-control" 
-                 ng-model="profile.surname"
-                 placeholder="Enter your surname here"
-                 required>
-        <br>
-        </div>
-      </div>
-      
-      
-      <div class="row"
-           ng-if="mode === 'change'">
-        <div class="col-md-6">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <strong>Profile Image Preview</strong>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="row">
+        
+        <div class="col-md-12">
+          
+          <!--Info about user-->
+          <div class="row"
+              ng-if="mode === 'view'">
+            <div class="col-sm-4">
+              <br>
+              <div class="image-preview">
+                <img ng-src="{{profile.image}}"
+                    class="image-preview__item"
+                    alt="{{profile.name}}_{{profile.surname}}_image"> 
+              </div>     
             </div>
-            <div class="panel-body">
+            <div class="col-sm-8">
+              
               <div class="row">
-                <div class="col-sm-6">
-                  
-                  <div class="image-preview">
-                    <img ng-src="{{profile.image}}"
-                         class="image-preview__item"
-                         alt="{{profile.name}}_{{profile.surname}}_image">
-                  </div>
+                <div class="col-xs-6">
+                  <h5 ng-if="mode === 'view'">
+                    {{profile.name}} {{profile.surname}}
+                  </h5>
                 </div>
-                
-                <div class="col-md-6">
-                  <input type="file"
-                         class="image-upload">
-                  <button class="btn btn-info btn-block"
-                          disabled>
-                    Upload via file
-                  </button>
-                  
-                  <div class="form-group">
-                    
-                    <input type="url"
-                           placeholder="Enter image url"
-                           ng-model="newImageUrl"
-                           class="form-control">
+                <div class="col-xs-6 ">
+                  <!--<div class="label label-success pull-right"
+                      ng-if="status === 0">
+                    Online
                   </div>
-                  
-                  <div class="image-preview"
-                       ng-if="newImageUrl.length && !imageLoaded">
-                    <img ng-src="{{newImageUrl}}"
-                         class="image-preview__new" 
-                         alt="{{profile.name}}_{{profile.surname}}_image"> 
-                  </div>
-                   
-                  <button class="btn btn-success"
-                          ng-disabled="!newImageUrl.length"
-                          ng-click="uploadProfileImage(newImageUrl)">
+                  <div class="label label-danger pull-right"
+                      ng-if="status !== 0">
+                    Offline
+                  </div>-->
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-xs-2">
+                  <p>
+                    <strong>
+                      Country:
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>
+                      Region:
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>
+                      City:
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>
+                      Phone:
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>
+                      Skype:
+                    </strong>
+                  </p>
+                </div>
+                <div class="col-xs-10">
+                  <p>
                     
-                    <span class="glyphicon glyphicon-upload"></span>
-                    Upload Image                     
-                  </button>
-                   
+                    <span ng-if="profile.country">{{profile.country}}</span>
+                    <span class="label label-info"
+                          ng-if="!profile.country">
+                      No country provided
+                    </span>
+                  </p>
+                  <p>
+                  
+                    <span ng-if="profile.region">{{profile.region}}</span>
+                    <span class="label label-info"
+                          ng-if="!profile.region">
+                      No region provided
+                    </span>
+                  </p>
+                  <p>
+                  
+                    <span ng-if="profile.city">{{profile.city}}</span>
+                    <span class="label label-info"
+                          ng-if="!profile.city">
+                      No city provided
+                    </span>
+                  </p>
+                  <p>
+                    <span ng-if="profile.tel">
+                      {{profile.tel}}
+                    </span>
+                    <span ng-if="!profile.tel"
+                          class="label label-info">
+                      No phone provided
+                    </span>
+                  </p>
+                  <p>
+                    <span ng-if="profile.skype">
+                      {{profile.skype}}
+                    </span>
+                    <span class="label label-info"
+                          ng-if="!profile.skype">
+                      No skype account provided
+                    </span>
+                  </p>  
                 </div>
               </div>  
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <textarea rows="3"
-                    ng-model="profile.about"
-                    placeholder="Tell people about yourself!"
-                    class="form-control textarea"
-                    required>
-                  
-          </textarea>
-        </div>
-      </div>
-      
-      <div class="row"
-           ng-if="mode === 'view'">
-        <div class="col-md-12">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <strong>About Me</strong>
-            </div>
-            <div class="panel-body">
-              <p ng-if="profile.about.length">
-                {{profile.about}}
-              </p>
-              <div class="alert alert-warning"
-                   ng-if="!profile.about.length">
-                Opps seams this user didn't add anything!
+          </div>     
+           
+          <!--Users personal info-->
+          <div class="row"
+              ng-if="mode === 'view'">
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <strong>About Me</strong>
+                </div>
+                <div class="panel-body">
+                  <p ng-if="profile.about.length">
+                    {{profile.about}}
+                  </p>
+                  <div class="alert alert-warning"
+                      ng-if="!profile.about.length">
+                    Opps seams this user didn't add anything!
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="row"
-           ng-if="profile.name">
-        <div class="col-md-12">
           
           <div class="row"
-               ng-if="mode === 'change'">
-            <div class="col-md-10">
-              
-              <div class="form-group">
-                
-                <input type="tel"
-                      placeholder="Enter your telephone number"
-                      ng-model="profile.phoneNumber" 
-                      class="form-control">
-              </div>
-            </div>
-            <div class="col-md-2 text-center">
-              <button class="btn btn-success"
-                      ng-click="addPhoneNumber()"
-                      ng-disabled="profile.phoneNumber.length < 10 || 
-                                   profile.phoneNumber.length > 10">
-                Add phone number
-              </button>
-            </div>
-          </div>
-          <br>
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <strong>My phone numbers</strong>
-            </div>
-            <div class="panel-body">
-              <ul class="list-group">
-                <li class="list-group-item"
-                    ng-if="profile.numbers.length"
-                    ng-repeat="number in profile.numbers">
+               ng-if="mode === 'view'">
+            <div class="col-sm-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  User photos
+                </div>
+                <div class="panel-body">
                   
-                  <strong>{{number}}</strong>
-                  <button class="btn btn-danger btn-xs pull-right"
-                          ng-if="mode === 'change'"
-                          ng-click="removePhone($index)">
-                    <span class="glyphicon glyphicon-remove">
-                      
-                    </span>
-                  </button>
-                </li>
-                <li class="alert alert-warning"
-                    ng-if="!profile.numbers.length">
-                  <strong>You have not added any phone number yet</strong>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      
-      <div class="row"
-           ng-if="mode === 'view'">
-        <div class="col-md-12">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <strong>My Location</strong>
-            </div>
-            
-            <div class="panel-body">
-              <div class="col-md-4">
-                <ul class="list-group">
+                  <div class="users-photos__photo"
+                       ng-repeat="img in profile.images"
+                       ng-if="img"
+                       style="background-image: url({{img}})">
+                        
+                  </div>
                   
-                  <li class="list-group-item">
-                    <strong>Country: </strong>
-                    {{profile.country}}
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-4">
-                <ul class="list-group">
-                  
-                  <li class="list-group-item">
-                    <strong>Region: </strong>
-                    {{profile.region}}
-                  </li>
-                </ul>
-              </div>
-              <div class="col-md-4">
-                <ul class="list-group">
-                  
-                  <li class="list-group-item">
-                    <strong>City: </strong>
-                    {{profile.city}}
-                  </li>
-                </ul>
+                  <div class="alert alert-warning"
+                       ng-if="!profile.images.length">
+                    Users didn't load any photos
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="row"
-           ng-if="mode === 'change'">
-        <div class="col-md-4">
-          <input type="text"
-                 ng-model="profile.country"
-                 placeholder="Enter your country here"
-                 class="form-control">
-        </div>
-        <div class="col-md-4">
-          <input type="text"
-                 ng-model="profile.region"
-                 placeholder="Enter your region here"
-                 class="form-control">
-        </div>
-        <div class="col-md-4">
-          <input type="text"
-                 ng-model="profile.city"
-                 placeholder="Enter your city here"
-                 class="form-control">
-        </div>
-      </div>
-      
-      <div class="row" 
-           ng-if="mode === 'change'">
-        <br>
-        <div class="col-md-12">
           
-          <button class="btn btn-success"
-                  ng-disabled="!profile.name.length ||
-                               !profile.surname.length"
-                  ng-click="saveProfileInfo()">
+           <!--Image preview--->
+          <div class="row"
+              ng-if="mode === 'change'">
+            <div class="col-md-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <strong>Profile Image Preview</strong>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      
+                      <div class="image-preview">
+                        <img ng-src="{{profile.image}}"
+                            class="image-preview__item"
+                            alt="{{profile.name}}_{{profile.surname}}_image">
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <input type="file"
+                            class="image-upload">
+                      <button class="btn btn-info btn-block"
+                              disabled>
+                        Upload via file
+                      </button>
+                      
+                      <div class="form-group">
+                        
+                        <input type="url"
+                              placeholder="Enter image url"
+                              ng-model="newImageUrl"
+                              class="form-control">
+                      </div>
+                      
+                      <div class="image-preview"
+                          ng-if="newImageUrl.length && !imageLoaded">
+                        <img ng-src="{{newImageUrl}}"
+                            class="image-preview__new" 
+                            alt="{{profile.name}}_{{profile.surname}}_image"> 
+                      </div>
+                      
+                      <button class="btn btn-success"
+                              ng-disabled="!newImageUrl.length"
+                              ng-click="uploadProfileImage(newImageUrl)">
+                        
+                        <span class="glyphicon glyphicon-upload"></span>
+                        Upload Image                     
+                      </button>
+                      
+                    </div>
+                  </div>  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              
+              <input type="text"
+                    class="form-control"
+                    ng-model="profile.name"
+                    placeholder="Enter your name here"
+                    required>
+              <input type="text"
+                    class="form-control" 
+                    ng-model="profile.surname"
+                    placeholder="Enter your surname here"
+                    required>
+              <textarea rows="2"
+                        ng-model="profile.about"
+                        placeholder="Tell people about yourself!"
+                        class="form-control textarea"
+                        required>
+                      
+              </textarea>
+            </div>
+          </div> 
+          
+          <!--Country / Region / City / number / skype-->
+          <div class="row"
+              ng-if="mode === 'change'">
+            <div class="col-sm-6">
+              <input type="text"
+                    ng-model="profile.country"
+                    placeholder="Enter your country here"
+                    class="form-control">
             
-            Save
-          </button>
-          <button class="btn btn-primary"
-                  ng-click="dontSaveProfileInfo()">
-            
-            Don't save
-          </button>  
+              <input type="text"
+                    ng-model="profile.region"
+                    placeholder="Enter your region here"
+                    class="form-control">
+              <input type="text"
+                    ng-model="profile.city"
+                    placeholder="Enter your city here"
+                    class="form-control">
+              <br>
+            </div>
+            <div class="col-sm-6">
+              <input type="tel"
+                     placeholder="Enter your telephone number"
+                     ng-model="profile.tel" 
+                     class="form-control">
+               
+               <input type="text"
+                      placeholder="Enter your skype name"
+                      ng-model="profile.skype"
+                      class="form-control">
+               <br>
+            </div>                    
+          </div>  
+          
+          <!--Save info-->
+          <div class="row" 
+              ng-if="mode === 'change'">
+            <br>
+            <div class="col-md-12">
+              
+              <button class="btn btn-success"
+                      ng-disabled="!profile.name.length ||
+                                  !profile.surname.length"
+                      ng-click="saveProfileInfo()">
+                
+                Save
+              </button>
+              <button class="btn btn-primary"
+                      ng-click="dontSaveProfileInfo()">
+                
+                Don't save
+              </button>  
+            </div>
+          </div>     
         </div>
+    
       </div>
-             
     </div>
-  </div>
+  </div>   
 </div>

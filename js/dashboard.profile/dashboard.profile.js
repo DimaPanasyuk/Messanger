@@ -5,6 +5,8 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
   
   $rootScope.subLoading = true;
   let profile_ref = new Firebase(`${fire}/users/${userInfo.uid}/info`),
+      user_ref    = new Firebase(`${fire}/users/${userInfo.uid}`),
+      user        = $firebaseObject(user_ref),
       profile     = $firebaseObject(profile_ref);
   $scope.pageTitle = 'Your Profile page';
   
@@ -21,16 +23,21 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
         name: '',
         surname: '',
         about: '',
-        numbers: [],
+        tel: null,
         image: profile.image || '../../images/noavatar.jpg',
         country: '',
         region: '',
-        city: ''
+        city: '',
+        skype: ''
       }
+      document.getElementsByTagName('title')[0].innerHTML = `New Profile`;
     } else {
       
       $scope.mode = 'view';
+      document.getElementsByTagName('title')[0].innerHTML = `${profile.name} ${profile.surname}`;
+      $scope.status = user.lastLoggedOut;
     }
+    
     $rootScope.subLoading = false;
   })
   
@@ -61,10 +68,11 @@ function($scope, $rootScope, userInfo, fire, $firebaseObject) {
       name: prof.name,
       surname: prof.surname,
       about: prof.about || '',
-      numbers: prof.numbers || [],
+      tel: prof.tel || '',
       country: prof.country || '',
       region: prof.region || '',
       city: prof.city || '',
+      skype: prof.skype || '',
       image: prof.image || '../../images/noavatar.jpg'
     });
     $scope.mode = 'view';
