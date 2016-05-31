@@ -1437,6 +1437,11 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
       user_obj = $firebaseObject(user),
       userMessages = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
 
+  window.onbeforeunload = function () {
+
+    logOut();
+  };
+
   user_obj.$loaded(function () {
 
     $scope.user = user_obj;
