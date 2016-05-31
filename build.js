@@ -1376,11 +1376,13 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatched
 
   $rootScope.subLoading = true;
   var user_ref = new Firebase(fire + '/users/' + infoAboutWatchedUser),
-      user = $firebaseObject(user_ref.child('info'));
+      user = $firebaseObject(user_ref),
+      user_info = $firebaseObject(user_ref.child('info'));
 
-  user.$loaded(function () {
+  user_info.$loaded(function () {
 
-    $scope.profile = user;
+    $scope.user = user;
+    $scope.profile = user_info;
     $rootScope.subLoading = false;
   });
 }];
