@@ -1064,17 +1064,24 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, userInfo, fire, $firebaseObject) {
+exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebaseArray) {
 
   $rootScope.subLoading = true;
   var profile_ref = new Firebase(fire + '/users/' + userInfo.uid + '/info'),
       user_ref = new Firebase(fire + '/users/' + userInfo.uid),
       user = $firebaseObject(user_ref),
+      userPhotos = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/info/photos')),
       profile = $firebaseObject(profile_ref);
+
   $scope.pageTitle = 'Your Profile page';
 
   $scope.profile = profile;
   $scope.phoneNumber = '';
+
+  userPhotos.$loaded(function () {
+
+    $scope.userPhotos = userPhotos;
+  });
   profile.$loaded(function () {
 
     if (!profile.name) {
@@ -1110,6 +1117,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseObject'
   $scope.dontSaveProfileInfo = dontSaveProfileInfo;
   $scope.changeMode = changeMode;
   $scope.uploadProfileImage = uploadProfileImage;
+  $scope.addPhoto = addPhoto;
 
   function addPhoneNumber() {
     $scope.profile.numbers = $scope.profile.numbers || [];
@@ -1157,6 +1165,14 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', '$firebaseObject'
     profile.$save().then(function () {
 
       $scope.imageLoaded = true;
+    });
+  }
+
+  function addPhoto() {
+
+    userPhotos.$add($scope.newPhoto).then(function (data) {
+
+      $scope.newPhoto = '';
     });
   }
 }];
@@ -1441,7 +1457,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
 
   window.onbeforeunload = function () {
 
-    logOut();
+    //logOut(); 
   };
 
   user_obj.$loaded(function () {

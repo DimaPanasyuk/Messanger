@@ -1,5 +1,5 @@
 {
-  "injectCahnges": true,
+  "injectChanges": true,
   "files": [
     "./build.js",
     "./main.css",

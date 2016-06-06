@@ -336,3 +336,52 @@ header {
   font-size: 14px !important;
 }
 
+
+.user-photos-block {
+  
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-photo {
+  
+  position: relative;
+  border: 2px dashed lighten(#da4733, 20%);
+  max-width: 110px;
+  min-width: 70px;
+  height: 100px;
+  padding: 15px 27px;
+  cursor: pointer;
+  transition: all .3s ease;
+ 
+  &:hover {
+    
+    text-shadow: 0 3px 1px lighten(dodgerblue, 20%);
+    //box-shadow: 0 0 3px 1px lighten(dodgerblue, 10%);  
+  }
+  
+  span {
+    
+    font-size: 60px;
+  }
+}
+
+.user-photo {
+  
+  width: 120px;
+  max-width: 150px;
+  height: 100px;
+  margin: 5px 0;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 0 2px 1px lighten(black, 10%);
+  margin: 5px 5px;
+  //border: 1px solid red;
+}
+

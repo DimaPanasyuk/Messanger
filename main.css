@@ -647,3 +647,39 @@ header {
   margin-top: 14px;
   font-size: 14px !important;
 }
+.user-photos-block {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+.upload-photo {
+  position: relative;
+  border: 2px dashed #ea9589;
+  max-width: 110px;
+  min-width: 70px;
+  height: 100px;
+  padding: 15px 27px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
+.upload-photo:hover {
+  text-shadow: 0 3px 1px #84c2ff;
+}
+.upload-photo span {
+  font-size: 60px;
+}
+.user-photo {
+  width: 120px;
+  max-width: 150px;
+  height: 100px;
+  margin: 5px 0;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 0 2px 1px #1a1a1a;
+  margin: 5px 5px;
+}

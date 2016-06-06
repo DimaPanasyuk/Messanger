@@ -13,7 +13,7 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   
   window.onbeforeunload = function() {
      
-    logOut();   
+    //logOut();   
   }
   
   

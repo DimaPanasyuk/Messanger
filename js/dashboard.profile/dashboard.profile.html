@@ -45,6 +45,48 @@
   </div>
 </div>
 
+
+<div class="modal fade" 
+     id="uploadPhoto">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <input type="url"
+               class="form-control"
+               placeholder="Enter photo url"
+               ng-model="newPhoto">
+        <br>       
+        <div class="image-preview">
+          <img ng-src="{{newPhoto}}"
+               ng-if="newPhoto.length"
+               class="image-preview__item"
+               alt="{{profile.name}}_{{profile.surname}}_image">
+           
+        </div> 
+        <div class="alert alert-info"
+              ng-if="!newPhoto.length">
+          Image will apear here  
+        </div>
+        
+        <button class="btn btn-success"
+                data-dismiss="modal"
+                ng-click="addPhoto()"
+                id="closeAdd"
+                ng-disabled="!newPhoto.length">
+          Add image
+        </button>
+        
+        <button class="btn btn-default"
+                data-dismiss="modal">
+         
+         Cancel  
+        </button> 
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container"
      ng-if="!subLoading">
   
@@ -234,7 +276,7 @@
                 </div>
                 <div class="panel-body">
                   
-                  <div class="users-photos__photo"
+                  <div class="user-photos__photo"
                        ng-repeat="img in profile.images"
                        ng-if="img"
                        style="background-image: url({{img}})">
@@ -359,6 +401,37 @@
                <br>
             </div>                    
           </div>  
+         
+          <div class="row"
+               ng-if="mode === 'change'">
+            
+            <div class="col-sm-12">
+              
+             <div class="panel panel-primary">
+               
+               <div class="panel-heading">
+                
+                Uploaded images 
+               </div>
+               
+               <div class="panel-body user-photos-block">
+                 
+                 <div class="upload-photo"
+                      data-toggle="modal"
+                      data-target="#uploadPhoto">
+                   
+                   <span class="glyphicon glyphicon-plus text-center"></span>
+                 </div>
+                 
+                 <div class="user-photo"
+                      ng-repeat="img in userPhotos"
+                      style="background-image: url({{img.$value}})">
+                   
+                 </div>
+               </div>
+             </div>
+            </div>
+          </div>
           
           <!--Save info-->
           <div class="row" 
