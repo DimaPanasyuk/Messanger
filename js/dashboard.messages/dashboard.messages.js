@@ -92,7 +92,8 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
           //dialog.child('lastMessageTime').set((new Date()).getTime());
         }
       })
-      $scope.message.text = ''; 
+      $scope.message.text = '';
+      $scope.message.pictures = [];  
     } else {
       $scope.current_dialog.participants.forEach(function(participant) {
 
@@ -107,7 +108,7 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
         }
       })
       $scope.message.text = '';
-      $scope.message.pictures.length = 0;  
+      $scope.message.pictures = [];  
     }
   }
   

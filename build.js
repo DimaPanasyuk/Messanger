@@ -1009,6 +1009,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
           }
       });
       $scope.message.text = '';
+      $scope.message.pictures = [];
     } else {
       $scope.current_dialog.participants.forEach(function (participant) {
 
@@ -1023,7 +1024,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
         }
       });
       $scope.message.text = '';
-      $scope.message.pictures.length = 0;
+      $scope.message.pictures = [];
     }
   }
 
