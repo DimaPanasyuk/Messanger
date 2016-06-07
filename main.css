@@ -586,8 +586,10 @@ header {
   list-style-type: none !important;
 }
 .messages__message {
-  margin: 12px 0;
   padding: 0;
+}
+.message {
+  margin-top: 15px;
 }
 .messages__message-photo {
   padding-right: 0px !important;
@@ -655,7 +657,7 @@ header {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  align-items: center;
+  align-items: top;
 }
 .upload-photo {
   position: relative;
@@ -702,4 +704,62 @@ header {
 .user-photo__icon span {
   color: white;
   font-size: 40px;
+}
+.dialog-actions {
+  margin-top: 7px;
+}
+.message-photo-preview {
+  position: relative;
+  width: 120px;
+  max-width: 150px;
+  height: 100px;
+  margin: 5px 0;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0 0 2px 1px #1a1a1a;
+  margin: 5px 5px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+}
+.message-photo-preview:hover .user-photo__icon {
+  visibility: visible;
+}
+.message-photo-preview:hover .message-photo__icon-preview {
+  visibility: visible;
+}
+.message-photo__icon-preview {
+  position: absolute;
+  visibility: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 12px 13px;
+}
+.message-photo__icon-preview span {
+  color: white;
+  font-size: 15px;
+}
+.message-photo {
+  height: auto !important;
+  max-width: 300px;
+  min-width: 150px;
+  height: auto;
+  min-height: 140px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  margin: 5px;
+}
+.message-photos-block {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }

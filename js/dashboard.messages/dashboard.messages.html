@@ -44,6 +44,58 @@
     </div>
   </div>
 </div>
+
+<!--Add images to message-->
+<div class="modal fade" 
+     id="addPicture">
+  <div class="modal-dialog">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        Adding Photo
+        <button class="btn btn-warning btn-xs pull-right"
+                data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+      <div class="panel-body user-photos-block">
+        <div class="user-photo"
+             ng-repeat="img in userPhotos"
+             data-dismiss="modal"
+             ng-click="addPhoto(img)"
+             style="background-image: url({{img.$value}})">
+            
+            <div class="user-photo__icon">
+              <span class="glyphicon glyphicon-plus"></span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Image preview-->
+<div class="modal fade" 
+     id="image-preview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="image-preview">
+          <img ng-src="{{shownPhoto.value}}"
+               class="image-preview__item"
+               alt="{{profile.name}}_{{profile.surname}}_image">
+           
+        </div>
+        
+        <button class="btn btn-default"
+                data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container messages"
      ng-if="!subLoading">
      
@@ -117,20 +169,47 @@
                             
                   </textarea>
                 </div>
+                <div class="col-sm-12 user-photos-block">
+                  <div class="message-photo-preview"
+                       ng-repeat="img in message.pictures"
+                       data-toggle="modal"
+                       data-target="#image-preview"
+                       ng-click="removePhoto(img)"
+                       style="background-image: url({{img.value}})">
+                      
+                      <div class="message-photo__icon-preview">
+                        <span class="glyphicon glyphicon-minus"></span>
+                      </div>
+                  </div>
+                </div>
               </div>
               <div class="col-sm-3">
-                <button class="btn btn-sm btn-block btn-success"
+                <button class="btn btn-sm btn-block btn-primary"
                         id="message_text"
                         ng-disabled="!message.text.length"
                         ng-click="sendMessage()">
                   Send message
                 </button>
-                <a class="btn btn-sm btn-block btn-default"
-                   ng-if="(current_dialog &&  userUid) && current_dialog.dialogHost === userUid"
-                   href="#/dialogs/{{dialogName}}/settings">
-                  <span class="glyphicon glyphicon-cog"></span>
-                  Dialog settings
-                </a>
+                
+                <div class="btn-group btn-group-justified dialog-actions">
+                  
+                  <div class="btn-group">
+                    
+                    <button class="btn btn-sm btn-block btn-default"
+                            data-toggle="modal"
+                            data-target="#addPicture">
+                      <span class="glyphicon glyphicon-picture"></span>
+                    </button>
+                  </div>
+                  <div class="btn-group">
+                    
+                    <a class="btn btn-sm btn-block btn-default"
+                       ng-if="(current_dialog &&  userUid) && current_dialog.dialogHost === userUid"
+                       href="#/dialogs/{{dialogName}}/settings">
+                      <span class="glyphicon glyphicon-cog"></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -142,7 +221,7 @@
           <li class="messsages__message"
               ng-repeat="message in messages | orderBy: time : true">
             
-            <div class="row">
+            <div class="row message">
               <div class="col-xs-2 col-sm-1 messages__message-photo">
                 <div class="messages-profile-image pull-right"
                      ng-if="message.authorPhoto"
@@ -159,6 +238,17 @@
                 <div class="row">
                   <div class="col-xs-12">
                     {{message.text}}  
+                  </div>
+                  <div class="col-xs-12 message-photos-block">                   
+                              
+                    <div class="message-photo"
+                         ng-repeat="photo in message.pictures"
+                         ng-click="showPhoto(photo)"
+                         data-toggle="modal"
+                         data-target="#image-preview"
+                         style="background-image: url({{photo.value}})">
+                      
+                    </div>
                   </div>
                 </div>
               </div>
