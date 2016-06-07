@@ -1118,6 +1118,8 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
   $scope.changeMode = changeMode;
   $scope.uploadProfileImage = uploadProfileImage;
   $scope.addPhoto = addPhoto;
+  $scope.showPhoto = showPhoto;
+  $scope.removePhoto = removePhoto;
 
   function addPhoneNumber() {
     $scope.profile.numbers = $scope.profile.numbers || [];
@@ -1173,6 +1175,19 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
     userPhotos.$add($scope.newPhoto).then(function (data) {
 
       $scope.newPhoto = '';
+    });
+  }
+
+  function showPhoto(photo) {
+
+    $scope.shownPhoto = photo;
+  }
+
+  function removePhoto(photo) {
+
+    userPhotos.$remove(photo).then(function (data) {
+
+      toastr.info('Image deleted successfully!');
     });
   }
 }];
@@ -1388,11 +1403,12 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatchedUser', '$firebaseObject', function ($scope, $rootScope, userInfo, fire, infoAboutWatchedUser, $firebaseObject) {
+exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatchedUser', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, userInfo, fire, infoAboutWatchedUser, $firebaseObject, $firebaseArray) {
 
   $rootScope.subLoading = true;
   var user_ref = new Firebase(fire + '/users/' + infoAboutWatchedUser),
       user = $firebaseObject(user_ref),
+      userPhotos = $firebaseArray(new Firebase(fire + '/users/' + infoAboutWatchedUser + '/info/photos')),
       user_info = $firebaseObject(user_ref.child('info'));
 
   user_info.$loaded(function () {
@@ -1400,7 +1416,16 @@ exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatched
     $scope.user = user;
     $scope.profile = user_info;
     $rootScope.subLoading = false;
+
+    userPhotos.$loaded(function () {
+      $scope.userPhotos = userPhotos;
+    });
   });
+
+  $scope.showPhoto = showPhoto;
+  function showPhoto(photo) {
+    $scope.shownPhoto = photo;
+  }
 }];
 
 },{}],22:[function(require,module,exports){

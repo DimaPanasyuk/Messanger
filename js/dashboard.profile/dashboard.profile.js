@@ -56,6 +56,8 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
   $scope.changeMode          = changeMode;
   $scope.uploadProfileImage  = uploadProfileImage;
   $scope.addPhoto            = addPhoto;
+  $scope.showPhoto           = showPhoto;
+  $scope.removePhoto         = removePhoto;
   
   function addPhoneNumber() {
     $scope.profile.numbers = $scope.profile.numbers || [];
@@ -114,5 +116,19 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
       
       $scope.newPhoto = '';
     });
+  }
+  
+  function showPhoto(photo) {
+    
+    $scope.shownPhoto = photo;
+  }
+  
+  function removePhoto(photo) {
+    
+    userPhotos.$remove(photo)
+    .then(function(data) {
+      
+      toastr.info('Image deleted successfully!');
+    })
   }
 }]

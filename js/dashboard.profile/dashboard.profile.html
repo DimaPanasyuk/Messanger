@@ -45,7 +45,6 @@
   </div>
 </div>
 
-
 <div class="modal fade" 
      id="uploadPhoto">
   <div class="modal-dialog">
@@ -86,6 +85,42 @@
   </div>
 </div>
 
+<div class="modal fade" 
+     id="image-preview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="image-preview">
+          <img ng-src="{{shownPhoto.$value}}"
+               class="image-preview__item"
+               alt="{{profile.name}}_{{profile.surname}}_image">
+           
+        </div>
+        
+        <button class="btn btn-danger"
+                data-dismiss="modal"
+                ng-if="mode === 'change'"
+                ng-click="removePhoto(shownPhoto)">
+          Remove
+        </button>
+        
+        <button class="btn btn-default"
+                ng-if="mode === 'change'"
+                data-dismiss="modal">
+         
+         Cancel  
+        </button> 
+        
+        <button class="btn btn-default"
+                data-dismiss="modal"
+                ng-if="mode === 'view'">
+          <span class="glyphicon glyphicon-remove"></span>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container"
      ng-if="!subLoading">
@@ -267,6 +302,7 @@
             </div>
           </div>
           
+          <!--User photos-->
           <div class="row"
                ng-if="mode === 'view'">
             <div class="col-sm-12">
@@ -276,15 +312,20 @@
                 </div>
                 <div class="panel-body">
                   
-                  <div class="user-photos__photo"
-                       ng-repeat="img in profile.images"
-                       ng-if="img"
-                       style="background-image: url({{img}})">
-                        
-                  </div>
+                  <div class="user-photo"
+                      ng-repeat="img in userPhotos"
+                      data-toggle="modal"
+                      data-target="#image-preview"
+                      ng-click="showPhoto(img)"
+                      style="background-image: url({{img.$value}})">
+                      
+                      <div class="user-photo__icon">
+                        <span class="glyphicon glyphicon-fullscreen"></span>
+                      </div>
+                 </div>
                   
                   <div class="alert alert-warning"
-                       ng-if="!profile.images.length">
+                       ng-if="!userPhotos.length">
                     Users didn't load any photos
                   </div>
                 </div>
@@ -292,7 +333,7 @@
             </div>
           </div>
           
-           <!--Image preview--->
+          <!--Image preview--->
           <div class="row"
               ng-if="mode === 'change'">
             <div class="col-md-6">
@@ -425,8 +466,14 @@
                  
                  <div class="user-photo"
                       ng-repeat="img in userPhotos"
+                      data-toggle="modal"
+                      data-target="#image-preview"
+                      ng-click="showPhoto(img)"
                       style="background-image: url({{img.$value}})">
-                   
+                      
+                  <div class="user-photo__icon">
+                    <span class="glyphicon glyphicon-fullscreen"></span>
+                  </div>
                  </div>
                </div>
              </div>

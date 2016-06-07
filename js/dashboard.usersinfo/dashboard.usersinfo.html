@@ -45,6 +45,29 @@
   </div>
 </div>
 
+<div class="modal fade" 
+     id="image-preview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="image-preview">
+          <img ng-src="{{shownPhoto.$value}}"
+               class="image-preview__item"
+               alt="{{profile.name}}_{{profile.surname}}_image">
+           
+        </div>
+        
+        <button class="btn btn-default"
+                data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span>
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container"
      ng-if="!subLoading">
  
@@ -184,15 +207,20 @@
             </div>
             <div class="panel-body">
               
-              <div class="users-photos__photo"
-                    ng-repeat="img in profile.images"
-                    ng-if="img"
-                    style="background-image: url({{img}})">
-                    
+              <div class="user-photo"
+                  ng-repeat="img in userPhotos"
+                  data-toggle="modal"
+                  data-target="#image-preview"
+                  ng-click="showPhoto(img)"
+                  style="background-image: url({{img.$value}})">
+                  
+                  <div class="user-photo__icon">
+                    <span class="glyphicon glyphicon-fullscreen"></span>
+                  </div>
               </div>
               
               <div class="alert alert-warning"
-                    ng-if="!profile.images.length">
+                    ng-if="!userPhotos.length">
                 Users didn't load any photos
               </div>
             </div>

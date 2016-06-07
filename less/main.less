@@ -203,7 +203,7 @@ header {
   
   width: 70px;
   background-size: cover;
-  background-position: bottom center;
+  background-position: top center;
   background-repeat: no-repeat;
   height: 70px;
   cursor: pointer;
@@ -224,7 +224,7 @@ header {
   width: 50px;
   height: 50px;
   background-size: cover;
-  background-position: bottom center;
+  background-position: top center;
   background-repeat: no-repeat;
   cursor: pointer;
 }
@@ -245,7 +245,7 @@ header {
   width: 30px;
   height: 30px;
   background-size: cover;
-  background-position: bottom center;
+  background-position: top center;
   background-repeat: no-repeat;
   border-radius: 5px;
 }
@@ -374,6 +374,7 @@ header {
 
 .user-photo {
   
+  position: relative;
   width: 120px;
   max-width: 150px;
   height: 100px;
@@ -382,6 +383,32 @@ header {
   background-size: cover;
   box-shadow: 0 0 2px 1px lighten(black, 10%);
   margin: 5px 5px;
-  //border: 1px solid red;
+  cursor: pointer;
+  
+  &:hover {
+    
+    .user-photo__icon {
+      
+      visibility: visible;
+    }
+  }
+}
+
+.user-photo__icon {
+  
+  position: absolute;
+  visibility: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 28px 40px;
+  span {
+    
+    color: white;
+    font-size: 40px;
+  }
 }
 
