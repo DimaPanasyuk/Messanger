@@ -34,10 +34,7 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
     
     if (item.newMessages === true && (current_location.indexOf(item.name)) === -1) {
       let messageIn = new Audio('../../sounds/sound_1.mp3');
-      messageIn.onload = function() {
-
-        messageIn.play(); 
-      }
+      messageIn.play(); 
       toastr.error(`<b>${item.title}</b>, new message!`);
     }  
   })
