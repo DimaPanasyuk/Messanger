@@ -49,7 +49,7 @@
 <div class="container"
      ng-if="!subLoading &&
             current_dialog && 
-            current_dialog.dialogHost === current_user">
+            current_dialog.dialogHost === currentUser">
   
   <div class="row">
     
@@ -203,6 +203,6 @@
 
 <div class="alert alert-danger"
      ng-if="current_dialog && 
-            current_dialog.dialogHost !== current_user">
+            current_dialog.dialogHost !== currentUser">
   <strong>Opps, it seams you are not a host of this dialog motherfucker!</strong>  
 </div>

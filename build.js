@@ -141,29 +141,21 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-//Services
+// Services
 
-// import newsConfig          from './dashboard.news/dashboard.news.route';
-
-//Configs
-//Angular items
+// Configs
+// Angular items
 
 _angular2.default.module('app', [_angularUiRouter2.default, 'firebase']);
 
-//TODO: Split this 1 module into several smaller
+// TODO: Split this 1 module into several smaller
 
-//Run
+// Run
 
-//Filters
+// Filters
 
-// import News                from './dashboard.news/dashboard.news.js';
-
-//Controllers
-_angular2.default.module('app').constant('urls', { templates: './js/' }).constant('fire', 'https://dima-messanger.firebaseio.com').config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default)
-//.config(newsConfig)
-.config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).config(_dashboardUsers2.default).config(_dashboardUsersinfo2.default).config(_dashboardDialogSettings2.default).config(_dashboardDialogNew2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).filter('fromNow', _fromNow2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default)
-//.controller('News', News)
-.controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).controller('Users', _dashboardUsers4.default).controller('UsersInfo', _dashboardUsersinfo4.default).controller('DialogSettings', _dashboardDialogSettings4.default).controller('DialogNew', _dashboardDialogNew4.default).run(_app6.default);
+// Controllers
+_angular2.default.module('app').constant('urls', { templates: './js/' }).constant('fire', 'https://dima-messanger.firebaseio.com').config(_app2.default).config(_auth2.default).config(_resetPassword2.default).config(_registration2.default).config(_dashboard2.default).config(_dashboardFriends2.default).config(_dashboardProfile2.default).config(_dashboardDialogs2.default).config(_dashboardMessages2.default).config(_dashboardUsers2.default).config(_dashboardUsersinfo2.default).config(_dashboardDialogSettings2.default).config(_dashboardDialogNew2.default).service('auth', _auth6.default).filter('cut', _cutTo2.default).filter('fromNow', _fromNow2.default).controller('App', _app4.default).controller('Auth', _auth4.default).controller('ResetPassword', _resetPassword4.default).controller('Registration', _registration4.default).controller('Dashboard', _dashboard4.default).controller('Friends', _dashboardFriends4.default).controller('Profile', _dashboardProfile4.default).controller('Dialogs', _dashboardDialogs4.default).controller('Messages', _dashboardMessages4.default).controller('Users', _dashboardUsers4.default).controller('UsersInfo', _dashboardUsersinfo4.default).controller('DialogSettings', _dashboardDialogSettings4.default).controller('DialogNew', _dashboardDialogNew4.default).run(_app6.default);
 
 },{"./app/app.config":2,"./app/app.js":3,"./app/app.run":4,"./auth/auth.js":5,"./auth/auth.route":6,"./dashboard.dialog.new/dashboard.dialog.new.js":7,"./dashboard.dialog.new/dashboard.dialog.new.route":8,"./dashboard.dialog.settings/dashboard.dialog.settings.js":9,"./dashboard.dialog.settings/dashboard.dialog.settings.route":10,"./dashboard.dialogs/dashboard.dialogs.js":11,"./dashboard.dialogs/dashboard.dialogs.route":12,"./dashboard.friends/dashboard.friends.js":13,"./dashboard.friends/dashboard.friends.route":14,"./dashboard.messages/dashboard.messages.js":15,"./dashboard.messages/dashboard.messages.route":16,"./dashboard.profile/dashboard.profile.js":17,"./dashboard.profile/dashboard.profile.route":18,"./dashboard.users/dashboard.users.js":19,"./dashboard.users/dashboard.users.route":20,"./dashboard.usersinfo/dashboard.usersinfo.js":21,"./dashboard.usersinfo/dashboard.usersinfo.route":22,"./dashboard/dashboard.js":23,"./dashboard/dashboard.route":24,"./filters/cutTo.filter":25,"./filters/fromNow.filter":26,"./registration/registration.js":27,"./registration/registration.route":28,"./resetPassword/resetPassword.js":29,"./resetPassword/resetPassword.route":30,"./services/auth.service":31,"angular":34,"angular-ui-router":32,"angularfire":36,"firebase":37}],2:[function(require,module,exports){
 'use strict';
@@ -172,17 +164,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$urlRouterProvider', function appConfig($urlRouterProvider) {
-
   $urlRouterProvider.otherwise('/auth');
 }];
 
 },{}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$firebaseObject', 'auth', function App($scope, $firebaseObject, auth) {}];
+exports.default = [function () {}];
 
 },{}],4:[function(require,module,exports){
 'use strict';
@@ -191,11 +182,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$rootScope', '$location', function ($rootScope, $location) {
-
   $rootScope.$on("$stateChangeError", function (event, next, previous, error) {
-
     if (error === "AUTH_REQUIRED") {
-
       $location.path("/auth");
     }
   });
@@ -208,7 +196,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fire', function Auth($scope, $rootScope, $location, $timeout, auth, fire) {
-
   // $scope.useremail = '';
   // $scope.userpassword = '';
   var users = new Firebase(fire + '/users');
@@ -216,7 +203,6 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fir
   $scope.signUp = signUp;
 
   function logIn() {
-
     $rootScope.loading = true;
     auth.authUser({
       email: $scope.useremail,
@@ -224,7 +210,6 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fir
     }).then(function (data) {
       $rootScope.loading = false;
       if (data && data.provider) {
-
         users.child(data.uid).update({
           id: data.uid,
           lastLoggedIn: new Date().getTime(),
@@ -240,7 +225,6 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fir
   }
 
   function signUp() {
-
     $location.path('/signup');
   }
 }];
@@ -252,7 +236,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('auth', {
 
     url: '/auth',
@@ -277,17 +260,15 @@ function _interopRequireDefault(obj) {
 }
 
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
-
   $rootScope.subLoading = true;
-  var dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
-      friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
-      users_ref = new Firebase(fire + '/users'),
-      dialogs = $firebaseArray(dialog_ref),
-      friends = $firebaseArray(friends_ref),
-      users = $firebaseArray(users_ref);
+  var dialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
+  var friendsRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends');
+  var usersRef = new Firebase(fire + '/users');
+  var dialogs = $firebaseArray(dialogRef);
+  var friends = $firebaseArray(friendsRef);
+  var users = $firebaseArray(usersRef);
 
   dialogs.$loaded(function () {
-
     $rootScope.subLoading = false;
     $scope.friends = users.filter(function (user) {
       return _lodash2.default.find(friends, { id: user.id });
@@ -305,24 +286,18 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
   $scope.removeParticipant = removeParticipant;
 
   function create() {
-
     var participants = angular.copy($scope.dialog.participants);
     $scope.dialog.name = $scope.dialog.title.split(' ').join('_');
 
     participants = participants.map(function (participant) {
-
       return participant.uid;
     });
     participants[participants.length] = userInfo.uid;
 
     participants.forEach(function (participant) {
-
-      var participant_dialogs_ref = new Firebase(fire + '/users/' + participant + '/dialogs');
-
+      var participantDialogRef = new Firebase(fire + '/users/' + participant + '/\n      dialogs');
       if (participant === userInfo.uid) {
-
-        participant_dialogs_ref.child($scope.dialog.name).set({
-
+        participantDialogRef.child($scope.dialog.name).set({
           title: $scope.dialog.title,
           name: $scope.dialog.name,
           participants: participants,
@@ -330,8 +305,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
           dialogHost: userInfo.uid
         });
       } else {
-
-        participant_dialogs_ref.child($scope.dialog.name).set({
+        participantDialogRef.child($scope.dialog.name).set({
 
           title: $scope.dialog.title,
           name: $scope.dialog.name,
@@ -345,12 +319,10 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
   }
 
   function cancel() {
-
     $location.path('/dialogs');
   }
 
   function addParticipant(participant) {
-
     $scope.dialog.participants.push({
 
       name: participant.info.name,
@@ -366,7 +338,6 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
   }
 
   function removeParticipant(participant) {
-
     _lodash2.default.remove($scope.dialog.participants, {
 
       uid: participant.uid
@@ -391,26 +362,22 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.newDialog', {
 
     url: 'dialogs/new',
     parent: 'dashboard',
-    templateUrl: urls.templates + 'dashboard.dialog.new/dashboard.dialog.new.html',
+    templateUrl: urls.templates + 'dashboard.dialog.new/\n    dashboard.dialog.new.html',
     controller: 'DialogNew',
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to new dialog page');
       },
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -433,33 +400,28 @@ function _interopRequireDefault(obj) {
 }
 
 exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInfo', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, $stateParams, $location, userInfo, fire, $firebaseObject, $firebaseArray) {
-
   $rootScope.subLoading = true;
-  var current_dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name),
-      current_dialog = $firebaseObject(current_dialog_ref),
-      current_friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
-      users_ref = new Firebase(fire + '/users'),
-      current_friends = $firebaseArray(current_friends_ref),
-      users = $firebaseArray(users_ref);
+  var currentDialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/\n                                           dialogs/' + $stateParams.name);
+  var currentDialog = $firebaseObject(currentDialogRef);
+  var currentFriendsRef = new Firebase(fire + '/users\n                                           /' + userInfo.uid + '/friends');
+  var usersRef = new Firebase(fire + '/users');
+  var currentFriends = $firebaseArray(currentFriendsRef);
+  var users = $firebaseArray(usersRef);
 
   $scope.participants = [];
   $scope.friends = [];
-  $scope.current_user = userInfo.uid;
+  $scope.currentUser = userInfo.uid;
 
-  //Getting data and ordering it
-  current_dialog.$loaded(function () {
-
+  // Getting data and ordering it
+  currentDialog.$loaded(function () {
     $rootScope.subLoading = false;
-    $scope.current_dialog = current_dialog;
-    if (current_dialog.participants.length > 1) {
-
+    $scope.currentDialog = currentDialog;
+    if (currentDialog.participants.length > 1) {
       getAllData();
     } else {
-
-      current_friends.$loaded(function () {
-
+      currentFriends.$loaded(function () {
         $scope.friends = users.filter(function (user) {
-          return _lodash2.default.find(current_friends, { id: user.id });
+          return _lodash2.default.find(currentFriends, { id: user.id });
         });
       });
     }
@@ -471,7 +433,6 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
   $scope.cancelChanges = cancelChanges;
 
   function addParticipant(participant) {
-
     _lodash2.default.remove($scope.friends, {
       id: participant.id
     });
@@ -485,7 +446,6 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
   }
 
   function removeParticipant(participant) {
-
     _lodash2.default.remove($scope.participants, {
       uid: participant.uid
     });
@@ -501,27 +461,23 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
   }
 
   function saveChanges() {
-
     var participants = angular.copy($scope.participants);
     var friends = angular.copy($scope.friends);
     participants = participants.map(function (participant) {
-
       return participant.uid;
     });
     participants[participants.length] = userInfo.uid;
 
     friends.forEach(function (friend) {
-
-      var dialog_ref = new Firebase(fire + '/users/' + friend.id + '/dialogs/' + $stateParams.name);
-      dialog_ref.child('participants').set(null);
+      var dialogRef = new Firebase(fire + '/users/' + friend.id + '/dialogs/' + $stateParams.name);
+      dialogRef.child('participants').set(null);
     });
 
     participants.forEach(function (participant) {
-
-      var dialog_ref = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
-      dialog_ref.child('participants').set(participants);
-      dialog_ref.child('name').set($stateParams.name);
-      dialog_ref.child('title').set($stateParams.name.split('_').join(' '));
+      var dialogRef = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
+      dialogRef.child('participants').set(participants);
+      dialogRef.child('name').set($stateParams.name);
+      dialogRef.child('title').set($stateParams.name.split('_').join(' '));
     });
 
     toastr.error('Changes applied successfully!');
@@ -530,33 +486,26 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
   }
 
   function cancelChanges() {
-
     $location.path('/dialogs/' + $stateParams.name + '/messages');
   }
 
   function getAllData() {
-
-    $scope.participants_prev = current_dialog.participants.filter(function (participant) {
-
+    $scope.participantsPrev = currentDialog.participants.filter(function (participant) {
       return participant !== userInfo.uid;
     }).forEach(function (participant) {
-
-      var participant_info = $firebaseObject(new Firebase(fire + '/users/' + participant));
-      participant_info.$loaded(function () {
-
+      var participantInfo = $firebaseObject(new Firebase(fire + '/users/' + participant));
+      participantInfo.$loaded(function () {
         $scope.participants.push({
 
-          name: participant_info.info.name,
-          surname: participant_info.info.surname,
-          photo: participant_info.info.image,
-          uid: participant_info.id
+          name: participantInfo.info.name,
+          surname: participantInfo.info.surname,
+          photo: participantInfo.info.image,
+          uid: participantInfo.id
         });
-        current_friends.$loaded(function () {
-
+        currentFriends.$loaded(function () {
           $scope.friends = users.filter(function (user) {
-            return _lodash2.default.find(current_friends, { id: user.id });
+            return _lodash2.default.find(currentFriends, { id: user.id });
           }).filter(function (friend) {
-
             return !_lodash2.default.find($scope.participants, {
 
               uid: friend.id
@@ -575,7 +524,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.dialogSettings', {
 
     url: 'dialogs/:name/settings',
@@ -585,16 +533,13 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to dialog settings page');
       },
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -608,13 +553,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userInfo', 'fire', function ($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
-
   $rootScope.subLoading = true;
-  var dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
-      dialogs = $firebaseArray(dialog_ref);
+  var dialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
+  var dialogs = $firebaseArray(dialogRef);
 
   dialogs.$loaded(function () {
-
     $scope.dialogs = dialogs;
     $rootScope.subLoading = false;
   });
@@ -623,17 +566,14 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
   $scope.addNewDialog = addNewDialog;
 
   function addNewDialog() {
-
     $location.path('/dialogs/new');
   }
 
   function removeDialog(dialog) {
-
     dialogs.$remove(dialog);
   }
 
   function openDialogMessages(dialog) {
-
     $location.path('/dialogs/' + dialog.name + '/messages');
   }
 }];
@@ -645,7 +585,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.dialogs', {
 
     url: 'dialogs',
@@ -655,16 +594,13 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to dialogs page');
       },
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -686,30 +622,23 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 'fire', '$firebaseObject', '$firebaseArray', '$stateParams', function ($scope, $rootScope, userInfo, $timeout, $location, fire, $firebaseObject, $firebaseArray, $stateParams) {
-
+exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, userInfo, $timeout, $location, fire, $firebaseObject, $firebaseArray) {
   $rootScope.subLoading = true;
   $scope.pageTitle = 'List of your friends';
-  var friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
-      current_user_friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
-      users_ref = new Firebase(fire + '/users'),
-      users = $firebaseArray(users_ref),
-      friends = $firebaseArray(friends_ref),
-      current_user = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid)),
-      current_user_dialogs = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/dialogs')),
-      current_user_friends = $firebaseArray(current_user_friends_ref);
-
+  var friendsRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends');
+  var usersRef = new Firebase(fire + '/users');
+  var users = $firebaseArray(usersRef);
+  var friends = $firebaseArray(friendsRef);
+  var currentUser = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
+  var currentUserDialogs = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'));
   users.$loaded(function () {
-
     friends.$loaded(function () {
-
-      $scope.friends = $scope.friends_total = users.filter(function (user) {
+      $scope.friends = $scope.friendsTotal = users.filter(function (user) {
         return _lodash2.default.find(friends, { id: user.id });
       });
       $rootScope.subLoading = false;
     });
   });
-
   $scope.filter = 'show-all';
   $scope.removeFriend = removeFriend;
   $scope.filterFriends = filterFriends;
@@ -717,147 +646,126 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
   $scope.sendMessage = sendMessage;
   $scope.checkEnter = checkEnter;
   $scope.showProfile = showProfile;
-
   function showProfile(profile) {
-
     $location.path('/users/' + profile.id + '/info');
   }
-
   function checkEnter(e) {
-
     if (e.keyCode === 13) {
-
       $timeout(function () {
         document.querySelector('#sendMessage').click();
       }, 0);
     }
   }
-
   function filterFriends(state) {
-
     $scope.filter = state;
     switch (state) {
-
       case 'show-all':
-        $scope.friends = $scope.friends_total;
+        $scope.friends = $scope.friendsTotal;
         break;
       case 'show-online':
-        $scope.friends = $scope.friends_total.filter(function (friend) {
-
+        $scope.friends = $scope.friendsTotal.filter(function (friend) {
           return friend.lastLoggedOut === 0;
         });
+        break;
+      default:
     }
   }
-
   function sendMessage() {
+    currentUserDialogs.$loaded(function () {
+      var friendDialogsRef = new Firebase(fire + '/users/' + $scope.toUser.id + '/dialogs');
+      var currentUserDialogsRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
+      var friendDialogs = $firebaseArray(friendDialogsRef);
+      var dialogExists = _lodash2.default.find(currentUserDialogs, { name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname });
+      var time = new Date().getTime();
+      var participants = [$scope.toUser.id, currentUser.id];
 
-    current_user_dialogs.$loaded(function () {
+      friendDialogs.$loaded(function () {
+        var friendDialogExists = _lodash2.default.find(friendDialogs, { name: currentUser.info.name + '_' + currentUser.info.surname });
 
-      var friend_dialogs_ref = new Firebase(fire + '/users/' + $scope.toUser.id + '/dialogs'),
-          current_user_dialogs_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs'),
-          friend_dialogs = $firebaseArray(friend_dialogs_ref),
-          dialog_exists = _lodash2.default.find(current_user_dialogs, { name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname }),
-          time = new Date().getTime(),
-          participants = [$scope.toUser.id, current_user.id];
-
-      friend_dialogs.$loaded(function () {
-
-        var friend_dialog_exists = _lodash2.default.find(friend_dialogs, { name: current_user.info.name + '_' + current_user.info.surname });
-
-        if (!dialog_exists && !friend_dialog_exists) {
-
-          var dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
-              dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
-          friend_dialog_exists = {
-            title: dialog_title_for_friend.split('_').join(' '),
-            name: dialog_title_for_friend,
+        if (!dialogExists && !friendDialogExists) {
+          var dialogTitleForFriend = currentUser.info.name + '_' + currentUser.info.surname;
+          var dialogTitleForUser = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
+          friendDialogExists = {
+            title: dialogTitleForFriend.split('_').join(' '),
+            name: dialogTitleForFriend,
             participants: participants,
             toOneUser: true
-          }, dialog_exists = {
-            title: dialog_title_for_user.split('_').join(' '),
-            name: dialog_title_for_user,
+          };
+          dialogExists = {
+            title: dialogTitleForUser.split('_').join(' '),
+            name: dialogTitleForUser,
             participants: participants,
             toOneUser: true
           };
 
-          friend_dialogs_ref.child(dialog_title_for_friend).set(friend_dialog_exists);
-          current_user_dialogs_ref.child(dialog_title_for_user).set(dialog_exists);
+          friendDialogsRef.child(dialogTitleForFriend).set(friendDialogExists);
+          currentUserDialogsRef.child(dialogTitleForUser).set(dialogExists);
 
           $timeout(function () {
-
-            sendMessages(dialog_exists, time);
+            sendMessages(dialogExists, time);
           }, 200);
+        } else if (!friendDialogExists) {
+          var _dialogTitleForFriend = currentUser.info.name + '_' + currentUser.info.surname;
+          friendDialogExists = {
+            title: _dialogTitleForFriend.split('_').join(' '),
+            name: _dialogTitleForFriend,
+            participants: participants,
+            toOneUser: true
+          };
+
+          friendDialogsRef.child(_dialogTitleForFriend).set(friendDialogExists);
+
+          sendMessages(dialogExists, time);
+        } else if (!dialogExists) {
+          var _dialogTitleForUser = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
+          dialogExists = {
+            title: _dialogTitleForUser.split('_').join(' '),
+            name: _dialogTitleForUser,
+            participants: participants,
+            toOneUser: true
+          };
+          currentUserDialogsRef.child(_dialogTitleForUser).set(dialogExists);
+
+          sendMessages(dialogExists, time);
+        } else if (dialogExists && friendDialogExists) {
+          sendMessages(dialogExists, time);
         }
-        //If your friend has no dialog
-        else if (!friend_dialog_exists) {
-
-            var _dialog_title_for_friend = current_user.info.name + '_' + current_user.info.surname,
-                _friend_dialog_exists = {
-              title: _dialog_title_for_friend.split('_').join(' '),
-              name: _dialog_title_for_friend,
-              participants: participants,
-              toOneUser: true
-            };
-
-            friend_dialogs_ref.child(_dialog_title_for_friend).set(_friend_dialog_exists);
-
-            sendMessages(dialog_exists, time);
-          } else if (!dialog_exists) {
-
-            var _dialog_title_for_user = $scope.toUser.info.name + '_' + $scope.toUser.info.surname;
-            dialog_exists = {
-              title: _dialog_title_for_user.split('_').join(' '),
-              name: _dialog_title_for_user,
-              participants: participants,
-              toOneUser: true
-            };
-            current_user_dialogs_ref.child(_dialog_title_for_user).set(dialog_exists);
-
-            sendMessages(dialog_exists, time);
-          } else if (dialog_exists && friend_dialog_exists) {
-
-            sendMessages(dialog_exists, time);
-          }
       });
     });
   }
 
-  function sendMessages(dialog_item, time) {
-
-    dialog_item.participants.forEach(function (participant) {
-
-      //Adds message to your dialog         
+  function sendMessages(dialogItem, time) {
+    dialogItem.participants.forEach(function (participant) {
+      // Adds message to your dialog
       if (userInfo.uid === participant) {
+        var dialogMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogItem.name + '/messages'));
+        var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogItem.name);
 
-        var dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_item.name + '/messages')),
-            dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_item.name);
-
-        dialog_messages.$add({
-          author: current_user.info.name + ' ' + current_user.info.surname,
+        dialogMessages.$add({
+          author: currentUser.info.name + ' ' + currentUser.info.surname,
           time: time,
           text: $scope.message.text,
-          authorId: current_user.id,
-          authorPhoto: current_user.info.image
+          authorId: currentUser.id,
+          authorPhoto: currentUser.info.image
         });
         dialog.child('newMessages').set(false);
-        //dialog.child('lastMessageTime').set((new Date()).getTime());
+        // dialog.child('lastMessageTime').set((new Date()).getTime());
 
-        //Sends message for your friend
+        // Sends message for your friend
       } else {
-
-          var friend_dialog = current_user.info.name + '_' + current_user.info.surname,
-              _dialog_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog + '/messages')),
-              _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + friend_dialog);
-          _dialog_messages.$add({
-            author: current_user.info.name + ' ' + current_user.info.surname,
+          var friendDialog = currentUser.info.name + '_' + currentUser.info.surname;
+          var _dialogMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + friendDialog + '/messages'));
+          var _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + friendDialog);
+          _dialogMessages.$add({
+            author: currentUser.info.name + ' ' + currentUser.info.surname,
             time: time,
             text: $scope.message.text,
-            authorId: current_user.id,
-            authorPhoto: current_user.info.image
+            authorId: currentUser.id,
+            authorPhoto: currentUser.info.image
           });
 
           _dialog.child('newMessages').set(true);
-          //dialog.child('lastMessageTime').set((new Date()).getTime());
+          // dialog.child('lastMessageTime').set((new Date()).getTime());
         }
     });
     $scope.message.text = '';
@@ -867,12 +775,10 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
     $scope.toUser = friend;
   }
 
-  function removeFriend(friend, index) {
-
-    var friend_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends/' + friend.$id),
-        friend_u = $firebaseObject(friend_ref);
-    friend_u.$remove().then(function (data) {
-
+  function removeFriend(friend) {
+    var friendRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends/' + friend.$id);
+    var friendU = $firebaseObject(friendRef);
+    friendU.$remove().then(function () {
       _lodash2.default.remove($scope.friends, {
         $id: friend.$id
       });
@@ -887,7 +793,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.friends', {
 
     url: 'friends',
@@ -897,17 +802,14 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to friends page');
       },
 
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -1438,17 +1340,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', 'userInfo', 'fire', 'infoAboutWatchedUser', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, userInfo, fire, infoAboutWatchedUser, $firebaseObject, $firebaseArray) {
-
   $rootScope.subLoading = true;
-  var user_ref = new Firebase(fire + '/users/' + infoAboutWatchedUser),
-      user = $firebaseObject(user_ref),
-      userPhotos = $firebaseArray(new Firebase(fire + '/users/' + infoAboutWatchedUser + '/info/photos')),
-      user_info = $firebaseObject(user_ref.child('info'));
+  var userRef = new Firebase(fire + '/users/' + infoAboutWatchedUser);
+  var user = $firebaseObject(userRef);
+  var userPhotos = $firebaseArray(new Firebase(fire + '/users/' + infoAboutWatchedUser + '/info/photos'));
+  var userInf = $firebaseObject(userRef.child('info'));
 
-  user_info.$loaded(function () {
-
+  userInf.$loaded(function () {
     $scope.user = user;
-    $scope.profile = user_info;
+    $scope.profile = userInf;
     $rootScope.subLoading = false;
 
     userPhotos.$loaded(function () {
@@ -1469,7 +1369,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.usersinfo', {
 
     url: 'users/:id/info',
@@ -1479,22 +1378,18 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to Users Info page');
       },
 
       infoAboutWatchedUser: ['$stateParams', function ($stateParams) {
-
         return $stateParams.id;
       }],
 
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -1508,33 +1403,28 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInfo', '$firebaseObject', function ($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
-
-  var current_page = location.href.split('/'),
-      user = new Firebase(fire + '/users/' + userInfo.uid),
-      user_obj = $firebaseObject(user),
-      userMessages = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
+  var currentPage = location.href.split('/');
+  var user = new Firebase(fire + '/users/' + userInfo.uid);
+  var userObj = $firebaseObject(user);
+  var userMessages = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
 
   window.onbeforeunload = function () {
-
-    //logOut(); 
+    // logOut();
   };
 
-  user_obj.$loaded(function () {
-
-    $scope.user = user_obj;
+  userObj.$loaded(function () {
+    $scope.user = userObj;
   });
 
   $scope.logOut = logOut;
   $scope.setActivePage = setActivePage;
-  $scope.activePage = current_page[current_page.length - 1];
+  $scope.activePage = currentPage[currentPage.length - 1];
 
   userMessages.on('child_changed', function (event) {
-
-    console.debug('message change');
     var item = event.val();
-    var current_location = $location.path();
+    var currentLocation = $location.path();
 
-    if (item.newMessages === true && current_location.indexOf(item.name) === -1) {
+    if (item.newMessages === true && currentLocation.indexOf(item.name) === -1) {
       var messageIn = new Audio('../../sounds/sound_1.mp3');
       messageIn.play();
       toastr.error('<b>' + item.title + '</b>, new message!');
@@ -1542,7 +1432,6 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   });
 
   function logOut() {
-
     $rootScope.loading = true;
     auth.unauthUser();
     user.update({
@@ -1554,7 +1443,6 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   }
 
   function setActivePage(page) {
-
     $scope.activePage = page;
   }
 }];
@@ -1566,21 +1454,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard', {
-
     url: '/',
     templateUrl: urls.templates + 'dashboard/dashboard.html',
     controller: 'Dashboard',
     resolve: {
-
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
-
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -1594,13 +1476,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = [function () {
-
   return function (str, size) {
+    if (!str.length) {
+      return;
+    }
 
-    if (!str.length) return;
-    if (isNaN(size)) return str;
+    if (isNaN(size)) {
+      return str;
+    }
     if (str.length > size) {
-
       return str.slice(0, size - 3) + '...';
     }
   };
@@ -1613,21 +1497,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['dateFilter', function (dateFilter) {
-
   return function (date) {
-
-    var result = null,
-        current_date = new Date(),
-        day_start = new Date().setHours(0, 0, 0, 0);
-
-    var dayDifference = current_date.getTime() - day_start;
-    var messageDifference = current_date.getTime() - date;
-
+    var result = null;
+    var currentDate = new Date();
+    var dayStart = new Date().setHours(0, 0, 0, 0);
+    var dayDifference = currentDate.getTime() - dayStart;
+    var messageDifference = currentDate.getTime() - date;
     if (messageDifference > dayDifference) {
-
       result = dateFilter(date, 'dd.MM.yy');
     } else {
-
       result = dateFilter(date, 'HH:mm');
     }
     return result;
@@ -1641,27 +1519,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', 'auth', '$location', function ($scope, $rootScope, auth, $location) {
-
   $scope.signUp = signUp;
-
   function signUp() {
-
     $rootScope.loading = true;
     auth.registerUser({
       email: $scope.useremail,
       password: $scope.userpassword
     }).then(function (data) {
-
-      if (!data.uid) {
-
-        toastr.error(data);
-        $rootScope.loading = false;
-        $rootScope.$digest();
-      } else {
-
+      if (data.uid) {
         $rootScope.loading = false;
         toastr.success('Сongratulation, account created successfully, <b>Log in</b>!');
         $location.path('/auth');
+        $rootScope.$digest();
+      } else {
+        toastr.error(data);
+        $rootScope.loading = false;
         $rootScope.$digest();
       }
     });
@@ -1675,9 +1547,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('signup', {
-
     url: '/signup',
     templateUrl: urls.templates + 'registration/registration.html',
     controller: 'Registration'
@@ -1691,24 +1561,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope, $rootScope, $location, auth) {
-
   $scope.reset = reset;
   $scope.backToAuth = backToAuth;
-
   function reset() {
-
     $rootScope.loading = true;
     auth.resetUserPassword({
-
       email: $scope.userEmail
     }).then(function (data) {
       if (data) {
-
         $rootScope.loading = false;
         toastr.error(data);
         $rootScope.$digest();
       } else {
-
         $rootScope.loading = false;
         toastr.success('Temporary password was send on your email!');
         $location.path('/auth');
@@ -1716,9 +1580,7 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', function ($scope
       }
     });
   }
-
   function backToAuth() {
-
     $location.path('/auth');
   }
 }];
@@ -1730,9 +1592,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('reset', {
-
     url: '/reset',
     templateUrl: urls.templates + 'resetPassword/resetPassword.html',
     controller: 'ResetPassword'
@@ -1746,7 +1606,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
-
   var messanger = new Firebase('https://dima-messanger.firebaseio.com');
   var authentication = $firebaseAuth(messanger);
 
@@ -1761,72 +1620,51 @@ exports.default = ['$firebaseAuth', function auth($firebaseAuth) {
   };
 
   function authStatus() {
-
     authentication.$onAuth(function (data) {
-
       if (data) {
-
         return true;
       } else {
-
         return false;
       }
     });
   }
 
   function authUser(user) {
-
     return new Promise(function (resolve, reject) {
-
       authentication.$authWithPassword({
-
         email: user.email,
         password: user.password
       }).then(function (data) {
-
         resolve(data);
       }).catch(function (data) {
-
         resolve(data);
       });
     });
   }
 
   function unauthUser() {
-
     authentication.$unauth();
   }
 
   function resetUserPassword(user) {
-
     return new Promise(function (resolve, reject) {
-
       authentication.$resetPassword({
-
         email: user.email
       }).then(function (data) {
-
         resolve(data);
       }).catch(function (data) {
-
         resolve(data);
       });
     });
   }
-
   function registerUser(user) {
-
     return new Promise(function (resolve, reject) {
-
       authentication.$createUser({
-
         email: user.email,
         password: user.password
       }).then(function (data) {
-
         resolve(data);
       }).catch(function (err) {
-
         resolve(err);
       });
     });

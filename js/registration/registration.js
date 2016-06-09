@@ -1,31 +1,24 @@
 export default
-['$scope', '$rootScope', 'auth', '$location', 
-
+['$scope', '$rootScope', 'auth', '$location',
 function($scope, $rootScope, auth, $location) {
-  
-  $scope.signUp = signUp;  
-  
+  $scope.signUp = signUp;
   function signUp() {
-    
     $rootScope.loading = true;
     auth.registerUser({
       email: $scope.useremail,
       password: $scope.userpassword
     })
     .then(function(data) {
-      
-      if (!data.uid) { 
-        
-        toastr.error(data);
-        $rootScope.loading = false;
-        $rootScope.$digest();
-      } else {
-        
+      if (data.uid) {
         $rootScope.loading = false;
         toastr.success('Сongratulation, account created successfully, <b>Log in</b>!');
         $location.path('/auth');
         $rootScope.$digest();
+      } else {
+        toastr.error(data);
+        $rootScope.loading = false;
+        $rootScope.$digest();
       }
-    })
+    });
   }
-}]
+}];
