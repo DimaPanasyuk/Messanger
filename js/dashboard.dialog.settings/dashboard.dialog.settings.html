@@ -48,8 +48,8 @@
 
 <div class="container"
      ng-if="!subLoading &&
-            current_dialog && 
-            current_dialog.dialogHost === currentUser">
+            currentDialog && 
+            currentDialog.dialogHost === currentUser">
   
   <div class="row">
     
@@ -59,7 +59,7 @@
         
         <div class="panel-heading">
           <em>Settings for </em>
-          <strong class="text-primary">{{current_dialog.title}}</strong> 
+          <strong class="text-primary">{{currentDialog.title}}</strong> 
         </div>
         
         <div class="panel-body">
@@ -202,7 +202,7 @@
 </div>
 
 <div class="alert alert-danger"
-     ng-if="current_dialog && 
-            current_dialog.dialogHost !== currentUser">
+     ng-if="currentDialog && 
+            currentDialog.dialogHost !== currentUser">
   <strong>Opps, it seams you are not a host of this dialog motherfucker!</strong>  
 </div>

@@ -2,13 +2,12 @@ export default
 ['$scope', '$rootScope', 'userInfo', '$timeout',
  'fire', '$firebaseObject', '$firebaseArray',
 function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebaseArray) {
-
   $rootScope.subLoading = true;
-  let profile_ref = new Firebase(`${fire}/users/${userInfo.uid}/info`),
-      user_ref = new Firebase(`${fire}/users/${userInfo.uid}`),
-      user = $firebaseObject(user_ref),
-      userPhotos = $firebaseArray(new Firebase(`${fire}/users/${userInfo.uid}/info/photos`)),
-      profile = $firebaseObject(profile_ref);
+  let profileRef = new Firebase(`${fire}/users/${userInfo.uid}/info`);
+  let userRef = new Firebase(`${fire}/users/${userInfo.uid}`);
+  let user = $firebaseObject(userRef);
+  let userPhotos = $firebaseArray(new Firebase(`${fire}/users/${userInfo.uid}/info/photos`));
+  let profile = $firebaseObject(profileRef);
 
   $scope.pageTitle = 'Your Profile page';
 
@@ -16,13 +15,14 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
   $scope.phoneNumber = '';
 
   userPhotos.$loaded(function() {
-
     $scope.userPhotos = userPhotos;
   });
   profile.$loaded(function() {
-
-    if(!profile.name) {
-
+    if (profile.name) {
+      $scope.mode = 'view';
+      document.getElementsByTagName('title')[0].innerHTML = `${profile.name} ${profile.surname}`;
+      $scope.status = user.lastLoggedOut;
+    } else {
       $scope.firstTime = true;
       $scope.mode = 'change';
       $scope.profile = {
@@ -38,16 +38,10 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
         skype: ''
       };
       document.getElementsByTagName('title')[0].innerHTML = `New Profile`;
-    } else {
-
-      $scope.mode = 'view';
-      document.getElementsByTagName('title')[0].innerHTML = `${profile.name} ${profile.surname}`;
-      $scope.status = user.lastLoggedOut;
     }
 
     $rootScope.subLoading = false;
   });
-
 
   $scope.addPhoneNumber = addPhoneNumber;
   $scope.removePhone = removePhone;
@@ -66,14 +60,12 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
   }
 
   function removePhone(index) {
-
     $scope.profile.numbers.splice(index, 1);
   }
 
   function saveProfileInfo() {
-
     let prof = $scope.profile;
-    profile_ref.update({
+    profileRef.update({
 
       name: prof.name,
       surname: prof.surname,
@@ -90,12 +82,10 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
   }
 
   function dontSaveProfileInfo() {
-
     $scope.mode = 'view';
   }
 
   function changeMode(mode) {
-
     $scope.mode = mode;
   }
 
@@ -104,30 +94,24 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
     angular.extend(profile, $scope.profile);
     profile.$save()
     .then(function() {
-
       $scope.imageLoaded = true;
     });
   }
 
   function addPhoto() {
-
     userPhotos.$add($scope.newPhoto)
-    .then(function(data) {
-
+    .then(function() {
       $scope.newPhoto = '';
     });
   }
 
   function showPhoto(photo) {
-
     $scope.shownPhoto = photo;
   }
 
   function removePhoto(photo) {
-
     userPhotos.$remove(photo)
-    .then(function(data) {
-
+    .then(function() {
       toastr.info('Image deleted successfully!');
     });
   }

@@ -100,7 +100,7 @@
      ng-if="!subLoading">
      
   <div class="row"
-       ng-if="current_dialog">
+       ng-if="currentDialog">
        
     <div class="row">
       <div class="col-sm-8 col-sm-offset-2">
@@ -117,7 +117,7 @@
         <div class="col-sm-10">
           
           <div class="alert alert-danger"
-              ng-if="current_dialog && !current_dialog.participants">
+              ng-if="currentDialog && !currentDialog.participants">
             <strong>
               Host removed you from dialog!
             </strong>
@@ -128,7 +128,7 @@
   </div>
   
   <div class="row"
-       ng-if="current_dialog">
+       ng-if="currentDialog">
     
     <div class="col-md-8 col-md-offset-2">
      <div class="panel panel-info">
@@ -142,7 +142,7 @@
         
         
         <div class="panel panel-default"
-             ng-if="current_dialog && current_dialog.participants">
+             ng-if="currentDialog && currentDialog.participants">
           
           <div class="panel-body">
             <div class="row">
@@ -202,7 +202,7 @@
                   <div class="btn-group">
                     
                     <a class="btn btn-sm btn-block btn-default"
-                       ng-if="(current_dialog &&  userUid) && current_dialog.dialogHost === userUid"
+                       ng-if="(currentDialog &&  userUid) && currentDialog.dialogHost === userUid"
                        href="#/dialogs/{{dialogName}}/settings">
                       <span class="glyphicon glyphicon-cog"></span>
                     </a>

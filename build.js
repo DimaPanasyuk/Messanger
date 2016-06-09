@@ -401,9 +401,9 @@ function _interopRequireDefault(obj) {
 
 exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInfo', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, $stateParams, $location, userInfo, fire, $firebaseObject, $firebaseArray) {
   $rootScope.subLoading = true;
-  var currentDialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/\n                                           dialogs/' + $stateParams.name);
+  var currentDialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
   var currentDialog = $firebaseObject(currentDialogRef);
-  var currentFriendsRef = new Firebase(fire + '/users\n                                           /' + userInfo.uid + '/friends');
+  var currentFriendsRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends');
   var usersRef = new Firebase(fire + '/users');
   var currentFriends = $firebaseArray(currentFriendsRef);
   var users = $firebaseArray(usersRef);
@@ -822,39 +822,42 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
 
+var _lodash = require('lodash');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
   $rootScope.subLoading = true;
-  var current_dialog_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
-  var current_dialog = $firebaseObject(current_dialog_ref);
-  var current_user = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
-  var messages_ref = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
-  var messages = $firebaseArray(messages_ref);
+  var currentDialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
+  var currentDialog = $firebaseObject(currentDialogRef);
+  var currentUser = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
+  var messagesRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name + '/messages');
+  var messages = $firebaseArray(messagesRef);
   var userPhotos = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/info/photos'));
   $scope.userUid = userInfo.uid;
 
-  current_dialog.$loaded(function () {
-
-    $scope.current_dialog = current_dialog;
-    current_dialog_ref.child('newMessages').set(false);
+  currentDialog.$loaded(function () {
+    $scope.currentDialog = currentDialog;
+    currentDialogRef.child('newMessages').set(false);
     $rootScope.subLoading = false;
   });
-
   userPhotos.$loaded(function () {
-
     $scope.userPhotos = userPhotos;
   });
-
-  current_user.$loaded(function () {
-
+  currentUser.$loaded(function () {
     $scope.message = {
 
-      author: current_user.info.name + ' ' + current_user.info.surname,
+      author: currentUser.info.name + ' ' + currentUser.info.surname,
       time: '',
       text: '',
       pictures: [],
-      authorId: current_user.id,
-      authorPhoto: current_user.info.image
+      authorId: currentUser.id,
+      authorPhoto: currentUser.info.image
     };
   });
 
@@ -871,9 +874,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   $scope.showPhoto = showPhoto;
 
   function watchEnter(e) {
-
     if (e.keyCode === 13) {
-
       $timeout(function () {
         angular.element('#message_text').triggerHandler('click');
       }, 0);
@@ -881,47 +882,36 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   }
 
   function sendMessage() {
-
     $scope.message.time = new Date().getTime();
 
-    if ($scope.current_dialog.toOneUser) {
-
-      $scope.current_dialog.participants.forEach(function (participant) {
-
-        if (userInfo.uid !== participant) {
-
-          var dialog_name = current_user.info.name + '_' + current_user.info.surname,
-              dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_name),
-              participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialog_name + '/messages'));
-
-          participant_messages.$add($scope.message);
-          dialog.child('newMessages').set(true);
-
-          //add this feature back
-          //dialog.child('lastMessageTime').set((new Date()).getTime());
+    if ($scope.currentDialog.toOneUser) {
+      $scope.currentDialog.participants.forEach(function (participant) {
+        if (userInfo.uid === participant) {
+          var participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
+          var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
+          participantMessages.$add($scope.message);
+          dialog.child('newMessages').set(false);
         } else {
+          var dialogName = currentUser.info.name + '_' + currentUser.info.surname;
+          var _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogName);
+          var _participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogName + '/messages'));
 
-            var _participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages')),
-                _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
-            _participant_messages.$add($scope.message);
-            _dialog.child('newMessages').set(false);
-
-            //add this feature back but (2 notifications)
-            //dialog.child('lastMessageTime').set((new Date()).getTime());
-          }
+          _participantMessages.$add($scope.message);
+          _dialog.child('newMessages').set(true);
+          // add this feature back but (2 notifications)
+          // dialog.child('lastMessageTime').set((new Date()).getTime());
+        }
       });
       $scope.message.text = '';
       $scope.message.pictures = [];
     } else {
-      $scope.current_dialog.participants.forEach(function (participant) {
-
-        var participant_messages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
+      $scope.currentDialog.participants.forEach(function (participant) {
+        var participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
         var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
-        participant_messages.$add($scope.message);
+        participantMessages.$add($scope.message);
 
-        //dialog.child('lastMessageTime').set((new Date()).getTime());
+        // dialog.child('lastMessageTime').set((new Date()).getTime());
         if (userInfo.uid !== participant) {
-
           dialog.child('newMessages').set(true);
         }
       });
@@ -931,43 +921,36 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   }
 
   function showPhoto(photo) {
-
     $scope.shownPhoto = photo;
   }
 
   function goBack() {
-
-    current_dialog_ref.child('newMessages').set(false);
+    currentDialogRef.child('newMessages').set(false);
     $location.path('/dialogs');
   }
 
   function addPhoto(photo) {
-
-    if (!_.find($scope.message.pictures, { value: photo.$value })) {
-
+    if (_lodash2.default.find($scope.message.pictures, { value: photo.$value })) {
+      toastr.info('Image already added!');
+    } else {
       $scope.message.pictures.push({
         value: photo.$value
       });
-    } else {
-
-      toastr.info('Image already added!');
     }
   }
 
   function removePhoto(photo) {
-
-    _.remove($scope.message.pictures, { value: photo.value });
+    _lodash2.default.remove($scope.message.pictures, { value: photo.value });
   }
 }];
 
-},{}],16:[function(require,module,exports){
+},{"lodash":38}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.messages', {
 
     url: 'dialogs/:name/messages',
@@ -977,17 +960,14 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to messages page');
       },
 
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -1001,13 +981,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebaseArray) {
-
   $rootScope.subLoading = true;
-  var profile_ref = new Firebase(fire + '/users/' + userInfo.uid + '/info'),
-      user_ref = new Firebase(fire + '/users/' + userInfo.uid),
-      user = $firebaseObject(user_ref),
-      userPhotos = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/info/photos')),
-      profile = $firebaseObject(profile_ref);
+  var profileRef = new Firebase(fire + '/users/' + userInfo.uid + '/info');
+  var userRef = new Firebase(fire + '/users/' + userInfo.uid);
+  var user = $firebaseObject(userRef);
+  var userPhotos = $firebaseArray(new Firebase(fire + '/users/' + userInfo.uid + '/info/photos'));
+  var profile = $firebaseObject(profileRef);
 
   $scope.pageTitle = 'Your Profile page';
 
@@ -1015,13 +994,14 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
   $scope.phoneNumber = '';
 
   userPhotos.$loaded(function () {
-
     $scope.userPhotos = userPhotos;
   });
   profile.$loaded(function () {
-
-    if (!profile.name) {
-
+    if (profile.name) {
+      $scope.mode = 'view';
+      document.getElementsByTagName('title')[0].innerHTML = profile.name + ' ' + profile.surname;
+      $scope.status = user.lastLoggedOut;
+    } else {
       $scope.firstTime = true;
       $scope.mode = 'change';
       $scope.profile = {
@@ -1037,11 +1017,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
         skype: ''
       };
       document.getElementsByTagName('title')[0].innerHTML = 'New Profile';
-    } else {
-
-      $scope.mode = 'view';
-      document.getElementsByTagName('title')[0].innerHTML = profile.name + ' ' + profile.surname;
-      $scope.status = user.lastLoggedOut;
     }
 
     $rootScope.subLoading = false;
@@ -1064,14 +1039,12 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
   }
 
   function removePhone(index) {
-
     $scope.profile.numbers.splice(index, 1);
   }
 
   function saveProfileInfo() {
-
     var prof = $scope.profile;
-    profile_ref.update({
+    profileRef.update({
 
       name: prof.name,
       surname: prof.surname,
@@ -1088,12 +1061,10 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
   }
 
   function dontSaveProfileInfo() {
-
     $scope.mode = 'view';
   }
 
   function changeMode(mode) {
-
     $scope.mode = mode;
   }
 
@@ -1101,28 +1072,22 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
     $scope.profile.image = img;
     angular.extend(profile, $scope.profile);
     profile.$save().then(function () {
-
       $scope.imageLoaded = true;
     });
   }
 
   function addPhoto() {
-
-    userPhotos.$add($scope.newPhoto).then(function (data) {
-
+    userPhotos.$add($scope.newPhoto).then(function () {
       $scope.newPhoto = '';
     });
   }
 
   function showPhoto(photo) {
-
     $scope.shownPhoto = photo;
   }
 
   function removePhoto(photo) {
-
-    userPhotos.$remove(photo).then(function (data) {
-
+    userPhotos.$remove(photo).then(function () {
       toastr.info('Image deleted successfully!');
     });
   }
@@ -1135,7 +1100,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.profile', {
 
     url: 'profile',
@@ -1145,17 +1109,14 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to profile page');
       },
 
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }
@@ -1178,33 +1139,26 @@ function _interopRequireDefault(obj) {
 }
 
 exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$firebaseArray', '$firebaseObject', function ($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebaseObject) {
-
   $rootScope.subLoading = true;
-  var users_ref = new Firebase(fire + '/users'),
-      users = $firebaseArray(users_ref),
-      current_user_friends_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends'),
-      current_user_friends = $firebaseArray(current_user_friends_ref);
+  var usersRef = new Firebase(fire + '/users');
+  var users = $firebaseArray(usersRef);
+  var currentUserFriendsRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends');
+  var currentUserFriends = $firebaseArray(currentUserFriendsRef);
 
-  $scope.current_user_friends = current_user_friends;
+  $scope.currentUserFriends = currentUserFriends;
 
   users.$loaded(function () {
-
     $scope.users = users.filter(function (user) {
-
-      return user.info != null;
+      return user.info !== null;
     }).filter(function (user) {
-
       return user.id !== userInfo.uid;
     }).map(function (user) {
-
-      if (_lodash2.default.find(current_user_friends, {
+      if (_lodash2.default.find(currentUserFriends, {
         id: user.id
       })) {
-
         user.$$friend = true;
         return user;
       } else {
-
         user.$$friend = false;
         return user;
       }
@@ -1219,32 +1173,25 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
   $scope.showProfile = showProfile;
 
   function showProfile(user) {
-
     $location.path('/users/' + user.id + '/info');
   }
 
   function filterUsers(state) {
-
     $scope.filter = state;
     switch (state) {
 
       case 'show-all':
         $scope.users = users.filter(function (user) {
-
-          return user.info != null;
+          return user.info !== null;
         }).filter(function (user) {
-
           return user.id !== userInfo.uid;
         }).map(function (user) {
-
-          if (_lodash2.default.find(current_user_friends, {
+          if (_lodash2.default.find(currentUserFriends, {
             id: user.id
           })) {
-
             user.$$friend = true;
             return user;
           } else {
-
             user.$$friend = false;
             return user;
           }
@@ -1252,46 +1199,39 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
         break;
       case 'show-online':
         $scope.users = users.filter(function (user) {
-
-          return user.info != null;
+          return user.info !== null;
         }).filter(function (user) {
-
           return user.id !== userInfo.uid;
         }).filter(function (user) {
-
           return user.lastLoggedOut === 0;
         }).map(function (user) {
-
-          if (_lodash2.default.find(current_user_friends, {
+          if (_lodash2.default.find(currentUserFriends, {
             id: user.id
           })) {
-
             user.$$friend = true;
             return user;
           } else {
-
             user.$$friend = false;
             return user;
           }
         });
+        break;
+      default:
     }
   }
 
-  function toggleFriends(user, index) {
-
-    if (_lodash2.default.find(current_user_friends, {
+  function toggleFriends(user) {
+    if (_lodash2.default.find(currentUserFriends, {
       id: user.id
     })) {
+      var userRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends/' + user.$id);
+      var userU = $firebaseObject(userRef);
 
-      var user_ref = new Firebase(fire + '/users/' + userInfo.uid + '/friends/' + user.$id),
-          user_u = $firebaseObject(user_ref);
-
-      user_u.$remove().then(function (data) {
+      userU.$remove().then(function () {
         user.$$friend = false;
       });
     } else {
-
-      current_user_friends_ref.child(user.id).set({
+      currentUserFriendsRef.child(user.id).set({
         id: user.id
       });
       user.$$friend = true;
@@ -1306,7 +1246,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
-
   $stateProvider.state('dashboard.users', {
 
     url: 'users',
@@ -1316,17 +1255,14 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
     resolve: {
 
       log: function log() {
-
         console.debug('Routed to users page');
       },
 
       userInfo: ['auth', function (auth) {
-
         return auth.authentication.$getAuth();
       }],
 
       currentAuth: ['auth', function (auth) {
-
         return auth.authentication.$requireAuth();
       }]
     }

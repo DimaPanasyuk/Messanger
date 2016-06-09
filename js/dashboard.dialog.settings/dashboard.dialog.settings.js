@@ -12,11 +12,9 @@ export default [
   function($scope, $rootScope, $stateParams, $location, userInfo,
     fire, $firebaseObject, $firebaseArray) {
     $rootScope.subLoading = true;
-    let currentDialogRef = new Firebase(`${fire}/users/${userInfo.uid}/
-                                           dialogs/${$stateParams.name}`);
+    let currentDialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${$stateParams.name}`);
     let currentDialog = $firebaseObject(currentDialogRef);
-    let currentFriendsRef = new Firebase(`${fire}/users
-                                           /${userInfo.uid}/friends`);
+    let currentFriendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
     let usersRef = new Firebase(`${fire}/users`);
     let currentFriends = $firebaseArray(currentFriendsRef);
     let users = $firebaseArray(usersRef);

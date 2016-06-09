@@ -5,40 +5,33 @@ export default
  'fire', '$firebaseArray', '$firebaseObject',
 
 function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebaseObject) {
-
   $rootScope.subLoading = true;
-  let users_ref = new Firebase(`${fire}/users`),
-      users = $firebaseArray(users_ref),
-      current_user_friends_ref = new Firebase(`${fire}/users/${userInfo.uid}/friends`),
-      current_user_friends = $firebaseArray(current_user_friends_ref);
+  let usersRef = new Firebase(`${fire}/users`);
+  let users = $firebaseArray(usersRef);
+  let currentUserFriendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
+  let currentUserFriends = $firebaseArray(currentUserFriendsRef);
 
-  $scope.current_user_friends = current_user_friends;
+  $scope.currentUserFriends = currentUserFriends;
 
   users.$loaded(function() {
-
     $scope.users = users
     .filter(function(user) {
-
-      return user.info != null;
+      return user.info !== null;
     })
     .filter(function(user) {
-
       return user.id !== userInfo.uid;
     })
     .map(function(user) {
-
-      if (_.find(current_user_friends, {
+      if (_.find(currentUserFriends, {
         id: user.id
       })) {
-
         user.$$friend = true;
         return user;
       } else {
-
         user.$$friend = false;
         return user;
       }
-    })
+    });
     $rootScope.subLoading = false;
   });
 
@@ -49,92 +42,77 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
   $scope.showProfile = showProfile;
 
   function showProfile(user) {
-
     $location.path(`/users/${user.id}/info`);
   }
 
   function filterUsers(state) {
-
     $scope.filter = state;
-    switch(state) {
+    switch (state) {
 
       case 'show-all':
         $scope.users = users.filter(function(user) {
-
-          return user.info != null;
+          return user.info !== null;
         })
         .filter(function(user) {
-
           return user.id !== userInfo.uid;
         })
         .map(function(user) {
-
-          if (_.find(current_user_friends, {
+          if (_.find(currentUserFriends, {
             id: user.id
           })) {
-
             user.$$friend = true;
             return user;
           } else {
-
             user.$$friend = false;
             return user;
           }
-        })
+        });
         break;
       case 'show-online':
         $scope.users = users
         .filter(function(user) {
-
-          return user.info != null;
+          return user.info !== null;
         })
         .filter(function(user) {
-
           return user.id !== userInfo.uid;
         })
         .filter(function(user) {
-
           return user.lastLoggedOut === 0;
         })
         .map(function(user) {
-
-          if (_.find(current_user_friends, {
+          if (_.find(currentUserFriends, {
             id: user.id
           })) {
-
             user.$$friend = true;
             return user;
           } else {
-
             user.$$friend = false;
             return user;
           }
-        })
+        });
+        break;
+      default:
     }
   }
 
-  function toggleFriends(user, index) {
-
-    if(_.find(current_user_friends, {
+  function toggleFriends(user) {
+    if (_.find(currentUserFriends, {
       id: user.id
     })) {
+      let userRef = new Firebase(`${fire}/users/${userInfo.uid}/friends/${user.$id}`);
+      let userU = $firebaseObject(userRef);
 
-
-      let user_ref = new Firebase(`${fire}/users/${userInfo.uid}/friends/${user.$id}`),
-          user_u = $firebaseObject(user_ref);
-
-       user_u
-        .$remove()
-        .then(function(data) {
-          user.$$friend = false;
-        })
+      userU
+      .$remove()
+      .then(function() {
+        user.$$friend = false;
+      });
     } else {
-
-      current_user_friends_ref.child(user.id)
-        .set({
-          id: user.id
-        });
-        user.$$friend = true;
+      currentUserFriendsRef.child(user.id)
+      .set({
+        id: user.id
+      });
+      user.$$friend = true;
     }
   }
-}]
+}];
