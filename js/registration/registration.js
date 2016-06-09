@@ -9,8 +9,8 @@ function($scope, $rootScope, auth, $location) {
   function signUp() {
     $rootScope.loading = true;
     auth.registerUser({
-      email: $scope.useremail,
-      password: $scope.userpassword
+      email: $scope.user.email,
+      password: $scope.user.password
     })
     .then(function(data) {
       if (data.uid) {

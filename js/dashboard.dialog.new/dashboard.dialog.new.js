@@ -17,8 +17,10 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
   let users = $firebaseArray(usersRef);
 
   dialogs.$loaded(function() {
-    $scope.friends = users.filter(user => _.find(friends, {id: user.id}));
-    $rootScope.loading = false;
+    users.$loaded(function() {
+      $scope.friends = users.filter(user => _.find(friends, {$id: user.$id}));
+      $rootScope.loading = false;
+    });
   });
 
   $scope.dialog = {
@@ -73,13 +75,13 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
 
       name: participant.info.name,
       surname: participant.info.surname,
-      uid: participant.id,
+      uid: participant.$id,
       photo: participant.info.image
     });
 
     _.remove($scope.friends, {
 
-      id: participant.id
+      $id: participant.$id
     });
   }
 
@@ -91,7 +93,7 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
 
     $scope.friends.push({
 
-      id: participant.uid,
+      $id: participant.uid,
       info: {
         name: participant.name,
         surname: participant.surname,

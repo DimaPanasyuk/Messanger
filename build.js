@@ -275,10 +275,12 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
   var users = $firebaseArray(usersRef);
 
   dialogs.$loaded(function () {
-    $scope.friends = users.filter(function (user) {
-      return _lodash2.default.find(friends, { id: user.id });
+    users.$loaded(function () {
+      $scope.friends = users.filter(function (user) {
+        return _lodash2.default.find(friends, { $id: user.$id });
+      });
+      $rootScope.loading = false;
     });
-    $rootScope.loading = false;
   });
 
   $scope.dialog = {
@@ -333,13 +335,13 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
 
       name: participant.info.name,
       surname: participant.info.surname,
-      uid: participant.id,
+      uid: participant.$id,
       photo: participant.info.image
     });
 
     _lodash2.default.remove($scope.friends, {
 
-      id: participant.id
+      $id: participant.$id
     });
   }
 
@@ -351,7 +353,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$location', 'userI
 
     $scope.friends.push({
 
-      id: participant.uid,
+      $id: participant.uid,
       info: {
         name: participant.name,
         surname: participant.surname,
@@ -420,14 +422,17 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
 
   // Getting data and ordering it
   currentDialog.$loaded(function () {
-    $rootScope.loading = false;
     $scope.currentDialog = currentDialog;
     if (currentDialog.participants.length > 1) {
       getAllData();
     } else {
-      currentFriends.$loaded(function () {
-        $scope.friends = users.filter(function (user) {
-          return _lodash2.default.find(currentFriends, { id: user.id });
+      users.$loaded(function () {
+        currentFriends.$loaded(function () {
+          $scope.friends = users.filter(function (user) {
+            return _lodash2.default.find(currentFriends, { $id: user.$id });
+          });
+          console.debug($scope.friends);
+          $rootScope.loading = false;
         });
       });
     }
@@ -440,13 +445,13 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
 
   function addParticipant(participant) {
     _lodash2.default.remove($scope.friends, {
-      id: participant.id
+      $id: participant.$id
     });
 
     $scope.participants.push({
       name: participant.info.name,
       surname: participant.info.surname,
-      uid: participant.id,
+      uid: participant.$id,
       photo: participant.info.image
     });
   }
@@ -457,7 +462,7 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
     });
 
     $scope.friends.push({
-      id: participant.uid,
+      $id: participant.uid,
       info: {
         name: participant.name,
         surname: participant.surname,
@@ -475,7 +480,7 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
     participants[participants.length] = userInfo.uid;
 
     friends.forEach(function (friend) {
-      var dialogRef = new Firebase(fire + '/users/' + friend.id + '/dialogs/' + $stateParams.name);
+      var dialogRef = new Firebase(fire + '/users/' + friend.$id + '/dialogs/' + $stateParams.name);
       dialogRef.child('participants').set(null);
     });
 
@@ -506,17 +511,18 @@ exports.default = ['$scope', '$rootScope', '$stateParams', '$location', 'userInf
           name: participantInfo.info.name,
           surname: participantInfo.info.surname,
           photo: participantInfo.info.image,
-          uid: participantInfo.id
+          uid: participantInfo.$id
         });
         currentFriends.$loaded(function () {
           $scope.friends = users.filter(function (user) {
-            return _lodash2.default.find(currentFriends, { id: user.id });
+            return _lodash2.default.find(currentFriends, { $id: user.$id });
           }).filter(function (friend) {
             return !_lodash2.default.find($scope.participants, {
 
-              uid: friend.id
+              uid: friend.$id
             });
           });
+          $rootScope.loading = false;
         });
       });
     });
@@ -640,7 +646,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
   users.$loaded(function () {
     friends.$loaded(function () {
       $scope.friends = $scope.friendsTotal = users.filter(function (user) {
-        return _lodash2.default.find(friends, { id: user.id });
+        return _lodash2.default.find(friends, { id: user.$id });
       });
       $rootScope.loading = false;
     });
@@ -678,12 +684,12 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
   }
   function sendMessage() {
     currentUserDialogs.$loaded(function () {
-      var friendDialogsRef = new Firebase(fire + '/users/' + $scope.toUser.id + '/dialogs');
+      var friendDialogsRef = new Firebase(fire + '/users/' + $scope.toUser.$id + '/dialogs');
       var currentUserDialogsRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
       var friendDialogs = $firebaseArray(friendDialogsRef);
       var dialogExists = _lodash2.default.find(currentUserDialogs, { name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname });
       var time = new Date().getTime();
-      var participants = [$scope.toUser.id, currentUser.id];
+      var participants = [$scope.toUser.$id, currentUser.id];
 
       friendDialogs.$loaded(function () {
         var friendDialogExists = _lodash2.default.find(friendDialogs, { name: currentUser.info.name + '_' + currentUser.info.surname });
@@ -1160,7 +1166,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
       return user.id !== userInfo.uid;
     }).map(function (user) {
       if (_lodash2.default.find(currentUserFriends, {
-        id: user.id
+        id: user.$id
       })) {
         user.$$friend = true;
         return user;
@@ -1179,13 +1185,12 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
   $scope.showProfile = showProfile;
 
   function showProfile(user) {
-    $location.path('/users/' + user.id + '/info');
+    $location.path('/users/' + user.$id + '/info');
   }
 
   function filterUsers(state) {
     $scope.filter = state;
     switch (state) {
-
       case 'show-all':
         $scope.users = users.filter(function (user) {
           return user.info !== null;
@@ -1228,7 +1233,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
 
   function toggleFriends(user) {
     if (_lodash2.default.find(currentUserFriends, {
-      id: user.id
+      id: user.$id
     })) {
       var userRef = new Firebase(fire + '/users/' + userInfo.uid + '/friends/' + user.$id);
       var userU = $firebaseObject(userRef);
@@ -1237,8 +1242,8 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
         user.$$friend = false;
       });
     } else {
-      currentUserFriendsRef.child(user.id).set({
-        id: user.id
+      currentUserFriendsRef.child(user.$id).set({
+        id: user.$id
       });
       user.$$friend = true;
     }
@@ -1484,8 +1489,8 @@ exports.default = ['$scope', '$rootScope', 'auth', '$location', function ($scope
   function signUp() {
     $rootScope.loading = true;
     auth.registerUser({
-      email: $scope.useremail,
-      password: $scope.userpassword
+      email: $scope.user.email,
+      password: $scope.user.password
     }).then(function (data) {
       if (data.uid) {
         $rootScope.loading = false;

@@ -25,13 +25,16 @@ export default [
 
     // Getting data and ordering it
     currentDialog.$loaded(function() {
-      $rootScope.loading = false;
       $scope.currentDialog = currentDialog;
       if (currentDialog.participants.length > 1) {
         getAllData();
       } else {
-        currentFriends.$loaded(function() {
-          $scope.friends = users.filter(user => _.find(currentFriends, {id: user.id}));
+        users.$loaded(function() {
+          currentFriends.$loaded(function() {
+            $scope.friends = users.filter(user => _.find(currentFriends, {$id: user.$id}));
+            console.debug($scope.friends);
+            $rootScope.loading = false;
+          });
         });
       }
     });
@@ -43,13 +46,13 @@ export default [
 
     function addParticipant(participant) {
       _.remove($scope.friends, {
-        id: participant.id
+        $id: participant.$id
       });
 
       $scope.participants.push({
         name: participant.info.name,
         surname: participant.info.surname,
-        uid: participant.id,
+        uid: participant.$id,
         photo: participant.info.image
       });
     }
@@ -60,7 +63,7 @@ export default [
       });
 
       $scope.friends.push({
-        id: participant.uid,
+        $id: participant.uid,
         info: {
           name: participant.name,
           surname: participant.surname,
@@ -78,7 +81,7 @@ export default [
       participants[participants.length] = userInfo.uid;
 
       friends.forEach(function(friend) {
-        let dialogRef = new Firebase(`${fire}/users/${friend.id}/dialogs/${$stateParams.name}`);
+        let dialogRef = new Firebase(`${fire}/users/${friend.$id}/dialogs/${$stateParams.name}`);
         dialogRef.child('participants').set(null);
       });
 
@@ -112,17 +115,18 @@ export default [
               name: participantInfo.info.name,
               surname: participantInfo.info.surname,
               photo: participantInfo.info.image,
-              uid: participantInfo.id
+              uid: participantInfo.$id
             });
             currentFriends.$loaded(function() {
               $scope.friends = users
-              .filter(user => _.find(currentFriends, {id: user.id}))
+              .filter(user => _.find(currentFriends, {$id: user.$id}))
               .filter(function(friend) {
                 return !(_.find($scope.participants, {
 
-                  uid: friend.id
+                  uid: friend.$id
                 }));
               });
+              $rootScope.loading = false;
             });
           });
         });

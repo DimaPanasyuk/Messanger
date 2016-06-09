@@ -15,7 +15,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
   let currentUserDialogs = $firebaseArray(new Firebase(`${fire}/users/${userInfo.uid}/dialogs`));
   users.$loaded(function() {
     friends.$loaded(function() {
-      $scope.friends = $scope.friendsTotal = users.filter(user => _.find(friends, {id: user.id}));
+      $scope.friends = $scope.friendsTotal = users.filter(user => _.find(friends, {id: user.$id}));
       $rootScope.loading = false;
     });
   });
@@ -53,12 +53,12 @@ function($scope, $rootScope, userInfo, $timeout, $location,
   }
   function sendMessage() {
     currentUserDialogs.$loaded(function() {
-      let friendDialogsRef = new Firebase(`${fire}/users/${$scope.toUser.id}/dialogs`);
+      let friendDialogsRef = new Firebase(`${fire}/users/${$scope.toUser.$id}/dialogs`);
       let currentUserDialogsRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs`);
       let friendDialogs = $firebaseArray(friendDialogsRef);
       let dialogExists = _.find(currentUserDialogs, {name: $scope.toUser.info.name + '_' + $scope.toUser.info.surname});
       let time = (new Date()).getTime();
-      let participants = [$scope.toUser.id, currentUser.id];
+      let participants = [$scope.toUser.$id, currentUser.id];
 
       friendDialogs.$loaded(function() {
         let friendDialogExists = _.find(friendDialogs, {name: currentUser.info.name + '_' + currentUser.info.surname});

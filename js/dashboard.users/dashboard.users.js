@@ -23,7 +23,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
     })
     .map(function(user) {
       if (_.find(currentUserFriends, {
-        id: user.id
+        id: user.$id
       })) {
         user.$$friend = true;
         return user;
@@ -42,13 +42,12 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
   $scope.showProfile = showProfile;
 
   function showProfile(user) {
-    $location.path(`/users/${user.id}/info`);
+    $location.path(`/users/${user.$id}/info`);
   }
 
   function filterUsers(state) {
     $scope.filter = state;
     switch (state) {
-
       case 'show-all':
         $scope.users = users.filter(function(user) {
           return user.info !== null;
@@ -97,7 +96,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
 
   function toggleFriends(user) {
     if (_.find(currentUserFriends, {
-      id: user.id
+      id: user.$id
     })) {
       let userRef = new Firebase(`${fire}/users/${userInfo.uid}/friends/${user.$id}`);
       let userU = $firebaseObject(userRef);
@@ -108,9 +107,9 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
         user.$$friend = false;
       });
     } else {
-      currentUserFriendsRef.child(user.id)
+      currentUserFriendsRef.child(user.$id)
       .set({
-        id: user.id
+        id: user.$id
       });
       user.$$friend = true;
     }
