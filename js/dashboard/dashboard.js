@@ -4,6 +4,7 @@ export default
  'userInfo', '$firebaseObject',
 
 function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
+  $rootScope.loading = true;
   let currentPage = location.href.split('/');
   let user = new Firebase(`${fire}/users/${userInfo.uid}`);
   let userObj = $firebaseObject(user);
@@ -15,6 +16,7 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
 
   userObj.$loaded(function() {
     $scope.user = userObj;
+    $rootScope.loading = false;
   });
 
   $scope.logOut = logOut;

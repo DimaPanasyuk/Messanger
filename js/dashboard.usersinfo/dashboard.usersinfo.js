@@ -5,7 +5,7 @@ export default
 
 function($scope, $rootScope, userInfo, fire,
   infoAboutWatchedUser, $firebaseObject, $firebaseArray) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let userRef = new Firebase(`${fire}/users/${infoAboutWatchedUser}`);
   let user = $firebaseObject(userRef);
   let userPhotos = $firebaseArray(new Firebase(`${fire}/users/${infoAboutWatchedUser}/info/photos`));
@@ -14,7 +14,7 @@ function($scope, $rootScope, userInfo, fire,
   userInf.$loaded(function() {
     $scope.user = user;
     $scope.profile = userInf;
-    $rootScope.subLoading = false;
+    $rootScope.loading = false;
 
     userPhotos.$loaded(function() {
       $scope.userPhotos = userPhotos;

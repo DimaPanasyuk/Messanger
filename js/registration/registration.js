@@ -1,6 +1,10 @@
 export default
 ['$scope', '$rootScope', 'auth', '$location',
 function($scope, $rootScope, auth, $location) {
+  $scope.user = {
+    email: '',
+    password: ''
+  };
   $scope.signUp = signUp;
   function signUp() {
     $rootScope.loading = true;

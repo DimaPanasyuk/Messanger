@@ -11,7 +11,7 @@ export default [
   '$firebaseArray',
   function($scope, $rootScope, $stateParams, $location, userInfo,
     fire, $firebaseObject, $firebaseArray) {
-    $rootScope.subLoading = true;
+    $rootScope.loading = true;
     let currentDialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${$stateParams.name}`);
     let currentDialog = $firebaseObject(currentDialogRef);
     let currentFriendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
@@ -25,7 +25,7 @@ export default [
 
     // Getting data and ordering it
     currentDialog.$loaded(function() {
-      $rootScope.subLoading = false;
+      $rootScope.loading = false;
       $scope.currentDialog = currentDialog;
       if (currentDialog.participants.length > 1) {
         getAllData();

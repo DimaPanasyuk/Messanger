@@ -5,7 +5,7 @@ export default
  'fire', '$firebaseObject', '$firebaseArray',
 function($scope, $rootScope, userInfo, $timeout, $location,
  fire, $firebaseObject, $firebaseArray) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   $scope.pageTitle = 'List of your friends';
   let friendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
   let usersRef = new Firebase(`${fire}/users`);
@@ -16,7 +16,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
   users.$loaded(function() {
     friends.$loaded(function() {
       $scope.friends = $scope.friendsTotal = users.filter(user => _.find(friends, {id: user.id}));
-      $rootScope.subLoading = false;
+      $rootScope.loading = false;
     });
   });
   $scope.filter = 'show-all';

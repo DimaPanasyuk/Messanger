@@ -6,7 +6,7 @@ export default
  '$firebaseObject',
 function($scope, $rootScope, $firebaseArray, $stateParams,
   $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let currentDialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${$stateParams.name}`);
   let currentDialog = $firebaseObject(currentDialogRef);
   let currentUser = $firebaseObject(new Firebase(`${fire}/users/${userInfo.uid}`));
@@ -18,7 +18,7 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
   currentDialog.$loaded(function() {
     $scope.currentDialog = currentDialog;
     currentDialogRef.child('newMessages').set(false);
-    $rootScope.subLoading = false;
+    $rootScope.loading = false;
   });
   userPhotos.$loaded(function() {
     $scope.userPhotos = userPhotos;

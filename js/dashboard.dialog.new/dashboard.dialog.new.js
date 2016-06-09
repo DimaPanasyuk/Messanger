@@ -8,7 +8,7 @@ export default
  'userInfo',
  'fire',
 function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let dialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs`);
   let friendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
   let usersRef = new Firebase(`${fire}/users`);
@@ -17,8 +17,8 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
   let users = $firebaseArray(usersRef);
 
   dialogs.$loaded(function() {
-    $rootScope.subLoading = false;
     $scope.friends = users.filter(user => _.find(friends, {id: user.id}));
+    $rootScope.loading = false;
   });
 
   $scope.dialog = {
@@ -41,8 +41,7 @@ function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
     participants[participants.length] = userInfo.uid;
 
     participants.forEach(function(participant) {
-      let participantDialogRef = new Firebase(`${fire}/users/${participant}/
-      dialogs`);
+      let participantDialogRef = new Firebase(`${fire}/users/${participant}/dialogs`);
       if (participant === userInfo.uid) {
         participantDialogRef.child($scope.dialog.name).set({
           title: $scope.dialog.title,

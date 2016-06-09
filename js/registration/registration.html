@@ -29,25 +29,23 @@
                       id="uemail"
                       name="useremail"
                       placeholder="Email"
-                      ng-model="useremail"
-                      class="form-control"
-                      required>
+                      ng-model="user.email"
+                      class="form-control">
               </div>
               <div class="form-group">
                 <input type="password"
                       id="upassword"
                       name="userpassword"
                       placeholder="Password"
-                      ng-model="userpassword"
-                      class="form-control"
-                      required>
+                      ng-model="user.password"
+                      class="form-control">
               </div>
               <div class="text-center">                  
                 <button class="btn btn-warning"
-                        ng-disabled="!useremail || 
-                                    useremail.length < 4 || 
-                                    !userpassword || 
-                                    userpassword.length < 3"
+                        ng-disabled="!user.email || 
+                                    user.email.length < 4 || 
+                                    !user.password || 
+                                    user.password.length < 3"
                         ng-click="signUp()">
                   Sign Up
                 </button>            

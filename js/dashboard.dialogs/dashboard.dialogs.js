@@ -6,13 +6,13 @@ export default
  'userInfo',
  'fire',
 function($scope, $rootScope, $firebaseArray, $location, userInfo, fire) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let dialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs`);
   let dialogs = $firebaseArray(dialogRef);
 
   dialogs.$loaded(function() {
     $scope.dialogs = dialogs;
-    $rootScope.subLoading = false;
+    $rootScope.loading = false;
   });
   $scope.removeDialog = removeDialog;
   $scope.openDialogMessages = openDialogMessages;

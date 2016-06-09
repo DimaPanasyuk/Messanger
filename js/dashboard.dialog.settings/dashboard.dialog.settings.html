@@ -1,54 +1,5 @@
-<div class="canvas-container"
-      ng-if="subLoading">
-  <div class="canvas">
-    <div class="cube">
-        <div class="group group--aqua">
-            <div class="plane plane--aqua">
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-                <div class="dot dot--aqua"></div>
-            </div>
-        </div>
-        <div class="group">
-            <div class="plane plane--gold">
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-                <div class="dot dot--gold"></div>
-            </div>
-        </div>
-        <div class="group group--tomato">
-            <div class="plane plane--tomato">
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-                <div class="dot dot--tomato"></div>
-            </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-
 <div class="container"
-     ng-if="!subLoading &&
-            currentDialog && 
+     ng-if="currentDialog && 
             currentDialog.dialogHost === currentUser">
   
   <div class="row">

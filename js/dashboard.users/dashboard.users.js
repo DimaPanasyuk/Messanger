@@ -5,7 +5,7 @@ export default
  'fire', '$firebaseArray', '$firebaseObject',
 
 function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebaseObject) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let usersRef = new Firebase(`${fire}/users`);
   let users = $firebaseArray(usersRef);
   let currentUserFriendsRef = new Firebase(`${fire}/users/${userInfo.uid}/friends`);
@@ -32,7 +32,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
         return user;
       }
     });
-    $rootScope.subLoading = false;
+    $rootScope.loading = false;
   });
 
   $scope.pageTitle = 'Users page';

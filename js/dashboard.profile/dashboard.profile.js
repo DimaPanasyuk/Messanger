@@ -2,7 +2,7 @@ export default
 ['$scope', '$rootScope', 'userInfo', '$timeout',
  'fire', '$firebaseObject', '$firebaseArray',
 function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebaseArray) {
-  $rootScope.subLoading = true;
+  $rootScope.loading = true;
   let profileRef = new Firebase(`${fire}/users/${userInfo.uid}/info`);
   let userRef = new Firebase(`${fire}/users/${userInfo.uid}`);
   let user = $firebaseObject(userRef);
@@ -40,7 +40,7 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
       document.getElementsByTagName('title')[0].innerHTML = `New Profile`;
     }
 
-    $rootScope.subLoading = false;
+    $rootScope.loading = false;
   });
 
   $scope.addPhoneNumber = addPhoneNumber;

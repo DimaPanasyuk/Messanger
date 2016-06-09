@@ -41,6 +41,9 @@ import auth from './services/auth.service';
 import cut from './filters/cutTo.filter';
 import fromNow from './filters/fromNow.filter';
 
+// Directives
+import preloader from './directives/preloader.js';
+
 // Run
 import run from './app/app.run';
 
@@ -84,4 +87,6 @@ angular.module('app')
        .controller('UsersInfo', UsersInfo)
        .controller('DialogSettings', DialogSettings)
        .controller('DialogNew', DialogNew)
+
+       .directive('preloader', preloader)
        .run(run);

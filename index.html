@@ -11,15 +11,8 @@
   <body ng-app="app"
         ng-controller="App">
     
-    <header ng-if="loading">
-      <div aria-busy="true" 
-           aria-label="Loading, please wait."
-           role="progressbar">
-        
-      </div>
-    </header>
-    
-    <ui-view>  
+    <preloader></preloader>
+    <ui-view ng-if="!loading">  
     </ui-view>
     
     <script src="//vk.com/js/api/openapi.js"></script>

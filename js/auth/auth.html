@@ -18,10 +18,9 @@
                     id="uemail"
                     name="useremail"
                     placeholder="Email"
-                    ng-model="useremail"
+                    ng-model="user.email"
                     autocomplete="off"
-                    class="form-control"
-                    required>
+                    class="form-control">
               </div>
               <div class="form-group">
                 
@@ -30,19 +29,18 @@
                     name="userpassword"
                     placeholder="Password"
                     autocomplete="off"
-                    ng-model="userpassword"
-                    class="form-control"
-                    required>
+                    ng-model="user.password"
+                    class="form-control">
               </div>       
                     
               <p class="text-muted">
                 <a href="#reset">Forgot Password?</a>
               </p>
               <button class="btn btn-primary"
-                      ng-disabled="!useremail || 
-                                    useremail.length < 4  || 
-                                    !userpassword || 
-                                    userpassword.length < 3"
+                      ng-disabled="!user.email || 
+                                    user.email.length < 4  || 
+                                    !user.password || 
+                                    user.password.length < 3"
                       ng-click="logIn()">
                 Log In  
               </button>

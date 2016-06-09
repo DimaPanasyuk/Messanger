@@ -2,12 +2,15 @@ export default
 ['$scope', '$rootScope', '$location', 'auth',
 
 function($scope, $rootScope, $location, auth) {
+  $scope.user = {
+    email: ''
+  };
   $scope.reset = reset;
   $scope.backToAuth = backToAuth;
   function reset() {
     $rootScope.loading = true;
     auth.resetUserPassword({
-      email: $scope.userEmail
+      email: $scope.user.email
     })
     .then(function(data) {
       if (data) {
