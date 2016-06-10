@@ -23,16 +23,16 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   $scope.setActivePage = setActivePage;
   $scope.activePage = currentPage[currentPage.length - 1];
 
-  userMessages.on('child_changed', function(event) {
-    let item = event.val();
-    let currentLocation = $location.path();
-    if (item.newMessages === true && (currentLocation.indexOf(item.name)) === -1) {
-      console.debug('not on dialog page');
-      let messageIn = new Audio('../../sounds/sound_1.mp3');
-      messageIn.play();
-      toastr.error(`<b>${item.title}</b>, new message!`);
-    }
-  });
+  // userMessages.on('child_changed', function(event) {
+  //   let item = event.val();
+  //   let currentLocation = $location.path();
+  //   if (item.newMessages === true && (currentLocation.indexOf(item.name)) === -1) {
+  //     console.debug('not on dialog page');
+  //     let messageIn = new Audio('../../sounds/sound_1.mp3');
+  //     messageIn.play();
+  //     toastr.error(`<b>${item.title}</b>, new message!`);
+  //   }
+  // });
 
   function logOut() {
     $rootScope.loading = true;
