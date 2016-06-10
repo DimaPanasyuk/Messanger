@@ -72,8 +72,6 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
 
           participantMessages.$add($scope.message);
           dialog.child('newMessages').set(true);
-          // add this feature back but (2 notifications)
-          // dialog.child('lastMessageTime').set((new Date()).getTime());
         }
       });
       $scope.message.text = '';
@@ -83,8 +81,6 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
         let participantMessages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`));
         let dialog = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
         participantMessages.$add($scope.message);
-
-        // dialog.child('lastMessageTime').set((new Date()).getTime());
         if (userInfo.uid !== participant) {
           dialog.child('newMessages').set(true);
         }

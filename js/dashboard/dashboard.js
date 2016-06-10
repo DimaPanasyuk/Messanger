@@ -26,9 +26,8 @@ function($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
   userMessages.on('child_changed', function(event) {
     let item = event.val();
     let currentLocation = $location.path();
-
-    if (item.newMessages === true &&
-        (currentLocation.indexOf(item.name)) === -1) {
+    if (item.newMessages === true && (currentLocation.indexOf(item.name)) === -1) {
+      console.debug('not on dialog page');
       let messageIn = new Audio('../../sounds/sound_1.mp3');
       messageIn.play();
       toastr.error(`<b>${item.title}</b>, new message!`);

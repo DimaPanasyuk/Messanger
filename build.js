@@ -763,13 +763,12 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
           authorPhoto: currentUser.info.image
         });
         dialog.child('newMessages').set(false);
-        // dialog.child('lastMessageTime').set((new Date()).getTime());
-
         // Sends message for your friend
       } else {
           var friendDialog = currentUser.info.name + '_' + currentUser.info.surname;
           var _dialogMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + friendDialog + '/messages'));
           var _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + friendDialog);
+
           _dialogMessages.$add({
             author: currentUser.info.name + ' ' + currentUser.info.surname,
             time: time,
@@ -779,7 +778,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
           });
 
           _dialog.child('newMessages').set(true);
-          // dialog.child('lastMessageTime').set((new Date()).getTime());
         }
     });
     $scope.message.text = '';
@@ -912,8 +910,6 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
           _participantMessages.$add($scope.message);
           _dialog.child('newMessages').set(true);
-          // add this feature back but (2 notifications)
-          // dialog.child('lastMessageTime').set((new Date()).getTime());
         }
       });
       $scope.message.text = '';
@@ -923,8 +919,6 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
         var participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
         var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
         participantMessages.$add($scope.message);
-
-        // dialog.child('lastMessageTime').set((new Date()).getTime());
         if (userInfo.uid !== participant) {
           dialog.child('newMessages').set(true);
         }
@@ -1374,8 +1368,8 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   userMessages.on('child_changed', function (event) {
     var item = event.val();
     var currentLocation = $location.path();
-
     if (item.newMessages === true && currentLocation.indexOf(item.name) === -1) {
+      console.debug('not on dialog page');
       var messageIn = new Audio('../../sounds/sound_1.mp3');
       messageIn.play();
       toastr.error('<b>' + item.title + '</b>, new message!');

@@ -130,13 +130,12 @@ function($scope, $rootScope, userInfo, $timeout, $location,
           authorPhoto: currentUser.info.image
         });
         dialog.child('newMessages').set(false);
-        // dialog.child('lastMessageTime').set((new Date()).getTime());
-
       // Sends message for your friend
       } else {
         let friendDialog = currentUser.info.name + '_' + currentUser.info.surname;
         let dialogMessages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${friendDialog}/messages`));
         let dialog = new Firebase(`${fire}/users/${participant}/dialogs/${friendDialog}`);
+        
         dialogMessages.$add({
           author: currentUser.info.name + ' ' + currentUser.info.surname,
           time: time,
@@ -146,7 +145,6 @@ function($scope, $rootScope, userInfo, $timeout, $location,
         });
 
         dialog.child('newMessages').set(true);
-        // dialog.child('lastMessageTime').set((new Date()).getTime());
       }
     });
     $scope.message.text = '';
