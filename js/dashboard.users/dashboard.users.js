@@ -16,7 +16,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
   users.$loaded(function() {
     $scope.users = users
     .filter(function(user) {
-      return user.info !== null;
+      return user.info !== undefined;
     })
     .filter(function(user) {
       return user.id !== userInfo.uid;
@@ -32,6 +32,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
         return user;
       }
     });
+    console.debug($scope.users);
     $rootScope.loading = false;
   });
 
@@ -50,7 +51,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
     switch (state) {
       case 'show-all':
         $scope.users = users.filter(function(user) {
-          return user.info !== null;
+          return user.info !== undefined;
         })
         .filter(function(user) {
           return user.id !== userInfo.uid;
@@ -70,7 +71,7 @@ function($scope, $rootScope, userInfo, $location, fire, $firebaseArray, $firebas
       case 'show-online':
         $scope.users = users
         .filter(function(user) {
-          return user.info !== null;
+          return user.info !== undefined;
         })
         .filter(function(user) {
           return user.id !== userInfo.uid;

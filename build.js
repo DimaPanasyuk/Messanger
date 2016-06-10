@@ -220,8 +220,10 @@ exports.default = ['$scope', '$rootScope', '$location', '$timeout', 'auth', 'fir
           lastLoggedOut: 0
         });
         $location.path('/profile');
-        $rootScope.loading = false;
         $rootScope.$digest();
+        $timeout(function () {
+          $rootScope.loading = false;
+        }, 200);
       } else {
         toastr.error(data);
         $rootScope.loading = false;
@@ -1030,7 +1032,6 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', 'fire', '$fir
       };
       document.getElementsByTagName('title')[0].innerHTML = 'New Profile';
     }
-
     $rootScope.loading = false;
   });
 
@@ -1161,7 +1162,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
 
   users.$loaded(function () {
     $scope.users = users.filter(function (user) {
-      return user.info !== null;
+      return user.info !== undefined;
     }).filter(function (user) {
       return user.id !== userInfo.uid;
     }).map(function (user) {
@@ -1175,6 +1176,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
         return user;
       }
     });
+    console.debug($scope.users);
     $rootScope.loading = false;
   });
 
@@ -1193,7 +1195,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
     switch (state) {
       case 'show-all':
         $scope.users = users.filter(function (user) {
-          return user.info !== null;
+          return user.info !== undefined;
         }).filter(function (user) {
           return user.id !== userInfo.uid;
         }).map(function (user) {
@@ -1210,7 +1212,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$location', 'fire', '$fi
         break;
       case 'show-online':
         $scope.users = users.filter(function (user) {
-          return user.info !== null;
+          return user.info !== undefined;
         }).filter(function (user) {
           return user.id !== userInfo.uid;
         }).filter(function (user) {

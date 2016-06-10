@@ -26,8 +26,10 @@ function Auth($scope, $rootScope, $location, $timeout, auth, fire) {
           lastLoggedOut: 0
         });
         $location.path('/profile');
-        $rootScope.loading = false;
         $rootScope.$digest();
+        $timeout(function() {
+          $rootScope.loading = false;
+        }, 200);
       } else {
         toastr.error(data);
         $rootScope.loading = false;

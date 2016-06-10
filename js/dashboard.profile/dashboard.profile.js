@@ -39,7 +39,6 @@ function($scope, $rootScope, userInfo, $timeout, fire, $firebaseObject, $firebas
       };
       document.getElementsByTagName('title')[0].innerHTML = `New Profile`;
     }
-
     $rootScope.loading = false;
   });
 
