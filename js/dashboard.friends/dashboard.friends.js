@@ -129,7 +129,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
           authorId: currentUser.id,
           authorPhoto: currentUser.info.image
         });
-        dialog.child('newMessages').set(false);
+        dialog.child('status').child('newMessages').set(false);
       // Sends message for your friend
       } else {
         let friendDialog = currentUser.info.name + '_' + currentUser.info.surname;
@@ -144,7 +144,7 @@ function($scope, $rootScope, userInfo, $timeout, $location,
           authorPhoto: currentUser.info.image
         });
 
-        dialog.child('newMessages').set(true);
+        dialog.child('status').child('newMessages').set(Math.random() * 100);
       }
     });
     $scope.message.text = '';

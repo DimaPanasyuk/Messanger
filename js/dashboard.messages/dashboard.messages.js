@@ -6,7 +6,6 @@ export default
  '$firebaseObject',
 function($scope, $rootScope, $firebaseArray, $stateParams,
   $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
-  $rootScope.loading = true;
   let currentDialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${$stateParams.name}`);
   let currentDialog = $firebaseObject(currentDialogRef);
   let currentUser = $firebaseObject(new Firebase(`${fire}/users/${userInfo.uid}`));
@@ -17,8 +16,7 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
 
   currentDialog.$loaded(function() {
     $scope.currentDialog = currentDialog;
-    currentDialogRef.child('newMessages').set(false);
-    $rootScope.loading = false;
+    currentDialogRef.child('status').child('newMessages').set(false);
   });
   userPhotos.$loaded(function() {
     $scope.userPhotos = userPhotos;
@@ -34,12 +32,16 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
       authorPhoto: currentUser.info.image
     };
   });
+  messages.$loaded(() => {
+    $scope.messages = messages;
+    $rootScope.loading = false;
+  });
+
 
   $scope.currentDate = 1463754897700;
 
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
   $scope.dialogName = $stateParams.name;
-  $scope.messages = messages;
   $scope.sendMessage = sendMessage;
   $scope.watchEnter = watchEnter;
   $scope.goBack = goBack;
@@ -64,14 +66,18 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
           let participantMessages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}/messages`));
           let dialog = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
           participantMessages.$add($scope.message);
-          dialog.child('newMessages').set(false);
+          dialog.child('status').update({
+            newMessages: false
+          });
         } else {
           let dialogName = currentUser.info.name + '_' + currentUser.info.surname;
           let dialog = new Firebase(`${fire}/users/${participant}/dialogs/${dialogName}`);
           let participantMessages = $firebaseArray(new Firebase(`${fire}/users/${participant}/dialogs/${dialogName}/messages`));
 
           participantMessages.$add($scope.message);
-          dialog.child('newMessages').set(true);
+          dialog.child('status').update({
+            newMessages: Math.random() * 100
+          });
         }
       });
       $scope.message.text = '';
@@ -82,7 +88,9 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
         let dialog = new Firebase(`${fire}/users/${participant}/dialogs/${$stateParams.name}`);
         participantMessages.$add($scope.message);
         if (userInfo.uid !== participant) {
-          dialog.child('newMessages').set(true);
+          dialog.child('status').update({
+            newMessages: Math.random() * 100
+          });
         }
       });
       $scope.message.text = '';
@@ -95,7 +103,9 @@ function($scope, $rootScope, $firebaseArray, $stateParams,
   }
 
   function goBack() {
-    currentDialogRef.child('newMessages').set(false);
+    currentDialogRef.child('status').update({
+      newMessages: false
+    });
     $location.path('/dialogs');
   }
 

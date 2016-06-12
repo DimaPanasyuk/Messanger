@@ -187,11 +187,19 @@ exports.default = [function () {}];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$rootScope', '$location', function ($rootScope, $location) {
+exports.default = ['$rootScope', '$location', '$timeout', function ($rootScope, $location, $timeout) {
   $rootScope.$on("$stateChangeError", function (event, next, previous, error) {
     if (error === "AUTH_REQUIRED") {
       $location.path("/auth");
     }
+  });
+  $rootScope.$on('$stateChangeStart', function () {
+    $rootScope.loading = true;
+  });
+  $rootScope.$on('$stateChangeSuccess', function () {
+    $timeout(function () {
+      $rootScope.loading = false;
+    }, 400);
   });
 }];
 
@@ -762,7 +770,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
           authorId: currentUser.id,
           authorPhoto: currentUser.info.image
         });
-        dialog.child('newMessages').set(false);
+        dialog.child('status').child('newMessages').set(false);
         // Sends message for your friend
       } else {
           var friendDialog = currentUser.info.name + '_' + currentUser.info.surname;
@@ -777,7 +785,7 @@ exports.default = ['$scope', '$rootScope', 'userInfo', '$timeout', '$location', 
             authorPhoto: currentUser.info.image
           });
 
-          _dialog.child('newMessages').set(true);
+          _dialog.child('status').child('newMessages').set(Math.random() * 100);
         }
     });
     $scope.message.text = '';
@@ -844,7 +852,6 @@ function _interopRequireDefault(obj) {
 }
 
 exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$timeout', '$interval', '$location', 'userInfo', 'fire', '$firebaseObject', function ($scope, $rootScope, $firebaseArray, $stateParams, $timeout, $interval, $location, userInfo, fire, $firebaseObject) {
-  $rootScope.loading = true;
   var currentDialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + $stateParams.name);
   var currentDialog = $firebaseObject(currentDialogRef);
   var currentUser = $firebaseObject(new Firebase(fire + '/users/' + userInfo.uid));
@@ -855,8 +862,7 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
 
   currentDialog.$loaded(function () {
     $scope.currentDialog = currentDialog;
-    currentDialogRef.child('newMessages').set(false);
-    $rootScope.loading = false;
+    currentDialogRef.child('status').child('newMessages').set(false);
   });
   userPhotos.$loaded(function () {
     $scope.userPhotos = userPhotos;
@@ -872,12 +878,15 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
       authorPhoto: currentUser.info.image
     };
   });
+  messages.$loaded(function () {
+    $scope.messages = messages;
+    $rootScope.loading = false;
+  });
 
   $scope.currentDate = 1463754897700;
 
   $scope.dialogTitle = $stateParams.name.split('_').join(' ');
   $scope.dialogName = $stateParams.name;
-  $scope.messages = messages;
   $scope.sendMessage = sendMessage;
   $scope.watchEnter = watchEnter;
   $scope.goBack = goBack;
@@ -902,14 +911,18 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
           var participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name + '/messages'));
           var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
           participantMessages.$add($scope.message);
-          dialog.child('newMessages').set(false);
+          dialog.child('status').update({
+            newMessages: false
+          });
         } else {
           var dialogName = currentUser.info.name + '_' + currentUser.info.surname;
           var _dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogName);
           var _participantMessages = $firebaseArray(new Firebase(fire + '/users/' + participant + '/dialogs/' + dialogName + '/messages'));
 
           _participantMessages.$add($scope.message);
-          _dialog.child('newMessages').set(true);
+          _dialog.child('status').update({
+            newMessages: Math.random() * 100
+          });
         }
       });
       $scope.message.text = '';
@@ -920,7 +933,9 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
         var dialog = new Firebase(fire + '/users/' + participant + '/dialogs/' + $stateParams.name);
         participantMessages.$add($scope.message);
         if (userInfo.uid !== participant) {
-          dialog.child('newMessages').set(true);
+          dialog.child('status').update({
+            newMessages: Math.random() * 100
+          });
         }
       });
       $scope.message.text = '';
@@ -933,7 +948,9 @@ exports.default = ['$scope', '$rootScope', '$firebaseArray', '$stateParams', '$t
   }
 
   function goBack() {
-    currentDialogRef.child('newMessages').set(false);
+    currentDialogRef.child('status').update({
+      newMessages: false
+    });
     $location.path('/dialogs');
   }
 
@@ -1345,13 +1362,14 @@ exports.default = ['urls', '$stateProvider', function (urls, $stateProvider) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInfo', '$firebaseObject', function ($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject) {
+exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInfo', '$firebaseObject', '$firebaseArray', function ($scope, $rootScope, $location, auth, fire, userInfo, $firebaseObject, $firebaseArray) {
   $rootScope.loading = true;
   var currentPage = location.href.split('/');
   var user = new Firebase(fire + '/users/' + userInfo.uid);
   var userObj = $firebaseObject(user);
-  var userMessages = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
-
+  var userDialogsRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs');
+  var userDialogs = $firebaseArray(userDialogsRef);
+  var currentLocation = window.location.href;
   window.onbeforeunload = function () {
     // logOut();
   };
@@ -1365,7 +1383,20 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   $scope.setActivePage = setActivePage;
   $scope.activePage = currentPage[currentPage.length - 1];
 
-  // userMessages.on('child_changed', function(event) {
+  userDialogs.$loaded(function () {
+    userDialogs.forEach(function (dialog) {
+      var dialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + dialog.name);
+      dialogRef.child('status').on('child_changed', function (ev) {
+        var event = ev.val();
+        if (event !== false && currentLocation.indexOf(dialog.name) === -1) {
+          var messageIn = new Audio('../../sounds/sound_1.mp3');
+          messageIn.play();
+          toastr.error('<b>' + dialog.title + '</b>, new message!');
+        }
+      });
+    });
+  });
+  // userDialogs.on('child_changed', function(event) {
   //   let item = event.val();
   //   let currentLocation = $location.path();
   //   if (item.newMessages === true && (currentLocation.indexOf(item.name)) === -1) {
