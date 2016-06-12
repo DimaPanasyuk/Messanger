@@ -1383,28 +1383,26 @@ exports.default = ['$scope', '$rootScope', '$location', 'auth', 'fire', 'userInf
   $scope.setActivePage = setActivePage;
   $scope.activePage = currentPage[currentPage.length - 1];
 
-  userDialogs.$loaded(function () {
-    userDialogs.forEach(function (dialog) {
-      var dialogRef = new Firebase(fire + '/users/' + userInfo.uid + '/dialogs/' + dialog.name);
-      dialogRef.child('status').on('child_changed', function (ev) {
-        var event = ev.val();
-        if (event !== false && currentLocation.indexOf(dialog.name) === -1) {
-          var messageIn = new Audio('../../sounds/sound_1.mp3');
-          messageIn.play();
-          toastr.error('<b>' + dialog.title + '</b>, new message!');
-        }
-      });
-    });
-  });
-  // userDialogs.on('child_changed', function(event) {
-  //   let item = event.val();
-  //   let currentLocation = $location.path();
-  //   if (item.newMessages === true && (currentLocation.indexOf(item.name)) === -1) {
-  //     console.debug('not on dialog page');
-  //     let messageIn = new Audio('../../sounds/sound_1.mp3');
-  //     messageIn.play();
-  //     toastr.error(`<b>${item.title}</b>, new message!`);
-  //   }
+  // Remove for awhile
+  // userDialogs.$loaded(() => {
+  //   userDialogs.forEach(dialog => {
+  //     let dialogRef = new Firebase(`${fire}/users/${userInfo.uid}/dialogs/${dialog.name}`);
+  //     let eventEmitted = 0;
+  //     dialogRef.child('status').on('child_changed', function(ev) {
+  //       let event = ev.val();
+  //       if (event !== false && (currentLocation.indexOf(dialog.name)) === -1) {
+  //         if (eventEmitted !== 0) {
+  //           console.debug('false');
+  //         } else {
+  //           eventEmitted = 0;
+  //           let messageIn = new Audio('../../sounds/sound_1.mp3');
+  //           messageIn.play();
+  //           toastr.error(`<b>${dialog.title}</b>, new message!`);
+  //           eventEmitted = 1;
+  //         }
+  //       }
+  //     });
+  //   });
   // });
 
   function logOut() {
